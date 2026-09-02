@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class="scroll-smooth dark">
 <head>
   <!-- ============================================================
        METADATA & PERFORMANCE
@@ -32,7 +32,18 @@
        TAILWIND CONFIG — Tokens personalizados del diseño
        ============================================================ -->
   <script>
+    // Aplicar tema guardado antes de Tailwind para evitar parpadeo (FOUC)
+    (function () {
+      try {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        if (theme === 'light') document.documentElement.classList.add('light');
+      } catch (e) {}
+    })();
+
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -79,14 +90,65 @@
        CUSTOM STYLES — Glassmorphism, gradientes y utilidades
        ============================================================ -->
   <style>
-    /* Fondo base con gradiente sutil + grid */
+    /* ============================================================
+       THEME TOKENS — Variables CSS por tema
+       ============================================================ */
+    :root, html.dark {
+      --bg-base:      #0b1120;
+      --bg-bottom:    #0a0f1c;
+      --grid-line:    rgba(255, 255, 255, 0.025);
+      --orb-cyan:     rgba(34, 211, 238, 0.08);
+      --orb-indigo:   rgba(129, 140, 248, 0.08);
+
+      --glass-bg:     rgba(15, 23, 42, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.08);
+
+      --text-strong:  #ffffff;
+      --text-base:    #e2e8f0;   /* slate-200 */
+      --text-muted:   #94a3b8;   /* slate-400 */
+      --text-faint:   #64748b;   /* slate-500 */
+
+      --input-bg:     rgba(15, 23, 42, 0.5);
+      --input-border: rgba(255, 255, 255, 0.10);
+
+      --scrollbar-track: #0a0f1c;
+      --selection-bg:    rgba(34, 211, 238, 0.3);
+      --selection-fg:    #ffffff;
+    }
+
+    html.light {
+      --bg-base:      #f8fafc;
+      --bg-bottom:    #eef2f7;
+      --grid-line:    rgba(15, 23, 42, 0.06);
+      --orb-cyan:     rgba(34, 211, 238, 0.18);
+      --orb-indigo:   rgba(129, 140, 248, 0.18);
+
+      --glass-bg:     rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(15, 23, 42, 0.10);
+
+      --text-strong:  #0f172a;
+      --text-base:    #1f2937;
+      --text-muted:   #475569;
+      --text-faint:   #64748b;
+
+      --input-bg:     rgba(255, 255, 255, 0.9);
+      --input-border: rgba(15, 23, 42, 0.12);
+
+      --scrollbar-track: #e2e8f0;
+      --selection-bg:    rgba(34, 211, 238, 0.35);
+      --selection-fg:    #0f172a;
+    }
+
+    /* Fondo base con gradiente sutil */
     body {
-      background-color: #0b1120;
+      background-color: var(--bg-base);
       background-image:
-        radial-gradient(circle at 20% 0%, rgba(34, 211, 238, 0.08), transparent 40%),
-        radial-gradient(circle at 80% 60%, rgba(129, 140, 248, 0.08), transparent 40%),
-        linear-gradient(to bottom, #0b1120, #0a0f1c);
+        radial-gradient(circle at 20% 0%, var(--orb-cyan), transparent 40%),
+        radial-gradient(circle at 80% 60%, var(--orb-indigo), transparent 40%),
+        linear-gradient(to bottom, var(--bg-base), var(--bg-bottom));
       background-attachment: fixed;
+      color: var(--text-base);
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     /* Patrón de grid sutil sobre el fondo */
@@ -95,19 +157,21 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
+      transition: background-image 0.4s ease;
     }
 
     /* Tarjetas con efecto glassmorphism */
     .glass {
-      background: rgba(15, 23, 42, 0.55);
+      background: var(--glass-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--glass-border);
+      transition: background 0.4s ease, border-color 0.4s ease;
     }
 
     .glass-hover:hover {
@@ -139,9 +203,10 @@
 
     .btn-ghost {
       transition: all 0.25s ease;
+      border: 1px solid var(--input-border);
     }
     .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(34, 211, 238, 0.06);
       border-color: rgba(34, 211, 238, 0.5);
     }
 
@@ -174,9 +239,23 @@
     }
     .nav-link:hover::after { width: 100%; }
 
+    /* Inputs del formulario (theme-aware) */
+    .themed-input {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-strong);
+      transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+    }
+    .themed-input::placeholder { color: var(--text-faint); }
+    .themed-input:focus {
+      border-color: #22d3ee;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+    }
+
     /* Scrollbar personalizada */
     ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(180deg, #22d3ee, #818cf8);
       border-radius: 10px;
@@ -195,7 +274,7 @@
     }
 
     /* Selección de texto con acento neón */
-    ::selection { background: rgba(34, 211, 238, 0.3); color: #fff; }
+    ::selection { background: var(--selection-bg); color: var(--selection-fg); }
 
     /* Imagen de proyecto con zoom sutil */
     .project-img {
@@ -208,14 +287,12 @@
     /* ============================================================
        ROBOT MASCOT — Animaciones
        ============================================================ */
-    /* Parpadeo del LED de la antena */
     @keyframes robot-eye-blink {
       0%, 90%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(34, 211, 238, 0.9); }
       95%           { opacity: 0.2; box-shadow: none; }
     }
     .robot-eye-blink { animation: robot-eye-blink 3s ease-in-out infinite; }
 
-    /* Pupilas que siguen al cursor dentro del Hero */
     .robot-eye {
       position: relative;
       transition: transform 0.15s ease;
@@ -225,7 +302,6 @@
       box-shadow: 0 0 12px currentColor;
     }
 
-    /* Cursor parpadeante en la boca del robot */
     @keyframes cursor-blink {
       0%, 50%   { opacity: 1; }
       51%, 100% { opacity: 0; }
@@ -236,16 +312,151 @@
       color: #22d3ee;
       animation: cursor-blink 1s steps(2) infinite;
     }
+
+    /* ============================================================
+       THEME TOGGLE — botón
+       ============================================================ */
+    .theme-toggle-track {
+      position: relative;
+      width: 56px;
+      height: 28px;
+      border-radius: 9999px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .theme-toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #22d3ee, #818cf8);
+      display: grid;
+      place-items: center;
+      color: #0b1120;
+      font-size: 11px;
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    html.light .theme-toggle-thumb {
+      transform: translateX(28px);
+      background: linear-gradient(135deg, #f59e0b, #f43f5e);
+      color: #fff;
+    }
+
+    /* Cuerpo del robot — adaptarse al tema */
+    .robot-head {
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    html.light .robot-head {
+      background: linear-gradient(135deg, #1f2937, #0f172a) !important;
+    }
+
+    /* ============================================================
+       THEME-AWARE UTILITIES — reemplazan los colores hardcoded
+       ============================================================ */
+    .t-text-strong { color: var(--text-strong); }
+    .t-text-base   { color: var(--text-base); }
+    .t-text-muted  { color: var(--text-muted); }
+    .t-text-faint  { color: var(--text-faint); }
+
+    .t-border-faint {
+      border-color: var(--glass-border);
+    }
+
+    .t-bg-glass {
+      background: var(--glass-bg);
+    }
+
+    .t-divide {
+      border-color: var(--glass-border);
+    }
+
+    /* Etiquetas/badges que antes usaban bg-white/5 + border-white/5 */
+    .t-chip {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+    }
+    .t-chip:hover { color: var(--text-strong); }
+
+    /* Inputs del formulario */
+    .t-input {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-strong);
+      transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+    }
+    .t-input::placeholder { color: var(--text-faint); }
+    .t-input:focus {
+      border-color: #22d3ee;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+    }
+
+    /* Colores semánticos de Tailwind que dependen del tema */
+    .t-hover-bg:hover { background: rgba(34, 211, 238, 0.06); }
+
+    /* Etiquetas hover sobre las tarjetas de proyecto */
+    html.light .project-card .text-white { color: #0f172a; }
+
+    /* ============================================================
+       SKILL BADGES — theme-aware con acento por categoría
+       ============================================================ */
+    .skill-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      cursor: default;
+    }
+    .skill-badge:hover { color: var(--text-strong); }
+
+    .skill-cyan:hover    { border-color: rgba(34, 211, 238, 0.4);  background: rgba(34, 211, 238, 0.08); }
+    .skill-indigo:hover  { border-color: rgba(129, 140, 248, 0.4); background: rgba(129, 140, 248, 0.08); }
+    .skill-violet:hover  { border-color: rgba(167, 139, 250, 0.4); background: rgba(167, 139, 250, 0.08); }
+    .skill-emerald:hover { border-color: rgba(52, 211, 153, 0.4);  background: rgba(52, 211, 153, 0.08); }
+
+    /* Etiquetas de tecnología dentro de proyectos (chips de colores sólidos) */
+    .project-tag {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+
+    /* Botón de redes sociales */
+    .social-btn {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+    .social-btn:hover {
+      color: var(--text-strong);
+      background: rgba(34, 211, 238, 0.08);
+    }
   </style>
 </head>
 
-<body class="font-sans text-slate-200 antialiased selection:bg-cyan-500/30">
+<body class="font-sans antialiased">
 
   <!-- ============================================================
        NAVBAR — Fija con glassmorphism
        ============================================================ -->
   <header class="fixed top-0 inset-x-0 z-50">
-    <nav class="glass border-b border-white/5">
+    <nav class="glass border-b t-divide">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 md:h-20">
 
@@ -254,20 +465,20 @@
             <span class="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-cyan to-neon-indigo flex items-center justify-center text-slate-900 font-extrabold text-sm shadow-glow-cyan group-hover:rotate-6 transition-transform">
               TU
             </span>
-            <span class="font-bold text-white tracking-tight text-lg">
+            <span class="font-bold t-text-strong tracking-tight text-lg">
               Tech<span class="text-neon-cyan">unlock</span>
             </span>
           </a>
 
           <!-- Enlaces (desktop) -->
           <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-            <li><a href="#about"    class="nav-link text-slate-300 hover:text-white transition-colors">Sobre mí</a></li>
-            <li><a href="#skills"   class="nav-link text-slate-300 hover:text-white transition-colors">Habilidades</a></li>
-            <li><a href="#projects" class="nav-link text-slate-300 hover:text-white transition-colors">Proyectos</a></li>
-            <li><a href="#contact"  class="nav-link text-slate-300 hover:text-white transition-colors">Contacto</a></li>
+            <li><a href="#about"    class="nav-link t-text-muted hover:t-text-strong transition-colors">Sobre mí</a></li>
+            <li><a href="#skills"   class="nav-link t-text-muted hover:t-text-strong transition-colors">Habilidades</a></li>
+            <li><a href="#projects" class="nav-link t-text-muted hover:t-text-strong transition-colors">Proyectos</a></li>
+            <li><a href="#contact"  class="nav-link t-text-muted hover:t-text-strong transition-colors">Contacto</a></li>
           </ul>
 
-          <!-- CTA — Descargar CV -->
+          <!-- CTA — Descargar CV + Toggle tema -->
           <div class="flex items-center gap-3">
             <a href="#contact"
                class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
@@ -275,9 +486,20 @@
               Descargar CV
             </a>
 
+            <!-- Toggle Dark/Light -->
+            <button id="themeToggle" type="button"
+                    class="theme-toggle-track"
+                    aria-label="Cambiar tema"
+                    aria-pressed="false"
+                    title="Cambiar tema">
+              <span class="theme-toggle-thumb">
+                <i class="fa-solid fa-moon"></i>
+              </span>
+            </button>
+
             <!-- Botón menú móvil -->
             <button id="menuBtn" type="button"
-                    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg glass text-slate-200 hover:text-neon-cyan transition-colors"
+                    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg glass hover:text-neon-cyan transition-colors"
                     aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
               <i class="fa-solid fa-bars"></i>
             </button>
@@ -286,11 +508,11 @@
 
         <!-- Menú móvil (colapsable) -->
         <div id="mobileMenu" class="hidden md:hidden pb-4">
-          <ul class="flex flex-col gap-1 pt-2 border-t border-white/5">
-            <li><a href="#about"    class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Sobre mí</a></li>
-            <li><a href="#skills"   class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Habilidades</a></li>
-            <li><a href="#projects" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Proyectos</a></li>
-            <li><a href="#contact"  class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Contacto</a></li>
+          <ul class="flex flex-col gap-1 pt-2 border-t t-divide">
+            <li><a href="#about"    class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Sobre mí</a></li>
+            <li><a href="#skills"   class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Habilidades</a></li>
+            <li><a href="#projects" class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Proyectos</a></li>
+            <li><a href="#contact"  class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Contacto</a></li>
             <li class="pt-2">
               <a href="#contact" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
                 <i class="fa-solid fa-file-arrow-down"></i> Descargar CV
@@ -321,18 +543,18 @@
           <div class="order-2 lg:order-1">
 
             <!-- Indicador de disponibilidad -->
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass text-xs font-medium text-emerald-300 mb-8">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass text-xs font-medium text-emerald-500 mb-8">
               <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400 availability-dot"></span>
               <span>Disponible para proyectos</span>
             </div>
 
             <!-- Saludo -->
-            <p class="text-slate-400 font-mono text-sm md:text-base mb-3">
+            <p class="t-text-muted font-mono text-sm md:text-base mb-3">
               <span class="text-neon-cyan">$</span> Hola, soy
             </p>
 
             <!-- Nombre + Título -->
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight t-text-strong leading-[1.05]">
               Techunlock<span class="text-neon-cyan">.</span>
             </h1>
             <h2 class="mt-3 text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight gradient-text">
@@ -340,7 +562,7 @@
             </h2>
 
             <!-- Descripción de valor -->
-            <p class="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+            <p class="mt-6 text-base sm:text-lg t-text-muted max-w-2xl leading-relaxed">
               Diseño y construyo aplicaciones web de alto rendimiento, APIs robustas y pipelines
               de automatización que eliminan tareas repetitivas. Combino ingeniería limpia con
               un enfoque pragmático para llevar productos digitales del concepto a producción.
@@ -355,15 +577,15 @@
                 <i class="fa-solid fa-arrow-right text-xs"></i>
               </a>
               <a href="#contact"
-                 class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 text-slate-200 font-semibold text-sm md:text-base">
+                 class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-lg border t-border-faint t-text-base font-semibold text-sm md:text-base">
                 <i class="fa-regular fa-paper-plane"></i>
                 Contactar
               </a>
             </div>
 
             <!-- Tech stack mini -->
-            <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 text-slate-500 text-xs font-mono">
-              <span class="text-slate-400">stack principal:</span>
+            <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 t-text-faint text-xs font-mono">
+              <span class="t-text-muted">stack principal:</span>
               <span class="flex items-center gap-1.5"><i class="fa-brands fa-react text-neon-cyan"></i> React</span>
               <span class="flex items-center gap-1.5"><i class="fa-brands fa-node-js text-emerald-400"></i> Node.js</span>
               <span class="flex items-center gap-1.5"><i class="fa-brands fa-python text-yellow-400"></i> Python</span>
@@ -388,7 +610,7 @@
                 </div>
 
                 <!-- Cabeza del robot -->
-                <div class="relative w-full aspect-square rounded-2xl bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-white/10 overflow-hidden">
+                <div class="robot-head relative w-full aspect-square rounded-2xl bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-white/10 overflow-hidden">
 
                   <!-- Brillo superior -->
                   <div aria-hidden="true" class="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/5 to-transparent"></div>
@@ -406,7 +628,7 @@
                   <!-- Boca (terminal) -->
                   <div class="absolute bottom-5 inset-x-0 flex items-center justify-center gap-2 font-mono text-xs">
                     <span class="text-neon-cyan animate-pulse">&gt;_</span>
-                    <span class="text-slate-300 robot-cursor">build.app</span>
+                    <span class="t-text-base robot-cursor">build.app</span>
                   </div>
 
                   <!-- Líneas decorativas (código de fondo) -->
@@ -426,9 +648,9 @@
                 <div class="mt-4 flex items-center justify-between text-xs">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 availability-dot"></span>
-                    <span class="text-slate-400 font-mono">online · 99.9%</span>
+                    <span class="t-text-muted font-mono">online · 99.9%</span>
                   </div>
-                  <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-slate-300 font-mono">v2.0</span>
+                  <span class="px-2 py-0.5 rounded-md t-chip font-mono">v2.0</span>
                 </div>
               </div>
 
@@ -457,7 +679,7 @@
         <!-- Encabezado de sección -->
         <div class="max-w-2xl mb-14 reveal">
           <p class="text-neon-cyan font-mono text-sm mb-3">// 01 · Sobre mí</p>
-          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
             Ingeniería con propósito, código que <span class="gradient-text">resuelve problemas reales</span>.
           </h3>
         </div>
@@ -465,16 +687,16 @@
         <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
 
           <!-- Texto -->
-          <div class="lg:col-span-3 space-y-5 text-slate-300 leading-relaxed reveal">
+          <div class="lg:col-span-3 space-y-5 t-text-base leading-relaxed reveal">
             <p>
-              Soy un desarrollador enfocado en construir sistemas que <strong class="text-white">escalan sin complejidad innecesaria</strong>.
+              Soy un desarrollador enfocado en construir sistemas que <strong class="t-text-strong">escalan sin complejidad innecesaria</strong>.
               Mi enfoque combina una base sólida en arquitectura de software con la velocidad que exigen
               los proyectos modernos: entregas iterativas, pruebas automatizadas y decisiones técnicas
               documentadas.
             </p>
             <p>
-              Disfruto especialmente del trabajo en la intersección entre <strong class="text-white">desarrollo full-stack</strong> y
-              <strong class="text-white">automatización de procesos</strong>: conecto servicios, optimizo flujos de datos
+              Disfruto especialmente del trabajo en la intersección entre <strong class="t-text-strong">desarrollo full-stack</strong> y
+              <strong class="t-text-strong">automatización de procesos</strong>: conecto servicios, optimizo flujos de datos
               y elimino cuellos de botella operativos con scripts, bots y pipelines reproducibles.
             </p>
             <p>
@@ -489,29 +711,29 @@
               <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-cyan/10 text-neon-cyan mb-3">
                 <i class="fa-solid fa-briefcase"></i>
               </div>
-              <p class="text-3xl font-extrabold text-white">5+</p>
-              <p class="text-xs text-slate-400 mt-1">años de experiencia</p>
+              <p class="text-3xl font-extrabold t-text-strong">5+</p>
+              <p class="text-xs t-text-muted mt-1">años de experiencia</p>
             </div>
             <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
               <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-indigo/10 text-neon-indigo mb-3">
                 <i class="fa-solid fa-rocket"></i>
               </div>
-              <p class="text-3xl font-extrabold text-white">40+</p>
-              <p class="text-xs text-slate-400 mt-1">proyectos desplegados</p>
+              <p class="text-3xl font-extrabold t-text-strong">40+</p>
+              <p class="text-xs t-text-muted mt-1">proyectos desplegados</p>
             </div>
             <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
               <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-violet/10 text-neon-violet mb-3">
                 <i class="fa-solid fa-users"></i>
               </div>
-              <p class="text-3xl font-extrabold text-white">15+</p>
-              <p class="text-xs text-slate-400 mt-1">clientes satisfechos</p>
+              <p class="text-3xl font-extrabold t-text-strong">15+</p>
+              <p class="text-xs t-text-muted mt-1">clientes satisfechos</p>
             </div>
             <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
               <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-400/10 text-emerald-400 mb-3">
                 <i class="fa-solid fa-code-commit"></i>
               </div>
-              <p class="text-3xl font-extrabold text-white">2k+</p>
-              <p class="text-xs text-slate-400 mt-1">commits este año</p>
+              <p class="text-3xl font-extrabold t-text-strong">2k+</p>
+              <p class="text-xs t-text-muted mt-1">commits este año</p>
             </div>
           </div>
         </div>
@@ -526,7 +748,7 @@
 
         <div class="max-w-2xl mb-14 reveal">
           <p class="text-neon-cyan font-mono text-sm mb-3">// 02 · Habilidades</p>
-          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
             Stack técnico y herramientas que <span class="gradient-text">domino a diario</span>.
           </h3>
         </div>
@@ -539,15 +761,15 @@
               <span class="w-10 h-10 rounded-lg bg-neon-cyan/10 text-neon-cyan flex items-center justify-center">
                 <i class="fa-solid fa-display"></i>
               </span>
-              <h4 class="text-white font-semibold">Frontend</h4>
+              <h4 class="t-text-strong font-semibold">Frontend</h4>
             </div>
             <ul class="flex flex-wrap gap-2">
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">React</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Next.js</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">TypeScript</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Tailwind CSS</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Vue</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Vite</li>
+              <li class="skill-badge skill-cyan">React</li>
+              <li class="skill-badge skill-cyan">Next.js</li>
+              <li class="skill-badge skill-cyan">TypeScript</li>
+              <li class="skill-badge skill-cyan">Tailwind CSS</li>
+              <li class="skill-badge skill-cyan">Vue</li>
+              <li class="skill-badge skill-cyan">Vite</li>
             </ul>
           </div>
 
@@ -557,16 +779,16 @@
               <span class="w-10 h-10 rounded-lg bg-neon-indigo/10 text-neon-indigo flex items-center justify-center">
                 <i class="fa-solid fa-server"></i>
               </span>
-              <h4 class="text-white font-semibold">Backend</h4>
+              <h4 class="t-text-strong font-semibold">Backend</h4>
             </div>
             <ul class="flex flex-wrap gap-2">
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Node.js</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Express</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">FastAPI</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Python</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">PostgreSQL</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">MongoDB</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Redis</li>
+              <li class="skill-badge skill-indigo">Node.js</li>
+              <li class="skill-badge skill-indigo">Express</li>
+              <li class="skill-badge skill-indigo">FastAPI</li>
+              <li class="skill-badge skill-indigo">Python</li>
+              <li class="skill-badge skill-indigo">PostgreSQL</li>
+              <li class="skill-badge skill-indigo">MongoDB</li>
+              <li class="skill-badge skill-indigo">Redis</li>
             </ul>
           </div>
 
@@ -576,15 +798,15 @@
               <span class="w-10 h-10 rounded-lg bg-neon-violet/10 text-neon-violet flex items-center justify-center">
                 <i class="fa-solid fa-terminal"></i>
               </span>
-              <h4 class="text-white font-semibold">Scripting / DevOps</h4>
+              <h4 class="t-text-strong font-semibold">Scripting / DevOps</h4>
             </div>
             <ul class="flex flex-wrap gap-2">
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Bash</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">PowerShell</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Docker</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">GitHub Actions</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Linux</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Nginx</li>
+              <li class="skill-badge skill-violet">Bash</li>
+              <li class="skill-badge skill-violet">PowerShell</li>
+              <li class="skill-badge skill-violet">Docker</li>
+              <li class="skill-badge skill-violet">GitHub Actions</li>
+              <li class="skill-badge skill-violet">Linux</li>
+              <li class="skill-badge skill-violet">Nginx</li>
             </ul>
           </div>
 
@@ -594,15 +816,15 @@
               <span class="w-10 h-10 rounded-lg bg-emerald-400/10 text-emerald-400 flex items-center justify-center">
                 <i class="fa-solid fa-toolbox"></i>
               </span>
-              <h4 class="text-white font-semibold">Herramientas</h4>
+              <h4 class="t-text-strong font-semibold">Herramientas</h4>
             </div>
             <ul class="flex flex-wrap gap-2">
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Git</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Figma</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Postman</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Notion</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">VS Code</li>
-              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Linear</li>
+              <li class="skill-badge skill-emerald">Git</li>
+              <li class="skill-badge skill-emerald">Figma</li>
+              <li class="skill-badge skill-emerald">Postman</li>
+              <li class="skill-badge skill-emerald">Notion</li>
+              <li class="skill-badge skill-emerald">VS Code</li>
+              <li class="skill-badge skill-emerald">Linear</li>
             </ul>
           </div>
         </div>
@@ -618,12 +840,12 @@
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 reveal">
           <div class="max-w-2xl">
             <p class="text-neon-cyan font-mono text-sm mb-3">// 03 · Proyectos</p>
-            <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
               Trabajos recientes que <span class="gradient-text">generan impacto real</span>.
             </h3>
           </div>
           <a href="https://github.com/" target="_blank" rel="noopener"
-             class="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-neon-cyan transition-colors">
+             class="inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:text-neon-cyan transition-colors">
             Ver todo en GitHub <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           </a>
         </div>
@@ -639,31 +861,31 @@
                    loading="lazy"
                    class="project-img w-full h-full object-cover" />
               <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur text-[10px] font-mono uppercase tracking-wider text-neon-cyan border border-neon-cyan/30">
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-slate-900/70 backdrop-blur text-[10px] font-mono uppercase tracking-wider text-neon-cyan border border-neon-cyan/30">
                 Destacado
               </span>
             </div>
             <div class="p-6">
-              <h4 class="text-xl font-bold text-white mb-2">PulseMetrics · Dashboard de Analytics</h4>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              <h4 class="text-xl font-bold t-text-strong mb-2">PulseMetrics · Dashboard de Analytics</h4>
+              <p class="text-sm t-text-muted leading-relaxed mb-5">
                 Plataforma SaaS que unifica métricas de marketing y producto en tiempo real.
                 Resolví el problema de los equipos que necesitaban consultar 6 herramientas distintas
                 para entender el rendimiento semanal.
               </p>
               <ul class="flex flex-wrap gap-2 mb-6">
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">Next.js</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Node.js</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-300">PostgreSQL</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-violet">D3.js</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-slate-300">Tailwind</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-cyan">Next.js</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-emerald-400">Node.js</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-sky-300">PostgreSQL</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-violet">D3.js</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono t-text-base">Tailwind</li>
               </ul>
-              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+              <div class="flex items-center gap-3 pt-4 border-t t-divide">
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-strong hover:text-neon-cyan transition-colors">
                   <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
                 </a>
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:t-text-strong transition-colors">
                   <i class="fa-brands fa-github"></i> Código
                 </a>
               </div>
@@ -680,25 +902,25 @@
               <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
             </div>
             <div class="p-6">
-              <h4 class="text-xl font-bold text-white mb-2">FlowBot · Automatización de procesos</h4>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              <h4 class="text-xl font-bold t-text-strong mb-2">FlowBot · Automatización de procesos</h4>
+              <p class="text-sm t-text-muted leading-relaxed mb-5">
                 Motor de automatización sin código para PYMEs que conectan hojas de cálculo, CRMs y
                 APIs internas. Redujo un proceso manual de 4 horas a 6 minutos en el cliente piloto.
               </p>
               <ul class="flex flex-wrap gap-2 mb-6">
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-400">Python</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-400">FastAPI</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-red-300">Redis</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-400">Docker</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-indigo">React Flow</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-yellow-400">Python</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-yellow-400">FastAPI</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-red-300">Redis</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-sky-400">Docker</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-indigo">React Flow</li>
               </ul>
-              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+              <div class="flex items-center gap-3 pt-4 border-t t-divide">
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-strong hover:text-neon-cyan transition-colors">
                   <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
                 </a>
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:t-text-strong transition-colors">
                   <i class="fa-brands fa-github"></i> Código
                 </a>
               </div>
@@ -715,25 +937,25 @@
               <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
             </div>
             <div class="p-6">
-              <h4 class="text-xl font-bold text-white mb-2">Nimbus Shop · E-commerce headless</h4>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              <h4 class="text-xl font-bold t-text-strong mb-2">Nimbus Shop · E-commerce headless</h4>
+              <p class="text-sm t-text-muted leading-relaxed mb-5">
                 Tienda online headless para una marca de moda sostenible. Checkout optimizado, panel
                 de inventario en tiempo real y Core Web Vitals en verde desde el primer despliegue.
               </p>
               <ul class="flex flex-wrap gap-2 mb-6">
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">Next.js</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Stripe</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-300">Sanity CMS</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-slate-300">Tailwind</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-orange-300">Vercel</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-cyan">Next.js</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-emerald-400">Stripe</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-sky-300">Sanity CMS</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-slate-300">Tailwind</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-orange-300">Vercel</li>
               </ul>
-              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+              <div class="flex items-center gap-3 pt-4 border-t t-divide">
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-strong hover:text-neon-cyan transition-colors">
                   <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
                 </a>
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:t-text-strong transition-colors">
                   <i class="fa-brands fa-github"></i> Código
                 </a>
               </div>
@@ -750,26 +972,26 @@
               <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
             </div>
             <div class="p-6">
-              <h4 class="text-xl font-bold text-white mb-2">DevSync · Editor colaborativo en tiempo real</h4>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+              <h4 class="text-xl font-bold t-text-strong mb-2">DevSync · Editor colaborativo en tiempo real</h4>
+              <p class="text-sm t-text-muted leading-relaxed mb-5">
                 IDE en línea con sincronización de cursores, chat integrado y ejecución de snippets
                 en sandbox. Diseñado para entrevistas técnicas remotas y pair programming sin
                 configuración local.
               </p>
               <ul class="flex flex-wrap gap-2 mb-6">
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">React</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-300">WebSockets</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-400">Docker</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-violet">Monaco Editor</li>
-                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Node.js</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-cyan">React</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-yellow-300">WebSockets</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-sky-400">Docker</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-neon-violet">Monaco Editor</li>
+                <li class="px-2.5 py-1 rounded-md project-tag text-[11px] font-mono text-emerald-400">Node.js</li>
               </ul>
-              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+              <div class="flex items-center gap-3 pt-4 border-t t-divide">
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-strong hover:text-neon-cyan transition-colors">
                   <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
                 </a>
                 <a href="#" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                   class="inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:t-text-strong transition-colors">
                   <i class="fa-brands fa-github"></i> Código
                 </a>
               </div>
@@ -788,10 +1010,10 @@
 
         <div class="max-w-2xl mb-14 reveal">
           <p class="text-neon-cyan font-mono text-sm mb-3">// 04 · Contacto</p>
-          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
             ¿Tienes una idea? <span class="gradient-text">Construyámosla juntos</span>.
           </h3>
-          <p class="mt-4 text-slate-400">
+          <p class="mt-4 t-text-muted">
             Respondo en menos de 24 horas. Cuéntame qué problema quieres resolver y te enviaré una
             propuesta clara y sin compromiso.
           </p>
@@ -805,34 +1027,34 @@
                 novalidate>
             <div class="grid sm:grid-cols-2 gap-5">
               <div>
-                <label for="name" class="block text-xs font-medium text-slate-300 mb-2">
+                <label for="name" class="block text-xs font-medium t-text-base mb-2">
                   Nombre <span class="text-neon-cyan">*</span>
                 </label>
                 <input type="text" id="name" name="name" required autocomplete="name"
                        placeholder="Tu nombre"
-                       class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
+                       class="w-full px-4 py-3 rounded-lg t-input placeholder:text-[color:var(--text-faint)] text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
               </div>
               <div>
-                <label for="email" class="block text-xs font-medium text-slate-300 mb-2">
+                <label for="email" class="block text-xs font-medium t-text-base mb-2">
                   Email <span class="text-neon-cyan">*</span>
                 </label>
                 <input type="email" id="email" name="email" required autocomplete="email"
                        placeholder="tu@email.com"
-                       class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
+                       class="w-full px-4 py-3 rounded-lg t-input placeholder:text-[color:var(--text-faint)] text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
               </div>
             </div>
 
             <div>
-              <label for="message" class="block text-xs font-medium text-slate-300 mb-2">
+              <label for="message" class="block text-xs font-medium t-text-base mb-2">
                 Mensaje <span class="text-neon-cyan">*</span>
               </label>
               <textarea id="message" name="message" rows="6" required
                         placeholder="Cuéntame sobre tu proyecto, objetivos y plazos…"
-                        class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors resize-none"></textarea>
+                        class="w-full px-4 py-3 rounded-lg t-input placeholder:text-[color:var(--text-faint)] text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors resize-none"></textarea>
             </div>
 
             <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
-              <p class="text-xs text-slate-500">
+              <p class="text-xs t-text-faint">
                 <i class="fa-solid fa-lock text-[10px] mr-1"></i>
                 Tu información se mantiene privada y segura.
               </p>
@@ -857,10 +1079,10 @@
                 <i class="fa-regular fa-envelope"></i>
               </span>
               <div class="min-w-0">
-                <p class="text-xs text-slate-400">Email</p>
-                <p class="text-sm text-white font-medium truncate">hola@techunlock.dev</p>
+                <p class="text-xs t-text-muted">Email</p>
+                <p class="text-sm t-text-strong font-medium truncate">hola@techunlock.dev</p>
               </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 ml-auto"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs t-text-faint ml-auto"></i>
             </a>
 
             <!-- Tarjeta de ubicación -->
@@ -869,29 +1091,29 @@
                 <i class="fa-solid fa-location-dot"></i>
               </span>
               <div>
-                <p class="text-xs text-slate-400">Ubicación</p>
-                <p class="text-sm text-white font-medium">Madrid, España · Remoto</p>
+                <p class="text-xs t-text-muted">Ubicación</p>
+                <p class="text-sm t-text-strong font-medium">Madrid, España · Remoto</p>
               </div>
             </div>
 
             <!-- Redes -->
             <div class="glass rounded-2xl p-5">
-              <p class="text-xs text-slate-400 mb-4">Sígueme en redes</p>
+              <p class="text-xs t-text-muted mb-4">Sígueme en redes</p>
               <div class="flex flex-wrap gap-3">
                 <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"
-                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-cyan/40 transition-all duration-300">
+                   class="social-btn hover:border-neon-cyan/40">
                   <i class="fa-brands fa-github text-lg"></i>
                 </a>
                 <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"
-                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-indigo/40 transition-all duration-300">
+                   class="social-btn hover:border-neon-indigo/40">
                   <i class="fa-brands fa-linkedin-in text-lg"></i>
                 </a>
                 <a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter / X"
-                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-cyan/40 transition-all duration-300">
+                   class="social-btn hover:border-neon-cyan/40">
                   <i class="fa-brands fa-x-twitter text-lg"></i>
                 </a>
                 <a href="mailto:hola@techunlock.dev" aria-label="Email"
-                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-violet/40 transition-all duration-300">
+                   class="social-btn hover:border-neon-violet/40">
                   <i class="fa-regular fa-envelope text-lg"></i>
                 </a>
               </div>
@@ -899,11 +1121,11 @@
 
             <!-- Frase -->
             <div class="hidden lg:block glass rounded-2xl p-5 border-l-2 border-neon-cyan/60">
-              <p class="text-sm text-slate-300 italic leading-relaxed">
+              <p class="text-sm t-text-base italic leading-relaxed">
                 "El mejor código no es el más clever, es el que un equipo puede mantener a las 2am
                 cuando algo se rompe en producción."
               </p>
-              <p class="mt-3 text-xs text-slate-500 font-mono">— filosofía personal</p>
+              <p class="mt-3 text-xs t-text-faint font-mono">— filosofía personal</p>
             </div>
           </aside>
         </div>
@@ -914,7 +1136,7 @@
   <!-- ============================================================
        FOOTER
        ============================================================ -->
-  <footer class="relative z-10 border-t border-white/5 mt-12">
+  <footer class="relative z-10 border-t t-divide mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
 
@@ -922,12 +1144,12 @@
           <span class="w-8 h-8 rounded-md bg-gradient-to-br from-neon-cyan to-neon-indigo flex items-center justify-center text-slate-900 font-extrabold text-xs">
             TU
           </span>
-          <p class="text-sm text-slate-400">
-            © <span id="year">2026</span> <span class="text-white font-medium">Techunlock</span>. Todos los derechos reservados.
+          <p class="text-sm t-text-muted">
+            © <span id="year">2026</span> <span class="t-text-strong font-medium">Techunlock</span>. Todos los derechos reservados.
           </p>
         </div>
 
-        <div class="flex items-center gap-5 text-xs text-slate-500">
+        <div class="flex items-center gap-5 text-xs t-text-faint">
           <a href="#home" class="hover:text-neon-cyan transition-colors">Volver arriba <i class="fa-solid fa-arrow-up text-[10px]"></i></a>
           <span class="hidden sm:inline">·</span>
           <span class="font-mono">Construido con <span class="text-neon-cyan">HTML</span> + <span class="text-neon-indigo">Tailwind</span></span>
@@ -940,6 +1162,42 @@
        JAVASCRIPT — Interacciones mínimas
        ============================================================ -->
   <script>
+    // ============================================================
+    // THEME — Toggle dark/light con persistencia
+    // ============================================================
+    (function () {
+      const root  = document.documentElement;
+      const btn   = document.getElementById('themeToggle');
+      const thumb = btn ? btn.querySelector('.theme-toggle-thumb i') : null;
+
+      function syncIcon() {
+        if (!btn || !thumb) return;
+        const isLight = root.classList.contains('light');
+        btn.setAttribute('aria-pressed', String(isLight));
+        btn.setAttribute('aria-label', isLight ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro');
+        thumb.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      }
+
+      syncIcon();
+
+      if (!btn) return;
+
+      btn.addEventListener('click', () => {
+        const isLight = root.classList.toggle('light');
+        try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (e) {}
+        syncIcon();
+      });
+
+      // Si el usuario no ha elegido y cambia el sistema, sincroniza
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        let saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (err) {}
+        if (saved) return;
+        root.classList.toggle('light', !e.matches);
+        syncIcon();
+      });
+    })();
+
     // Año dinámico en el footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1018,7 +1276,7 @@
         const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         const showError = (text) => {
-          feedback.className = 'text-sm px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300';
+          feedback.className = 'text-sm px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-300';
           feedback.textContent = text;
           feedback.classList.remove('hidden');
         };
@@ -1027,7 +1285,7 @@
         if (!emailRx.test(email))        return showError('El email ingresado no parece válido.');
 
         // Simulación de éxito — reemplaza con tu endpoint real (Formspree, Resend, etc.)
-        feedback.className = 'text-sm px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300';
+        feedback.className = 'text-sm px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300';
         feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i>¡Gracias, ${name}! Tu mensaje se envió correctamente. Te responderé pronto.`;
         feedback.classList.remove('hidden');
         form.reset();
