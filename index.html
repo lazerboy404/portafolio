@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <!-- ============================================================
+       METADATA & PERFORMANCE
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portafolio profesional de Techunlock — Full-Stack Developer & Systems Automation. Disponible para nuevos proyectos." />
+  <meta name="theme-color" content="#0b1120" />
+  <title>Techunlock · Full-Stack Developer & Systems Automation</title>
+
+  <!-- ============================================================
+       EXTERNAL RESOURCES
+       ============================================================ -->
+  <!-- Inter — Tipografía principal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS vía CDN oficial -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome — Iconografía -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+
+  <!-- Favicon SVG inline -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2306b6d4'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' fill='%230b1120' font-family='Inter,sans-serif' font-weight='800' font-size='14'%3ETU%3C/text%3E%3C/svg%3E" />
+
+  <!-- ============================================================
+       TAILWIND CONFIG — Tokens personalizados del diseño
+       ============================================================ -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            // Acentos neón
+            neon: {
+              cyan:   '#22d3ee',
+              indigo: '#818cf8',
+              violet: '#a78bfa',
+            },
+          },
+          boxShadow: {
+            'glow-cyan':   '0 0 30px -5px rgba(34, 211, 238, 0.35)',
+            'glow-indigo': '0 0 30px -5px rgba(129, 140, 248, 0.35)',
+          },
+          animation: {
+            'gradient-shift': 'gradient-shift 8s ease infinite',
+            'float':          'float 6s ease-in-out infinite',
+            'pulse-dot':      'pulse-dot 2s ease-in-out infinite',
+          },
+          keyframes: {
+            'gradient-shift': {
+              '0%, 100%': { 'background-position': '0% 50%' },
+              '50%':      { 'background-position': '100% 50%' },
+            },
+            'float': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%':      { transform: 'translateY(-12px)' },
+            },
+            'pulse-dot': {
+              '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+              '50%':      { opacity: 0.6, transform: 'scale(0.85)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ============================================================
+       CUSTOM STYLES — Glassmorphism, gradientes y utilidades
+       ============================================================ -->
+  <style>
+    /* Fondo base con gradiente sutil + grid */
+    body {
+      background-color: #0b1120;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(34, 211, 238, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 60%, rgba(129, 140, 248, 0.08), transparent 40%),
+        linear-gradient(to bottom, #0b1120, #0a0f1c);
+      background-attachment: fixed;
+    }
+
+    /* Patrón de grid sutil sobre el fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Tarjetas con efecto glassmorphism */
+    .glass {
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-hover:hover {
+      border-color: rgba(34, 211, 238, 0.35);
+      box-shadow: 0 0 30px -5px rgba(34, 211, 238, 0.25);
+      transform: translateY(-4px);
+    }
+
+    /* Texto con gradiente neón */
+    .gradient-text {
+      background: linear-gradient(90deg, #22d3ee, #818cf8, #a78bfa, #22d3ee);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 8s ease infinite;
+    }
+
+    /* Botón con borde animado */
+    .btn-primary {
+      background: linear-gradient(135deg, #22d3ee 0%, #818cf8 100%);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+      box-shadow: 0 10px 30px -5px rgba(34, 211, 238, 0.45);
+    }
+
+    .btn-ghost {
+      transition: all 0.25s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+
+    /* Indicador de disponibilidad */
+    .availability-dot {
+      position: relative;
+    }
+    .availability-dot::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 9999px;
+      background: rgba(34, 197, 94, 0.35);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    /* Línea de tiempo animada para subrayado de enlaces */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #22d3ee, #818cf8);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #22d3ee, #818cf8);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #22d3ee; }
+
+    /* Reveal al hacer scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Selección de texto con acento neón */
+    ::selection { background: rgba(34, 211, 238, 0.3); color: #fff; }
+
+    /* Imagen de proyecto con zoom sutil */
+    .project-img {
+      transition: transform 0.6s ease;
+    }
+    .project-card:hover .project-img {
+      transform: scale(1.08);
+    }
+
+    /* ============================================================
+       ROBOT MASCOT — Animaciones
+       ============================================================ */
+    /* Parpadeo del LED de la antena */
+    @keyframes robot-eye-blink {
+      0%, 90%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(34, 211, 238, 0.9); }
+      95%           { opacity: 0.2; box-shadow: none; }
+    }
+    .robot-eye-blink { animation: robot-eye-blink 3s ease-in-out infinite; }
+
+    /* Pupilas que siguen al cursor dentro del Hero */
+    .robot-eye {
+      position: relative;
+      transition: transform 0.15s ease;
+    }
+    .robot-pupil {
+      transition: transform 0.15s ease;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    /* Cursor parpadeante en la boca del robot */
+    @keyframes cursor-blink {
+      0%, 50%   { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    .robot-cursor::after {
+      content: '|';
+      margin-left: 2px;
+      color: #22d3ee;
+      animation: cursor-blink 1s steps(2) infinite;
+    }
+  </style>
+</head>
+
+<body class="font-sans text-slate-200 antialiased selection:bg-cyan-500/30">
+
+  <!-- ============================================================
+       NAVBAR — Fija con glassmorphism
+       ============================================================ -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="glass border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
+
+          <!-- Logo -->
+          <a href="#home" class="flex items-center gap-2 group">
+            <span class="w-9 h-9 rounded-lg bg-gradient-to-br from-neon-cyan to-neon-indigo flex items-center justify-center text-slate-900 font-extrabold text-sm shadow-glow-cyan group-hover:rotate-6 transition-transform">
+              TU
+            </span>
+            <span class="font-bold text-white tracking-tight text-lg">
+              Tech<span class="text-neon-cyan">unlock</span>
+            </span>
+          </a>
+
+          <!-- Enlaces (desktop) -->
+          <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <li><a href="#about"    class="nav-link text-slate-300 hover:text-white transition-colors">Sobre mí</a></li>
+            <li><a href="#skills"   class="nav-link text-slate-300 hover:text-white transition-colors">Habilidades</a></li>
+            <li><a href="#projects" class="nav-link text-slate-300 hover:text-white transition-colors">Proyectos</a></li>
+            <li><a href="#contact"  class="nav-link text-slate-300 hover:text-white transition-colors">Contacto</a></li>
+          </ul>
+
+          <!-- CTA — Descargar CV -->
+          <div class="flex items-center gap-3">
+            <a href="#contact"
+               class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
+              <i class="fa-solid fa-file-arrow-down"></i>
+              Descargar CV
+            </a>
+
+            <!-- Botón menú móvil -->
+            <button id="menuBtn" type="button"
+                    class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg glass text-slate-200 hover:text-neon-cyan transition-colors"
+                    aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Menú móvil (colapsable) -->
+        <div id="mobileMenu" class="hidden md:hidden pb-4">
+          <ul class="flex flex-col gap-1 pt-2 border-t border-white/5">
+            <li><a href="#about"    class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Sobre mí</a></li>
+            <li><a href="#skills"   class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Habilidades</a></li>
+            <li><a href="#projects" class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Proyectos</a></li>
+            <li><a href="#contact"  class="block px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors">Contacto</a></li>
+            <li class="pt-2">
+              <a href="#contact" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
+                <i class="fa-solid fa-file-arrow-down"></i> Descargar CV
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- ============================================================
+         HERO SECTION
+         ============================================================ -->
+    <section id="home" class="relative pt-32 md:pt-44 pb-20 md:pb-32 px-4 sm:px-6 lg:px-8">
+      <!-- Orbes decorativos de fondo -->
+      <div aria-hidden="true" class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-1/4 -left-20 w-72 h-72 rounded-full bg-neon-cyan/20 blur-3xl animate-float"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 rounded-full bg-neon-indigo/15 blur-3xl animate-float" style="animation-delay: -3s;"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <!-- Columna izquierda — texto -->
+          <div class="order-2 lg:order-1">
+
+            <!-- Indicador de disponibilidad -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass text-xs font-medium text-emerald-300 mb-8">
+              <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400 availability-dot"></span>
+              <span>Disponible para proyectos</span>
+            </div>
+
+            <!-- Saludo -->
+            <p class="text-slate-400 font-mono text-sm md:text-base mb-3">
+              <span class="text-neon-cyan">$</span> Hola, soy
+            </p>
+
+            <!-- Nombre + Título -->
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
+              Techunlock<span class="text-neon-cyan">.</span>
+            </h1>
+            <h2 class="mt-3 text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight gradient-text">
+              Full-Stack Developer &amp; Systems Automation
+            </h2>
+
+            <!-- Descripción de valor -->
+            <p class="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+              Diseño y construyo aplicaciones web de alto rendimiento, APIs robustas y pipelines
+              de automatización que eliminan tareas repetitivas. Combino ingeniería limpia con
+              un enfoque pragmático para llevar productos digitales del concepto a producción.
+            </p>
+
+            <!-- Botones CTA -->
+            <div class="mt-10 flex flex-wrap items-center gap-4">
+              <a href="#projects"
+                 class="inline-flex items-center gap-2 px-6 py-3 rounded-lg btn-primary text-slate-900 font-semibold text-sm md:text-base shadow-glow-cyan">
+                <i class="fa-solid fa-rocket"></i>
+                Ver proyectos
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+              <a href="#contact"
+                 class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 text-slate-200 font-semibold text-sm md:text-base">
+                <i class="fa-regular fa-paper-plane"></i>
+                Contactar
+              </a>
+            </div>
+
+            <!-- Tech stack mini -->
+            <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 text-slate-500 text-xs font-mono">
+              <span class="text-slate-400">stack principal:</span>
+              <span class="flex items-center gap-1.5"><i class="fa-brands fa-react text-neon-cyan"></i> React</span>
+              <span class="flex items-center gap-1.5"><i class="fa-brands fa-node-js text-emerald-400"></i> Node.js</span>
+              <span class="flex items-center gap-1.5"><i class="fa-brands fa-python text-yellow-400"></i> Python</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-database text-neon-indigo"></i> PostgreSQL</span>
+              <span class="flex items-center gap-1.5"><i class="fa-brands fa-docker text-sky-400"></i> Docker</span>
+            </div>
+          </div>
+
+          <!-- Columna derecha — Mascota robot -->
+          <div class="order-1 lg:order-2 flex items-center justify-center">
+            <div class="robot-mascot relative animate-float" aria-label="Robot mascota de Techunlock">
+              <!-- Aura de fondo -->
+              <div aria-hidden="true" class="absolute inset-0 -m-8 rounded-full bg-gradient-to-br from-neon-cyan/20 via-neon-indigo/15 to-neon-violet/20 blur-3xl"></div>
+
+              <!-- Tarjeta glass del robot -->
+              <div class="relative glass rounded-3xl p-6 md:p-8 max-w-sm">
+
+                <!-- Antena -->
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-neon-cyan robot-eye-blink"></div>
+                  <div class="w-1 h-3 bg-gradient-to-b from-neon-cyan to-slate-700"></div>
+                </div>
+
+                <!-- Cabeza del robot -->
+                <div class="relative w-full aspect-square rounded-2xl bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 border border-white/10 overflow-hidden">
+
+                  <!-- Brillo superior -->
+                  <div aria-hidden="true" class="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/5 to-transparent"></div>
+
+                  <!-- Ojos (pantalla) -->
+                  <div class="absolute inset-0 flex items-center justify-center gap-6">
+                    <div class="robot-eye w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-950 border border-neon-cyan/40 flex items-center justify-center shadow-glow-cyan">
+                      <div class="robot-pupil w-5 h-5 md:w-6 md:h-6 rounded-full bg-neon-cyan"></div>
+                    </div>
+                    <div class="robot-eye w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-950 border border-neon-indigo/40 flex items-center justify-center shadow-glow-indigo">
+                      <div class="robot-pupil w-5 h-5 md:w-6 md:h-6 rounded-full bg-neon-indigo"></div>
+                    </div>
+                  </div>
+
+                  <!-- Boca (terminal) -->
+                  <div class="absolute bottom-5 inset-x-0 flex items-center justify-center gap-2 font-mono text-xs">
+                    <span class="text-neon-cyan animate-pulse">&gt;_</span>
+                    <span class="text-slate-300 robot-cursor">build.app</span>
+                  </div>
+
+                  <!-- Líneas decorativas (código de fondo) -->
+                  <div aria-hidden="true" class="absolute inset-0 opacity-[0.07] font-mono text-[8px] leading-[10px] text-neon-cyan overflow-hidden select-none pointer-events-none p-3">
+                    <div>const deploy = async () =&gt; {</div>
+                    <div>&nbsp;&nbsp;await build();</div>
+                    <div>&nbsp;&nbsp;await ship();</div>
+                    <div>};</div>
+                    <div class="mt-1">if (coffee &gt; 0) ship();</div>
+                    <div class="mt-1">// while (alive) {</div>
+                    <div>// &nbsp;&nbsp;learn();</div>
+                    <div>// }</div>
+                  </div>
+                </div>
+
+                <!-- Cuerpo / panel inferior con info -->
+                <div class="mt-4 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 availability-dot"></span>
+                    <span class="text-slate-400 font-mono">online · 99.9%</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-slate-300 font-mono">v2.0</span>
+                </div>
+              </div>
+
+              <!-- Burbujas de herramientas orbitando -->
+              <div aria-hidden="true" class="absolute -top-2 -right-2 w-12 h-12 rounded-xl glass flex items-center justify-center text-neon-cyan animate-float shadow-glow-cyan" style="animation-delay: -2s;">
+                <i class="fa-brands fa-react text-lg"></i>
+              </div>
+              <div aria-hidden="true" class="absolute -bottom-2 -left-2 w-12 h-12 rounded-xl glass flex items-center justify-center text-yellow-400 animate-float shadow-glow-cyan" style="animation-delay: -4s;">
+                <i class="fa-brands fa-python text-lg"></i>
+              </div>
+              <div aria-hidden="true" class="absolute top-1/2 -right-4 w-10 h-10 rounded-lg glass flex items-center justify-center text-sky-400 animate-float" style="animation-delay: -1s;">
+                <i class="fa-brands fa-docker text-base"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT SECTION
+         ============================================================ -->
+    <section id="about" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Encabezado de sección -->
+        <div class="max-w-2xl mb-14 reveal">
+          <p class="text-neon-cyan font-mono text-sm mb-3">// 01 · Sobre mí</p>
+          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            Ingeniería con propósito, código que <span class="gradient-text">resuelve problemas reales</span>.
+          </h3>
+        </div>
+
+        <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+
+          <!-- Texto -->
+          <div class="lg:col-span-3 space-y-5 text-slate-300 leading-relaxed reveal">
+            <p>
+              Soy un desarrollador enfocado en construir sistemas que <strong class="text-white">escalan sin complejidad innecesaria</strong>.
+              Mi enfoque combina una base sólida en arquitectura de software con la velocidad que exigen
+              los proyectos modernos: entregas iterativas, pruebas automatizadas y decisiones técnicas
+              documentadas.
+            </p>
+            <p>
+              Disfruto especialmente del trabajo en la intersección entre <strong class="text-white">desarrollo full-stack</strong> y
+              <strong class="text-white">automatización de procesos</strong>: conecto servicios, optimizo flujos de datos
+              y elimino cuellos de botella operativos con scripts, bots y pipelines reproducibles.
+            </p>
+            <p>
+              Fuera del teclado, aprendo constantemente sobre arquitectura cloud, observabilidad y
+              diseño de productos. Creo en el código legible, los equipos pequeños y los commits pequeños.
+            </p>
+          </div>
+
+          <!-- Métricas clave -->
+          <div class="lg:col-span-2 grid grid-cols-2 gap-4 reveal">
+            <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
+              <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-cyan/10 text-neon-cyan mb-3">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+              <p class="text-3xl font-extrabold text-white">5+</p>
+              <p class="text-xs text-slate-400 mt-1">años de experiencia</p>
+            </div>
+            <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
+              <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-indigo/10 text-neon-indigo mb-3">
+                <i class="fa-solid fa-rocket"></i>
+              </div>
+              <p class="text-3xl font-extrabold text-white">40+</p>
+              <p class="text-xs text-slate-400 mt-1">proyectos desplegados</p>
+            </div>
+            <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
+              <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-violet/10 text-neon-violet mb-3">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <p class="text-3xl font-extrabold text-white">15+</p>
+              <p class="text-xs text-slate-400 mt-1">clientes satisfechos</p>
+            </div>
+            <div class="glass glass-hover rounded-2xl p-5 transition-all duration-300">
+              <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-400/10 text-emerald-400 mb-3">
+                <i class="fa-solid fa-code-commit"></i>
+              </div>
+              <p class="text-3xl font-extrabold text-white">2k+</p>
+              <p class="text-xs text-slate-400 mt-1">commits este año</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SKILLS SECTION
+         ============================================================ -->
+    <section id="skills" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="max-w-2xl mb-14 reveal">
+          <p class="text-neon-cyan font-mono text-sm mb-3">// 02 · Habilidades</p>
+          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            Stack técnico y herramientas que <span class="gradient-text">domino a diario</span>.
+          </h3>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Frontend -->
+          <div class="glass rounded-2xl p-6 reveal transition-all duration-300 hover:border-neon-cyan/30">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-10 h-10 rounded-lg bg-neon-cyan/10 text-neon-cyan flex items-center justify-center">
+                <i class="fa-solid fa-display"></i>
+              </span>
+              <h4 class="text-white font-semibold">Frontend</h4>
+            </div>
+            <ul class="flex flex-wrap gap-2">
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">React</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Next.js</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">TypeScript</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Tailwind CSS</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Vue</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-cyan/40 hover:text-white transition-colors">Vite</li>
+            </ul>
+          </div>
+
+          <!-- Backend -->
+          <div class="glass rounded-2xl p-6 reveal transition-all duration-300 hover:border-neon-indigo/30">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-10 h-10 rounded-lg bg-neon-indigo/10 text-neon-indigo flex items-center justify-center">
+                <i class="fa-solid fa-server"></i>
+              </span>
+              <h4 class="text-white font-semibold">Backend</h4>
+            </div>
+            <ul class="flex flex-wrap gap-2">
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Node.js</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Express</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">FastAPI</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Python</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">PostgreSQL</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">MongoDB</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-indigo/40 hover:text-white transition-colors">Redis</li>
+            </ul>
+          </div>
+
+          <!-- Scripting & DevOps -->
+          <div class="glass rounded-2xl p-6 reveal transition-all duration-300 hover:border-neon-violet/30">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-10 h-10 rounded-lg bg-neon-violet/10 text-neon-violet flex items-center justify-center">
+                <i class="fa-solid fa-terminal"></i>
+              </span>
+              <h4 class="text-white font-semibold">Scripting / DevOps</h4>
+            </div>
+            <ul class="flex flex-wrap gap-2">
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Bash</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">PowerShell</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Docker</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">GitHub Actions</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Linux</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-neon-violet/40 hover:text-white transition-colors">Nginx</li>
+            </ul>
+          </div>
+
+          <!-- Herramientas -->
+          <div class="glass rounded-2xl p-6 reveal transition-all duration-300 hover:border-emerald-400/30">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-10 h-10 rounded-lg bg-emerald-400/10 text-emerald-400 flex items-center justify-center">
+                <i class="fa-solid fa-toolbox"></i>
+              </span>
+              <h4 class="text-white font-semibold">Herramientas</h4>
+            </div>
+            <ul class="flex flex-wrap gap-2">
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Git</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Figma</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Postman</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Notion</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">VS Code</li>
+              <li class="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 text-xs text-slate-300 hover:border-emerald-400/40 hover:text-white transition-colors">Linear</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROJECTS SECTION
+         ============================================================ -->
+    <section id="projects" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 reveal">
+          <div class="max-w-2xl">
+            <p class="text-neon-cyan font-mono text-sm mb-3">// 03 · Proyectos</p>
+            <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              Trabajos recientes que <span class="gradient-text">generan impacto real</span>.
+            </h3>
+          </div>
+          <a href="https://github.com/" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-neon-cyan transition-colors">
+            Ver todo en GitHub <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Grid de proyectos -->
+        <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+
+          <!-- ===== Proyecto 1 ===== -->
+          <article class="project-card glass rounded-2xl overflow-hidden reveal transition-all duration-300 hover:border-neon-cyan/40 hover:-translate-y-1 hover:shadow-glow-cyan">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+                   alt="Captura del dashboard de analytics"
+                   loading="lazy"
+                   class="project-img w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur text-[10px] font-mono uppercase tracking-wider text-neon-cyan border border-neon-cyan/30">
+                Destacado
+              </span>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-white mb-2">PulseMetrics · Dashboard de Analytics</h4>
+              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+                Plataforma SaaS que unifica métricas de marketing y producto en tiempo real.
+                Resolví el problema de los equipos que necesitaban consultar 6 herramientas distintas
+                para entender el rendimiento semanal.
+              </p>
+              <ul class="flex flex-wrap gap-2 mb-6">
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">Next.js</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Node.js</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-300">PostgreSQL</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-violet">D3.js</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-slate-300">Tailwind</li>
+              </ul>
+              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                  <i class="fa-brands fa-github"></i> Código
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Proyecto 2 ===== -->
+          <article class="project-card glass rounded-2xl overflow-hidden reveal transition-all duration-300 hover:border-neon-indigo/40 hover:-translate-y-1 hover:shadow-glow-indigo">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1200&q=80"
+                   alt="Captura de plataforma de automatización"
+                   loading="lazy"
+                   class="project-img w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-white mb-2">FlowBot · Automatización de procesos</h4>
+              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+                Motor de automatización sin código para PYMEs que conectan hojas de cálculo, CRMs y
+                APIs internas. Redujo un proceso manual de 4 horas a 6 minutos en el cliente piloto.
+              </p>
+              <ul class="flex flex-wrap gap-2 mb-6">
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-400">Python</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-400">FastAPI</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-red-300">Redis</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-400">Docker</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-indigo">React Flow</li>
+              </ul>
+              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                  <i class="fa-brands fa-github"></i> Código
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Proyecto 3 ===== -->
+          <article class="project-card glass rounded-2xl overflow-hidden reveal transition-all duration-300 hover:border-neon-violet/40 hover:-translate-y-1 hover:shadow-glow-indigo">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80"
+                   alt="Captura de e-commerce"
+                   loading="lazy"
+                   class="project-img w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-white mb-2">Nimbus Shop · E-commerce headless</h4>
+              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+                Tienda online headless para una marca de moda sostenible. Checkout optimizado, panel
+                de inventario en tiempo real y Core Web Vitals en verde desde el primer despliegue.
+              </p>
+              <ul class="flex flex-wrap gap-2 mb-6">
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">Next.js</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Stripe</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-300">Sanity CMS</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-slate-300">Tailwind</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-orange-300">Vercel</li>
+              </ul>
+              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                  <i class="fa-brands fa-github"></i> Código
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Proyecto 4 ===== -->
+          <article class="project-card glass rounded-2xl overflow-hidden reveal transition-all duration-300 hover:border-emerald-400/40 hover:-translate-y-1">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80"
+                   alt="Captura del editor de código en línea"
+                   loading="lazy"
+                   class="project-img w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-white mb-2">DevSync · Editor colaborativo en tiempo real</h4>
+              <p class="text-sm text-slate-400 leading-relaxed mb-5">
+                IDE en línea con sincronización de cursores, chat integrado y ejecución de snippets
+                en sandbox. Diseñado para entrevistas técnicas remotas y pair programming sin
+                configuración local.
+              </p>
+              <ul class="flex flex-wrap gap-2 mb-6">
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-cyan">React</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-yellow-300">WebSockets</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-sky-400">Docker</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-neon-violet">Monaco Editor</li>
+                <li class="px-2.5 py-1 rounded-md bg-white/5 text-[11px] font-mono text-emerald-400">Node.js</li>
+              </ul>
+              <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-neon-cyan transition-colors">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Live Demo
+                </a>
+                <a href="#" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                  <i class="fa-brands fa-github"></i> Código
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT SECTION
+         ============================================================ -->
+    <section id="contact" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="max-w-2xl mb-14 reveal">
+          <p class="text-neon-cyan font-mono text-sm mb-3">// 04 · Contacto</p>
+          <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            ¿Tienes una idea? <span class="gradient-text">Construyámosla juntos</span>.
+          </h3>
+          <p class="mt-4 text-slate-400">
+            Respondo en menos de 24 horas. Cuéntame qué problema quieres resolver y te enviaré una
+            propuesta clara y sin compromiso.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-5 gap-8 lg:gap-10">
+
+          <!-- Formulario -->
+          <form id="contactForm"
+                class="lg:col-span-3 glass rounded-2xl p-6 md:p-8 space-y-5 reveal"
+                novalidate>
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label for="name" class="block text-xs font-medium text-slate-300 mb-2">
+                  Nombre <span class="text-neon-cyan">*</span>
+                </label>
+                <input type="text" id="name" name="name" required autocomplete="name"
+                       placeholder="Tu nombre"
+                       class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
+              </div>
+              <div>
+                <label for="email" class="block text-xs font-medium text-slate-300 mb-2">
+                  Email <span class="text-neon-cyan">*</span>
+                </label>
+                <input type="email" id="email" name="email" required autocomplete="email"
+                       placeholder="tu@email.com"
+                       class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors" />
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-xs font-medium text-slate-300 mb-2">
+                Mensaje <span class="text-neon-cyan">*</span>
+              </label>
+              <textarea id="message" name="message" rows="6" required
+                        placeholder="Cuéntame sobre tu proyecto, objetivos y plazos…"
+                        class="w-full px-4 py-3 rounded-lg bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/20 transition-colors resize-none"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+              <p class="text-xs text-slate-500">
+                <i class="fa-solid fa-lock text-[10px] mr-1"></i>
+                Tu información se mantiene privada y segura.
+              </p>
+              <button type="submit"
+                      class="inline-flex items-center gap-2 px-6 py-3 rounded-lg btn-primary text-slate-900 font-semibold text-sm shadow-glow-cyan">
+                <i class="fa-regular fa-paper-plane"></i>
+                Enviar mensaje
+              </button>
+            </div>
+
+            <!-- Mensaje de feedback -->
+            <div id="formFeedback" class="hidden text-sm px-4 py-3 rounded-lg"></div>
+          </form>
+
+          <!-- Información de contacto + redes -->
+          <aside class="lg:col-span-2 space-y-6 reveal">
+
+            <!-- Tarjeta de email -->
+            <a href="mailto:hola@techunlock.dev"
+               class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-neon-cyan/40 transition-all duration-300 hover:-translate-y-1 block">
+              <span class="w-11 h-11 rounded-lg bg-neon-cyan/10 text-neon-cyan flex items-center justify-center shrink-0">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <div class="min-w-0">
+                <p class="text-xs text-slate-400">Email</p>
+                <p class="text-sm text-white font-medium truncate">hola@techunlock.dev</p>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 ml-auto"></i>
+            </a>
+
+            <!-- Tarjeta de ubicación -->
+            <div class="glass rounded-2xl p-5 flex items-center gap-4">
+              <span class="w-11 h-11 rounded-lg bg-neon-indigo/10 text-neon-indigo flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-location-dot"></i>
+              </span>
+              <div>
+                <p class="text-xs text-slate-400">Ubicación</p>
+                <p class="text-sm text-white font-medium">Madrid, España · Remoto</p>
+              </div>
+            </div>
+
+            <!-- Redes -->
+            <div class="glass rounded-2xl p-5">
+              <p class="text-xs text-slate-400 mb-4">Sígueme en redes</p>
+              <div class="flex flex-wrap gap-3">
+                <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"
+                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-cyan/40 transition-all duration-300">
+                  <i class="fa-brands fa-github text-lg"></i>
+                </a>
+                <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-indigo/40 transition-all duration-300">
+                  <i class="fa-brands fa-linkedin-in text-lg"></i>
+                </a>
+                <a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter / X"
+                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-cyan/40 transition-all duration-300">
+                  <i class="fa-brands fa-x-twitter text-lg"></i>
+                </a>
+                <a href="mailto:hola@techunlock.dev" aria-label="Email"
+                   class="w-11 h-11 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 hover:border-neon-violet/40 transition-all duration-300">
+                  <i class="fa-regular fa-envelope text-lg"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Frase -->
+            <div class="hidden lg:block glass rounded-2xl p-5 border-l-2 border-neon-cyan/60">
+              <p class="text-sm text-slate-300 italic leading-relaxed">
+                "El mejor código no es el más clever, es el que un equipo puede mantener a las 2am
+                cuando algo se rompe en producción."
+              </p>
+              <p class="mt-3 text-xs text-slate-500 font-mono">— filosofía personal</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="relative z-10 border-t border-white/5 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-md bg-gradient-to-br from-neon-cyan to-neon-indigo flex items-center justify-center text-slate-900 font-extrabold text-xs">
+            TU
+          </span>
+          <p class="text-sm text-slate-400">
+            © <span id="year">2026</span> <span class="text-white font-medium">Techunlock</span>. Todos los derechos reservados.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-5 text-xs text-slate-500">
+          <a href="#home" class="hover:text-neon-cyan transition-colors">Volver arriba <i class="fa-solid fa-arrow-up text-[10px]"></i></a>
+          <span class="hidden sm:inline">·</span>
+          <span class="font-mono">Construido con <span class="text-neon-cyan">HTML</span> + <span class="text-neon-indigo">Tailwind</span></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT — Interacciones mínimas
+       ============================================================ -->
+  <script>
+    // Año dinámico en el footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Robot mascot — las pupilas siguen al cursor (solo en escritorio)
+    (() => {
+      if (window.matchMedia('(pointer: coarse)').matches) return; // saltar en táctiles
+
+      const mascot = document.querySelector('.robot-mascot');
+      if (!mascot) return;
+      const eyes  = mascot.querySelectorAll('.robot-eye');
+      const pupils = mascot.querySelectorAll('.robot-pupil');
+
+      window.addEventListener('mousemove', (e) => {
+        eyes.forEach((eye, i) => {
+          const rect = eye.getBoundingClientRect();
+          const cx = rect.left + rect.width  / 2;
+          const cy = rect.top  + rect.height / 2;
+          // Vector normalizado
+          const dx = (e.clientX - cx) / (rect.width  / 2);
+          const dy = (e.clientY - cy) / (rect.height / 2);
+          const max = 6; // px de desplazamiento máximo
+          const clamp = (v) => Math.max(-1, Math.min(1, v));
+          pupils[i].style.transform = `translate(${clamp(dx) * max}px, ${clamp(dy) * max}px)`;
+        });
+      });
+    })();
+
+    // Menú móvil toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('hidden') === false;
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+        menuBtn.innerHTML = isOpen
+          ? '<i class="fa-solid fa-xmark"></i>'
+          : '<i class="fa-solid fa-bars"></i>';
+      });
+
+      // Cerrar menú al hacer clic en un enlace
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        });
+      });
+    }
+
+    // Reveal al hacer scroll (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // Validación y simulación de envío del formulario
+    const form = document.getElementById('contactForm');
+    const feedback = document.getElementById('formFeedback');
+    if (form && feedback) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name    = form.name.value.trim();
+        const email   = form.email.value.trim();
+        const message = form.message.value.trim();
+        const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const showError = (text) => {
+          feedback.className = 'text-sm px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300';
+          feedback.textContent = text;
+          feedback.classList.remove('hidden');
+        };
+
+        if (!name || !email || !message) return showError('Por favor, completa todos los campos obligatorios.');
+        if (!emailRx.test(email))        return showError('El email ingresado no parece válido.');
+
+        // Simulación de éxito — reemplaza con tu endpoint real (Formspree, Resend, etc.)
+        feedback.className = 'text-sm px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300';
+        feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i>¡Gracias, ${name}! Tu mensaje se envió correctamente. Te responderé pronto.`;
+        feedback.classList.remove('hidden');
+        form.reset();
+
+        setTimeout(() => feedback.classList.add('hidden'), 6000);
+      });
+    }
+  </script>
+</body>
+</html>
