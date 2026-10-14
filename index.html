@@ -18,7 +18,9 @@
   <!-- Inter — Tipografía principal -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Inter + JetBrains Mono (portafolio). El resto surte las tipografias
+       propias de cada plantilla del catalogo de Plantillas. -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS vía CDN oficial -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -449,169 +451,507 @@
     }
 
     /* ============================================================
-       PLANTILLAS — Miniaturas wireframe (CSS puro, sin imágenes)
-       Cada mock pinta el esqueleto del layout con su propia paleta.
+       PLANTILLAS — Mini-sitios reales
+       Cada tarjeta contiene una pagina real de 1200px dentro de un
+       marco de navegador; `zoom` la reduce al ancho de la tarjeta.
+       Los colores y la tipografia son del template, nunca del tema
+       activo del portafolio, para que la miniatura muestre el diseno
+       tal y como se publica.
        ============================================================ */
-    .tpl-mock {
+
+    /* --- Marco de navegador --- */
+    .shot {
+      position: relative;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: #0f172a;
+    }
+    .shot-chrome {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.65rem;
+      background: rgba(15, 23, 42, 0.94);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    }
+    .shot-chrome .cdot {
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.45);
+      flex: none;
+    }
+    .shot-chrome .cdot.r { background: #f87171; }
+    .shot-chrome .cdot.y { background: #fbbf24; }
+    .shot-chrome .cdot.g { background: #34d399; }
+    .shot-url {
+      flex: 1;
+      min-width: 0;
+      margin-left: 0.35rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 0.3rem;
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .shot-view {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 10;
       overflow: hidden;
-      border-radius: 0.75rem;
-      border: 1px solid var(--mock-edge, var(--glass-border));
-      background: var(--mock-bg);
-      padding: 0.7rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      background: #0b1120;
     }
-    .tpl-card:hover .tpl-mock { transform: scale(1.035); }
-
-    .tpl-mock .bar {
-      display: block;
-      height: 0.35rem;
-      border-radius: 999px;
-      background: var(--mock-line);
-    }
-    .tpl-mock .bar-lg { height: 0.7rem; border-radius: 0.25rem; }
-    .tpl-mock .bar-accent { background: var(--mock-accent); }
-    .tpl-mock .row { display: flex; gap: 0.4rem; align-items: center; }
-    .tpl-mock .spread { justify-content: space-between; }
-    .tpl-mock .stack { display: flex; flex-direction: column; gap: 0.35rem; }
-    .tpl-mock .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
-    .tpl-mock .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
-    .tpl-mock .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
-    .tpl-mock .blk {
-      border-radius: 0.4rem;
-      background: var(--mock-soft);
-      min-height: 1.7rem;
-      padding: 0.35rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.28rem;
-      justify-content: center;
-    }
-    .tpl-mock .blk > .bar { width: 100%; }
-    .tpl-mock .grow { flex: 1; }
-    .tpl-mock .w-25 { width: 25%; }
-    .tpl-mock .w-40 { width: 40%; }
-    .tpl-mock .w-50 { width: 50%; }
-    .tpl-mock .w-60 { width: 60%; }
-    .tpl-mock .w-75 { width: 75%; }
-    .tpl-mock .w-90 { width: 90%; }
-    .tpl-mock .spacer { flex: 1; }
-    .tpl-mock .dot {
-      width: 0.6rem; height: 0.6rem;
-      border-radius: 999px;
-      background: var(--mock-accent);
-      flex: none;
-    }
-    .tpl-mock .pill {
-      height: 0.95rem; width: 2.6rem;
-      border-radius: 0.3rem;
-      background: var(--mock-accent);
-      flex: none;
-    }
-    .tpl-mock .pill-ghost {
-      height: 0.95rem; width: 2.2rem;
-      border-radius: 0.3rem;
-      border: 1px solid var(--mock-line);
-      flex: none;
-    }
-    .tpl-mock .logo {
-      width: 1.1rem; height: 1.1rem;
-      border-radius: 0.3rem;
-      background: var(--mock-accent);
-      flex: none;
-    }
-    .tpl-mock .hero {
-      flex: 1;
-      border-radius: 0.5rem;
-      background: var(--mock-hero);
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      justify-content: center;
-      padding: 0.7rem;
-    }
-    .tpl-mock .mono { font-family: 'JetBrains Mono', monospace; }
-    .tpl-mock .cap {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.04em;
-      color: var(--mock-accent);
-      line-height: 1;
-    }
-
-    /* Paletas de cada plantilla (no dependen del tema activo:
-       la miniatura siempre muestra el color real del template) */
-    .mock-noir {
-      --mock-bg: #0b1120;
-      --mock-edge: rgba(34, 211, 238, 0.25);
-      --mock-line: rgba(226, 232, 240, 0.22);
-      --mock-soft: rgba(255, 255, 255, 0.06);
-      --mock-accent: #22d3ee;
-      --mock-hero: linear-gradient(135deg, rgba(34,211,238,0.16), rgba(129,140,248,0.12));
-    }
-    .mock-paper {
-      --mock-bg: #ffffff;
-      --mock-edge: rgba(15, 23, 42, 0.12);
-      --mock-line: rgba(15, 23, 42, 0.14);
-      --mock-soft: rgba(15, 23, 42, 0.045);
-      --mock-accent: #0f172a;
-      --mock-hero: rgba(15, 23, 42, 0.03);
-    }
-    .mock-bolt {
-      --mock-bg: #fff7ed;
-      --mock-edge: rgba(249, 115, 22, 0.35);
-      --mock-line: rgba(124, 45, 18, 0.20);
-      --mock-soft: rgba(249, 115, 22, 0.10);
-      --mock-accent: #f97316;
-      --mock-hero: linear-gradient(135deg, rgba(249,115,22,0.22), rgba(236,72,153,0.14));
-    }
-    .mock-corp {
-      --mock-bg: #f8fafc;
-      --mock-edge: rgba(37, 99, 235, 0.28);
-      --mock-line: rgba(15, 23, 42, 0.16);
-      --mock-soft: rgba(37, 99, 235, 0.07);
-      --mock-accent: #2563eb;
-      --mock-hero: linear-gradient(135deg, rgba(37,99,235,0.14), rgba(14,165,233,0.10));
-    }
-    .mock-canvas {
-      --mock-bg: #faf5ff;
-      --mock-edge: rgba(167, 139, 250, 0.32);
-      --mock-line: rgba(76, 29, 149, 0.18);
-      --mock-soft: rgba(167, 139, 250, 0.12);
-      --mock-accent: #a78bfa;
-      --mock-hero: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(236,72,153,0.12));
-    }
-    .mock-term {
-      --mock-bg: #05070d;
-      --mock-edge: rgba(52, 211, 153, 0.30);
-      --mock-line: rgba(148, 163, 184, 0.26);
-      --mock-soft: rgba(52, 211, 153, 0.07);
-      --mock-accent: #34d399;
-      --mock-hero: rgba(52, 211, 153, 0.06);
-    }
-
-    /* Chip de estado "Disponible" sobre la miniatura */
-    .tpl-flag {
+    .tpl-card:hover .shot-view { background: #0b1120; }
+    .tpl-card:hover .shot { border-color: rgba(34, 211, 238, 0.35); }
+    .shot-flag {
       position: absolute;
-      top: 0.55rem;
+      top: 2.1rem;
       right: 0.55rem;
-      z-index: 2;
+      z-index: 3;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.55rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.2rem 0.45rem;
+      padding: 0.22rem 0.45rem;
       border-radius: 0.3rem;
-      background: rgba(2, 6, 23, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(2, 6, 23, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       color: #e2e8f0;
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
+
+    /* --- Framework de pagina (compartido por los 6 templates) --- */
+    .pg {
+      width: 1200px;
+      zoom: 0.24;                 /* JS lo ajusta al ancho real */
+      background: var(--tp-bg);
+      color: var(--tp-text);
+      font-family: var(--tp-font);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .pg *, .pg *::before, .pg *::after { box-sizing: border-box; margin: 0; }
+    .pg img { display: block; max-width: 100%; }
+
+    .pg-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 56px;
+      border-bottom: 1px solid var(--tp-edge);
+      background: var(--tp-nav-bg);
+    }
+    .pg-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--tp-strong);
+    }
+    .pg-logo .mk {
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      display: grid; place-items: center;
+      background: var(--tp-accent);
+      color: var(--tp-on);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .pg-links { display: flex; gap: 26px; font-size: 14px; color: var(--tp-text); }
+    .pg-links .on { color: var(--tp-accent); font-weight: 600; }
+    .pg-cta {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: var(--tp-accent);
+      color: var(--tp-on);
+    }
+
+    .pg-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
+      align-items: center;
+      padding: 62px 56px;
+      background: var(--tp-hero-bg);
+    }
+    .pg-kick {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--tp-accent);
+      margin-bottom: 14px;
+    }
+    .pg-h1 {
+      font-family: var(--tp-display);
+      font-size: 56px;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      font-weight: var(--tp-h-w, 800);
+      color: var(--tp-strong);
+      margin-bottom: 18px;
+    }
+    .pg-h1 em { font-style: normal; color: var(--tp-accent); }
+    .pg-lead { font-size: 17px; color: var(--tp-text); margin-bottom: 26px; max-width: 520px; }
+    .pg-btns { display: flex; gap: 12px; align-items: center; }
+    .pg-btn {
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      background: var(--tp-accent);
+      color: var(--tp-on);
+    }
+    .pg-btn.alt {
+      background: var(--tp-alt-bg);
+      border: 1.5px solid var(--tp-edge2);
+      color: var(--tp-strong);
+      font-weight: 600;
+    }
+    .pg-media {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--tp-shadow);
+      border: 1px solid var(--tp-edge);
+    }
+    .pg-media img { width: 100%; height: 330px; object-fit: cover; }
+
+    .pg-sec { padding: 44px 56px; border-top: 1px solid var(--tp-edge); }
+    .pg-h2 {
+      font-family: var(--tp-display);
+      font-size: 30px;
+      font-weight: var(--tp-h-w, 800);
+      letter-spacing: -0.02em;
+      color: var(--tp-strong);
+      margin-bottom: 8px;
+    }
+    .pg-sub { font-size: 15px; color: var(--tp-text); margin-bottom: 24px; max-width: 640px; }
+    .pg-g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pg-g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .pg-g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+    .pg-card {
+      background: var(--tp-card);
+      border: 1px solid var(--tp-edge);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .pg-card h4 { font-size: 17px; font-weight: 700; color: var(--tp-strong); margin-bottom: 8px; }
+    .pg-card p { font-size: 13.5px; color: var(--tp-text); }
+    .pg-ic {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      background: var(--tp-accent-soft);
+      color: var(--tp-accent);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+    .pg-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--tp-accent-soft);
+      color: var(--tp-accent);
+      margin-top: 12px;
+    }
+    .pg-stat b {
+      display: block;
+      font-family: var(--tp-display);
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--tp-accent);
+      line-height: 1;
+    }
+    .pg-stat span { font-size: 13px; color: var(--tp-faint); }
+    .pg-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 56px;
+      border-top: 1px solid var(--tp-edge);
+      font-size: 13px;
+      color: var(--tp-faint);
+    }
+
+    /* ============================================================
+       PIELES — cada template con su tipografia y paleta reales
+       ============================================================ */
+
+    /* 01 · Techunlock Neon — glassmorphism oscuro */
+    .pg-neon {
+      --tp-bg: #0b1120;
+      --tp-strong: #ffffff;
+      --tp-text: #cbd5e1;
+      --tp-faint: #64748b;
+      --tp-accent: #22d3ee;
+      --tp-on: #04121a;
+      --tp-edge: rgba(148, 163, 184, 0.16);
+      --tp-edge2: rgba(148, 163, 184, 0.3);
+      --tp-card: rgba(255, 255, 255, 0.045);
+      --tp-accent-soft: rgba(34, 211, 238, 0.12);
+      --tp-nav-bg: rgba(11, 17, 32, 0.8);
+      --tp-alt-bg: rgba(255, 255, 255, 0.05);
+      --tp-hero-bg:
+        radial-gradient(circle at 18% 10%, rgba(34, 211, 238, 0.16), transparent 42%),
+        radial-gradient(circle at 82% 60%, rgba(129, 140, 248, 0.16), transparent 42%),
+        #0b1120;
+      --tp-shadow: 0 24px 60px -20px rgba(34, 211, 238, 0.35);
+      --tp-font: 'Inter', sans-serif;
+      --tp-display: 'Inter', sans-serif;
+      background-image:
+        radial-gradient(circle at 18% 10%, rgba(34, 211, 238, 0.16), transparent 42%),
+        radial-gradient(circle at 82% 60%, rgba(129, 140, 248, 0.16), transparent 42%);
+    }
+    .pg-neon .pg-btn {
+      background: linear-gradient(135deg, #22d3ee, #818cf8);
+      color: #04121a;
+      box-shadow: 0 10px 26px -8px rgba(34, 211, 238, 0.55);
+    }
+    .pg-neon .pg-logo .mk { background: linear-gradient(135deg, #22d3ee, #818cf8); }
+    .pg-neon .pg-h1 { background: linear-gradient(90deg, #fff 40%, #22d3ee); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* 02 · Minimal Paper — editorial serif, blanco y negro */
+    .pg-paper {
+      --tp-bg: #ffffff;
+      --tp-strong: #111111;
+      --tp-text: #4b4b4b;
+      --tp-faint: #9a9a9a;
+      --tp-accent: #111111;
+      --tp-on: #ffffff;
+      --tp-edge: #ececec;
+      --tp-edge2: #dcdcdc;
+      --tp-card: #fafafa;
+      --tp-accent-soft: #f0f0f0;
+      --tp-nav-bg: #ffffff;
+      --tp-alt-bg: #ffffff;
+      --tp-hero-bg: #ffffff;
+      --tp-shadow: 0 20px 50px -24px rgba(0, 0, 0, 0.22);
+      --tp-font: 'Inter', sans-serif;
+      --tp-display: 'Playfair Display', serif;
+      --tp-h-w: 700;
+    }
+    .pg-paper .pg-nav { border-bottom: 1px solid #111; }
+    .pg-paper .pg-hero { padding-top: 76px; padding-bottom: 76px; }
+    .pg-paper .pg-h1 { font-size: 64px; letter-spacing: -0.01em; }
+    .pg-paper .pg-btn { border-radius: 2px; padding: 13px 26px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+    .pg-paper .pg-btn.alt { border: 1px solid #111; }
+    .pg-paper .pg-media { border-radius: 0; border: none; }
+    .pg-paper .pg-card { border-radius: 0; border: none; border-top: 1px solid #111; background: #fff; padding: 18px 0; }
+    .pg-paper .pg-ic { border-radius: 0; }
+    .pg-paper .pg-logo { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0; }
+    .pg-paper .pg-logo .mk { border-radius: 0; width: 26px; height: 26px; font-family: 'Playfair Display', serif; }
+
+    /* 03 · Bold Creative — display enorme, naranja, asimetrico */
+    .pg-bolt {
+      --tp-bg: #fff6ec;
+      --tp-strong: #14100e;
+      --tp-text: #574d45;
+      --tp-faint: #9b8d80;
+      --tp-accent: #ff4d1c;
+      --tp-on: #ffffff;
+      --tp-edge: rgba(20, 16, 14, 0.14);
+      --tp-edge2: rgba(20, 16, 14, 0.28);
+      --tp-card: #ffffff;
+      --tp-accent-soft: rgba(255, 77, 28, 0.12);
+      --tp-nav-bg: #fff6ec;
+      --tp-alt-bg: #ffffff;
+      --tp-hero-bg: #fff6ec;
+      --tp-shadow: 0 22px 0 -6px rgba(20, 16, 14, 0.9);
+      --tp-font: 'Space Grotesk', sans-serif;
+      --tp-display: 'Syne', sans-serif;
+      --tp-h-w: 800;
+    }
+    .pg-bolt .pg-hero { grid-template-columns: 1.25fr 0.75fr; padding: 48px 56px 64px; }
+    .pg-bolt .pg-h1 { font-size: 92px; line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase; }
+    .pg-bolt .pg-h2 { font-size: 40px; text-transform: uppercase; letter-spacing: -0.03em; }
+    .pg-bolt .pg-btn { border-radius: 999px; box-shadow: 4px 4px 0 0 #14100e; }
+    .pg-bolt .pg-btn.alt { border-radius: 999px; box-shadow: 4px 4px 0 0 #14100e; }
+    .pg-bolt .pg-card { border-radius: 20px; border: 2px solid #14100e; box-shadow: 6px 6px 0 0 #14100e; }
+    .pg-bolt .pg-media { border-radius: 24px; border: 2px solid #14100e; }
+    .pg-bolt .pg-logo { font-family: 'Syne', sans-serif; font-size: 22px; text-transform: uppercase; }
+    .pg-bolt .pg-logo .mk { border-radius: 999px; }
+    .pg-bolt .pg-links { font-weight: 600; }
+
+    /* 04 · Corporate Clean — azul negocio, estructura clara */
+    .pg-corp {
+      --tp-bg: #ffffff;
+      --tp-strong: #0f2557;
+      --tp-text: #4a5a78;
+      --tp-faint: #8fa0bd;
+      --tp-accent: #155df5;
+      --tp-on: #ffffff;
+      --tp-edge: #e6ecf7;
+      --tp-edge2: #cfdcf2;
+      --tp-card: #f6f9ff;
+      --tp-accent-soft: rgba(21, 93, 245, 0.10);
+      --tp-nav-bg: #ffffff;
+      --tp-alt-bg: #ffffff;
+      --tp-hero-bg: linear-gradient(180deg, #f4f8ff, #ffffff);
+      --tp-shadow: 0 26px 60px -28px rgba(15, 37, 87, 0.35);
+      --tp-font: 'Plus Jakarta Sans', sans-serif;
+      --tp-display: 'Plus Jakarta Sans', sans-serif;
+      --tp-h-w: 800;
+    }
+    .pg-corp .pg-nav { box-shadow: 0 1px 0 var(--tp-edge); border-bottom: none; }
+    .pg-corp .pg-h1 { font-size: 52px; color: #0f2557; }
+    .pg-corp .pg-btn { box-shadow: 0 12px 26px -12px rgba(21, 93, 245, 0.6); }
+    .pg-corp .pg-card { border-radius: 12px; }
+    .pg-corp .pg-ic { border-radius: 8px; }
+    .pg-corp .pg-media { border-radius: 14px; border: none; }
+    .pg-corp .pg-sec { background: #fff; }
+
+    /* 05 · Creative Canvas — mosaico pastel, imagen manda */
+    .pg-canvas {
+      --tp-bg: #f7f4ff;
+      --tp-strong: #2b1055;
+      --tp-text: #6a5a8c;
+      --tp-faint: #a294bd;
+      --tp-accent: #7c3aed;
+      --tp-on: #ffffff;
+      --tp-edge: rgba(124, 58, 237, 0.14);
+      --tp-edge2: rgba(124, 58, 237, 0.3);
+      --tp-card: #ffffff;
+      --tp-accent-soft: rgba(124, 58, 237, 0.10);
+      --tp-nav-bg: rgba(247, 244, 255, 0.9);
+      --tp-alt-bg: #ffffff;
+      --tp-hero-bg: linear-gradient(160deg, #f7f4ff, #ffeef8);
+      --tp-shadow: 0 24px 60px -26px rgba(124, 58, 237, 0.45);
+      --tp-font: 'Outfit', sans-serif;
+      --tp-display: 'Outfit', sans-serif;
+      --tp-h-w: 700;
+    }
+    .pg-canvas .pg-hero { grid-template-columns: 1fr; text-align: center; padding-bottom: 34px; }
+    .pg-canvas .pg-lead { margin-left: auto; margin-right: auto; }
+    .pg-canvas .pg-btns { justify-content: center; }
+    .pg-canvas .pg-h1 { font-size: 62px; }
+    .pg-canvas .pg-btn { border-radius: 999px; }
+    .pg-canvas .pg-btn.alt { border-radius: 999px; }
+    .pg-canvas .pg-card { border-radius: 18px; border: none; box-shadow: 0 14px 30px -20px rgba(43, 16, 85, 0.4); }
+    .pg-canvas .pg-media { border-radius: 20px; border: none; }
+    .pg-canvas .pg-mos { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 112px; gap: 14px; }
+    .pg-canvas .pg-mos figure { border-radius: 16px; overflow: hidden; margin: 0; position: relative; }
+    .pg-canvas .pg-mos img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-canvas .pg-mos .tall { grid-row: span 2; }
+    .pg-canvas .pg-mos .wide { grid-column: span 2; }
+    .pg-canvas .pg-mos figcaption {
+      position: absolute; inset: auto 0 0 0;
+      padding: 10px 12px;
+      font-size: 11px; font-weight: 600; color: #fff;
+      background: linear-gradient(transparent, rgba(43, 16, 85, 0.72));
+    }
+
+    /* 06 · Dev Terminal — monospace, consola */
+    .pg-term {
+      --tp-bg: #05070d;
+      --tp-strong: #e6f4ee;
+      --tp-text: #8fa3b8;
+      --tp-faint: #4c5a6b;
+      --tp-accent: #34d399;
+      --tp-on: #04120c;
+      --tp-edge: rgba(52, 211, 153, 0.16);
+      --tp-edge2: rgba(52, 211, 153, 0.34);
+      --tp-card: rgba(52, 211, 153, 0.05);
+      --tp-accent-soft: rgba(52, 211, 153, 0.12);
+      --tp-nav-bg: #05070d;
+      --tp-alt-bg: transparent;
+      --tp-hero-bg: #05070d;
+      --tp-shadow: 0 0 0 1px rgba(52, 211, 153, 0.25), 0 24px 60px -28px rgba(52, 211, 153, 0.3);
+      --tp-font: 'JetBrains Mono', monospace;
+      --tp-display: 'JetBrains Mono', monospace;
+      --tp-h-w: 500;
+    }
+    .pg-term .pg-nav { padding: 16px 40px; }
+    .pg-term .pg-hero { padding: 40px; grid-template-columns: 1fr; gap: 24px; }
+    .pg-term .pg-h1 { font-size: 40px; letter-spacing: -0.01em; font-weight: 500; }
+    .pg-term .pg-h1::before { content: '$ '; color: var(--tp-accent); }
+    .pg-term .pg-lead { font-size: 15px; }
+    .pg-term .pg-btn { border-radius: 4px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    .pg-term .pg-btn.alt { border-radius: 4px; }
+    .pg-term .pg-card { border-radius: 6px; }
+    .pg-term .pg-ic { border-radius: 6px; }
+    .pg-term .pg-console {
+      border: 1px solid var(--tp-edge);
+      border-radius: 8px;
+      background: #070a11;
+      overflow: hidden;
+    }
+    .pg-term .pg-console .bar {
+      display: flex; gap: 6px; padding: 9px 12px;
+      border-bottom: 1px solid var(--tp-edge);
+      background: rgba(52, 211, 153, 0.05);
+    }
+    .pg-term .pg-console .bar i { width: 8px; height: 8px; border-radius: 999px; background: #2a3644; display: block; }
+    .pg-term .pg-console pre { padding: 16px 18px; font-size: 13px; line-height: 1.75; color: #8fa3b8; font-family: 'JetBrains Mono', monospace; }
+    .pg-term .pg-console .p { color: var(--tp-accent); }
+    .pg-term .pg-console .c { color: #4c5a6b; }
+    .pg-term .pg-console .s { color: #e6f4ee; }
+    .pg-term .pg-logo { font-size: 16px; font-weight: 500; }
+    .pg-term .pg-logo .mk { border-radius: 4px; }
+
+    /* Cursor de consola (Dev Terminal) */
+    @keyframes pg-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+    .pg-term .cursor { color: #34d399; animation: pg-blink 1s steps(2) infinite; }
+
+    /* 07 · A medida — lienzo en blanco, estructura sin definir */
+    .pg-blank {
+      --tp-bg: #ffffff;
+      --tp-strong: #0f172a;
+      --tp-text: #64748b;
+      --tp-faint: #94a3b8;
+      --tp-accent: #06b6d4;
+      --tp-on: #04121a;
+      --tp-edge: #e2e8f0;
+      --tp-edge2: #cbd5e1;
+      --tp-card: #f8fafc;
+      --tp-accent-soft: rgba(6, 182, 212, 0.10);
+      --tp-nav-bg: #ffffff;
+      --tp-alt-bg: #ffffff;
+      --tp-hero-bg:
+        linear-gradient(#eef2f7 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(90deg, #eef2f7 1px, transparent 1px) 0 0 / 24px 24px,
+        #ffffff;
+      --tp-shadow: 0 20px 50px -28px rgba(15, 23, 42, 0.25);
+      --tp-font: 'Inter', sans-serif;
+      --tp-display: 'Inter', sans-serif;
+      --tp-h-w: 800;
+    }
+    .pg-blank .pg-h1 { font-size: 46px; }
+    .pg-blank .pg-btn { border-radius: 8px; }
+    .pg-blank .pg-btn.alt { border-radius: 8px; border-style: dashed; }
+    .pg-blank .pg-card { border-style: dashed; border-radius: 10px; }
+    .pg-blank .pg-media { border-radius: 12px; }
+    /* Placeholder de bloque: area rayada a la espera de contenido real */
+    .pg-ph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 330px;
+      border: 2px dashed var(--tp-edge2);
+      border-radius: 14px;
+      color: var(--tp-faint);
+      background:
+        repeating-linear-gradient(45deg, rgba(6,182,212,0.05) 0 10px, transparent 10px 20px);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .pg-ph i { font-size: 30px; color: var(--tp-accent); opacity: 0.7; }
+    .pg-ph.sm { min-height: 108px; font-size: 11.5px; }
 
     /* ============================================================
        PLANTILLAS — Modal de vista previa
@@ -633,10 +973,10 @@
     }
     .tpl-modal-panel {
       position: relative;
-      margin: 5vh auto;
+      margin: 4vh auto;
       width: calc(100% - 2rem);
-      max-width: 52rem;
-      max-height: 90vh;
+      max-width: 64rem;
+      max-height: 92vh;
       overflow-y: auto;
       border-radius: 1.25rem;
       background: var(--glass-bg);
@@ -649,7 +989,7 @@
     @keyframes tpl-fade { from { opacity: 0; } to { opacity: 1; } }
     @keyframes tpl-rise {
       from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
     }
     body.tpl-lock {
       /* position:fixed + top negativo = bloquear scroll sin saltar al inicio */
@@ -662,7 +1002,7 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      z-index: 3;
+      z-index: 4;
       width: 2.25rem;
       height: 2.25rem;
       border-radius: 0.6rem;
@@ -676,6 +1016,22 @@
       transition: all 0.2s ease;
     }
     .tpl-close:hover { color: var(--text-strong); border-color: rgba(34, 211, 238, 0.5); }
+
+    /* Vista previa ampliada: la misma pagina real, mas grande y con scroll */
+    .tpl-live {
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: #0f172a;
+    }
+    .tpl-live .shot-view {
+      aspect-ratio: auto;
+      height: min(58vh, 560px);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .tpl-live .shot-url::before { content: '\f023  '; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.45rem; }
+
   </style>
 </head>
 
@@ -1266,27 +1622,41 @@
         <!-- Grid de plantillas -->
         <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-          <!-- ===== Plantilla 1 — Neón (esta misma) ===== -->
+          <!-- ===== Plantilla 1 — Techunlock Neón ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-cyan/40 hover:-translate-y-1 hover:shadow-glow-cyan"
                    data-template="neon">
-            <div class="tpl-mock mock-noir" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row spread">
-                <div class="row gap-2" style="gap:.3rem"><span class="logo"></span><span class="bar w-25"></span></div>
-                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="pill"></span></div>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">techunlock-neon.vercel.app</span>
               </div>
-              <div class="hero">
-                <span class="cap">// 01 · hero</span>
-                <span class="bar-lg bar-accent w-60"></span>
-                <span class="bar w-90"></span>
-                <span class="bar w-75"></span>
-                <div class="row" style="gap:.35rem;margin-top:.25rem"><span class="pill"></span><span class="pill-ghost"></span></div>
+              <div class="shot-view">
+                <div class="pg pg-neon">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">TU</span>Techunlock</div>
+                    <div class="pg-links"><span class="on">Inicio</span><span>Sobre mí</span><span>Proyectos</span><span>Contacto</span></div>
+                    <div class="pg-btn">Hablemos</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Full-Stack · Automatización</div>
+                      <div class="pg-h1">Construyo sistemas que <em>trabajan solos</em></div>
+                      <div class="pg-lead">Desarrollo web y automatización de procesos para equipos que quieren dejar de copiar datos a mano.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver proyectos</span><span class="pg-btn alt">Descargar CV</span></div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=900&q=70" alt="Editor de código" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-code"></i></div><h4>Web a medida</h4><p>React, Node y APIs que aguantan producción.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-robot"></i></div><h4>Automatización</h4><p>Scripts que cierran el mes por ti.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-chart-line"></i></div><h4>Dashboards</h4><p>Tus datos, legibles y en tiempo real.</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>© 2026 Techunlock</span><span>Disponible para proyectos</span></div>
+                </div>
               </div>
-              <div class="grid3">
-                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
-                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
-                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
-              </div>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1318,22 +1688,39 @@
           <!-- ===== Plantilla 2 — Minimal Paper ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-indigo/40 hover:-translate-y-1 hover:shadow-glow-indigo"
                    data-template="paper">
-            <div class="tpl-mock mock-paper" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row spread">
-                <span class="bar w-40"></span>
-                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="bar w-25"></span></div>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">minimal-paper.netlify.app</span>
               </div>
-              <div class="hero" style="align-items:center;text-align:center">
-                <span class="cap">curriculum · 2026</span>
-                <span class="bar-lg w-60" style="margin:0 auto"></span>
-                <span class="bar w-75" style="margin:0 auto"></span>
-                <span class="bar w-50" style="margin:0 auto"></span>
+              <div class="shot-view">
+                <div class="pg pg-paper">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">M</span>Marina Ruiz</div>
+                    <div class="pg-links"><span class="on">Perfil</span><span>Trayectoria</span><span>Escribo</span></div>
+                    <div class="pg-btn">Contacto</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Curriculum · 2026</div>
+                      <div class="pg-h1">Diseñadora de producto, con método</div>
+                      <div class="pg-lead">Ocho años investigando usuarios y escribiendo especificaciones que los equipos sí pueden construir.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver CV</span><span class="pg-btn alt">Descargar PDF</span></div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=70" alt="Retrato profesional" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-h2">Trayectoria</div>
+                    <div class="pg-sub">Cuatro empresas, un mismo oficio: hacer simple lo complicado.</div>
+                    <div class="pg-g2">
+                      <div class="pg-card"><h4>2023 — hoy · Lead Product Designer</h4><p>Nomadic. Sistema de diseño usado por 40 personas en tres países.</p></div>
+                      <div class="pg-card"><h4>2019 — 2023 · Senior UX</h4><p>Caja Viva. Rediseño del onboarding: 31% más altas completadas.</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>Marina Ruiz</span><span>hola@marinaruiz.mx</span></div>
+                </div>
               </div>
-              <div class="grid2">
-                <div class="blk"><span class="bar w-60"></span><span class="bar"></span><span class="bar w-90"></span></div>
-                <div class="blk"><span class="bar w-60"></span><span class="bar"></span><span class="bar w-90"></span></div>
-              </div>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1365,27 +1752,40 @@
           <!-- ===== Plantilla 3 — Bold Creative ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-orange-400/50 hover:-translate-y-1"
                    data-template="bolt">
-            <div class="tpl-mock mock-bolt" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row spread">
-                <span class="bar-lg bar-accent w-40"></span>
-                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="pill"></span></div>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">bold-creative.vercel.app</span>
               </div>
-              <div class="row grow" style="align-items:stretch;gap:.45rem">
-                <div class="stack grow" style="justify-content:center">
-                  <span class="cap">hola · soy</span>
-                  <span class="bar-lg w-90"></span>
-                  <span class="bar-lg bar-accent w-75"></span>
-                  <span class="bar w-60"></span>
+              <div class="shot-view">
+                <div class="pg pg-bolt">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">B</span>Bold Studio</div>
+                    <div class="pg-links"><span>Trabajo</span><span class="on">Estudio</span><span>Diario</span></div>
+                    <div class="pg-btn">Cotizar</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Hola · soy</div>
+                      <div class="pg-h1">Diseño que <em>no</em> pide permiso</div>
+                      <div class="pg-lead">Branding y sitios para marcas que prefieren ser recordadas a pasar desapercibidas.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver trabajo</span><span class="pg-btn alt">El proceso</span></div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=70" alt="Composición gráfica" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-h2">Servicios</div>
+                    <div class="pg-g4">
+                      <div class="pg-card"><h4>Branding</h4><p>Identidad completa</p></div>
+                      <div class="pg-card"><h4>Web</h4><p>Diseño y build</p></div>
+                      <div class="pg-card"><h4>Motion</h4><p>Piezas animadas</p></div>
+                      <div class="pg-card"><h4>Print</h4><p>Editorial y empaque</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>Bold Studio</span><span>CDMX · remoto</span></div>
                 </div>
-                <div class="blk" style="width:38%;border-radius:.6rem"></div>
               </div>
-              <div class="grid4">
-                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
-                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
-                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
-                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
-              </div>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1414,29 +1814,48 @@
             </div>
           </article>
 
+
           <!-- ===== Plantilla 4 — Corporate Clean ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-sky-400/50 hover:-translate-y-1"
                    data-template="corp">
-            <div class="tpl-mock mock-corp" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row spread">
-                <div class="row" style="gap:.3rem"><span class="logo"></span><span class="bar w-40"></span></div>
-                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="bar w-25"></span><span class="pill"></span></div>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">novacorp-consulting.com</span>
               </div>
-              <div class="row" style="gap:.45rem;flex:none">
-                <div class="stack" style="flex:1.3;gap:.3rem">
-                  <span class="bar-lg w-90"></span>
-                  <span class="bar w-75"></span>
-                  <div class="row" style="gap:.35rem"><span class="pill"></span><span class="pill-ghost"></span></div>
+              <div class="shot-view">
+                <div class="pg pg-corp">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">N</span>NovaCorp</div>
+                    <div class="pg-links"><span class="on">Servicios</span><span>Casos</span><span>Equipo</span><span>Precios</span></div>
+                    <div class="pg-btn">Agendar llamada</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Consultoría operativa</div>
+                      <div class="pg-h1">Su operación, sin los cuellos de botella</div>
+                      <div class="pg-lead">Diagnosticamos, automatizamos y medimos. Resultados auditables en 90 días o no cobramos la última fase.</div>
+                      <div class="pg-btns"><span class="pg-btn">Solicitar cotización</span><span class="pg-btn alt">Ver casos</span></div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=70" alt="Equipo en reunión" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-magnifying-glass-chart"></i></div><h4>Diagnóstico</h4><p>Semanas de proceso mapeados en un documento.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-gears"></i></div><h4>Automatización</h4><p>Menos captura manual, menos error humano.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-file-invoice-dollar"></i></div><h4>Cierre mensual</h4><p>Estados financieros a tiempo, todos los meses.</p></div>
+                    </div>
+                    <div class="pg-g4" style="margin-top:22px">
+                      <div class="pg-card pg-stat"><b>90</b><span>días promedio</span></div>
+                      <div class="pg-card pg-stat"><b>38%</b><span>menos horas manuales</span></div>
+                      <div class="pg-card pg-stat"><b>64</b><span>clientes activos</span></div>
+                      <div class="pg-card pg-stat"><b>4.8</b><span>calificación</span></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>© NovaCorp</span><span>Aviso de privacidad</span></div>
                 </div>
-                <div class="blk" style="flex:1;min-height:3rem"></div>
               </div>
-              <div class="grid3">
-                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
-                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
-                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
-              </div>
-              <span class="bar w-90" style="height:.28rem;margin-top:auto"></span>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1449,7 +1868,7 @@
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Servicios + precios + FAQ</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Pruebas sociales y logos de clientes</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Pruebas sociales y logos de cliente</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Formulario de cotización</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
@@ -1468,20 +1887,36 @@
           <!-- ===== Plantilla 5 — Creative Canvas ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-violet/50 hover:-translate-y-1"
                    data-template="canvas">
-            <div class="tpl-mock mock-canvas" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row spread">
-                <span class="bar-lg bar-accent w-25"></span>
-                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="dot"></span></div>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">canvas-portfolio.dribbble.site</span>
               </div>
-              <div class="grid2 grow" style="grid-template-rows:1fr 1fr;gap:.4rem">
-                <div class="blk" style="grid-row:span 2;justify-content:flex-start"><span class="cap">work · 01</span><span class="bar-lg w-75"></span><span class="bar w-60"></span></div>
-                <div class="blk"><span class="bar w-60"></span></div>
-                <div class="blk"><span class="bar w-90"></span></div>
+              <div class="shot-view">
+                <div class="pg pg-canvas">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">C</span>Canvas</div>
+                    <div class="pg-links"><span class="on">Piezas</span><span>Casos</span><span>Acerca</span></div>
+                    <div class="pg-btn">Comisión</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div class="pg-kick">Ilustración · UX · Dirección de arte</div>
+                    <div class="pg-h1">El trabajo primero, <em>la bio después</em></div>
+                    <div class="pg-lead">Selección de piezas de los últimos dos años. Cada una con su caso de estudio.</div>
+                    <div class="pg-btns"><span class="pg-btn">Ver galería</span><span class="pg-btn alt">Contacto</span></div>
+                  </div>
+                  <div class="pg-sec" style="padding-top:20px">
+                    <div class="pg-mos">
+                      <figure class="tall"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=70" alt="Pieza abstracta" loading="lazy" /><figcaption>Serie Neón · 2025</figcaption></figure>
+                      <figure><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=70" alt="Composición color" loading="lazy" /><figcaption>Retromanía</figcaption></figure>
+                      <figure><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=70" alt="Montaña nocturna" loading="lazy" /><figcaption>Portada Altitud</figcaption></figure>
+                      <figure class="wide"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=70" alt="Paisaje con niebla" loading="lazy" /><figcaption>Campaña Bruma · dirección de arte</figcaption></figure>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>© Canvas</span><span>IG · Behance</span></div>
+                </div>
               </div>
-              <div class="row" style="gap:.3rem;justify-content:flex-end">
-                <span class="pill-ghost"></span><span class="pill-ghost"></span><span class="pill"></span>
-              </div>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1513,30 +1948,40 @@
           <!-- ===== Plantilla 6 — Dev Terminal ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-emerald-400/50 hover:-translate-y-1"
                    data-template="term">
-            <div class="tpl-mock mock-term" aria-hidden="true">
-              <span class="tpl-flag">Disponible</span>
-              <div class="row" style="gap:.3rem">
-                <span class="dot" style="background:#f87171"></span>
-                <span class="dot" style="background:#fbbf24"></span>
-                <span class="dot" style="background:#34d399"></span>
-                <span class="bar w-50" style="height:.28rem;margin-left:.3rem"></span>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">~/dev/terminal — zsh</span>
               </div>
-              <div class="hero mono" style="gap:.3rem;justify-content:flex-start">
-                <span class="cap">$ whoami</span>
-                <span class="bar bar-accent w-75" style="height:.45rem"></span>
-                <span class="bar w-90" style="height:.3rem"></span>
-                <span class="bar w-60" style="height:.3rem"></span>
-                <span class="cap" style="margin-top:.3rem">$ ls ./projects</span>
-                <div class="grid3">
-                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
-                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
-                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
+              <div class="shot-view">
+                <div class="pg pg-term">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">&gt;_</span>dev@portfolio</div>
+                    <div class="pg-links"><span class="on">~/</span><span>./skills</span><span>./repos</span><span>./contact</span></div>
+                    <div class="pg-btn">ssh hola</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div class="pg-console">
+                      <div class="bar"><i></i><i></i><i></i></div>
+                      <pre><span class="c"># portafolio de ingeniería de plataforma</span>
+<span class="p">dev@usshi:~$</span> <span class="s">whoami</span>
+Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
+<span class="p">dev@usshi:~$</span> <span class="s">cat focus.txt</span>
+→ Confiabilidad: p99 de 210ms en 40M requests/día
+→ Costos: -42% en la factura de nube en dos trimestres
+→ Equipos: mentoría a 6 personas, 3 ascendidas a senior
+<span class="p">dev@usshi:~$</span> <span class="s">./hire --contact</span><span class="cursor">▊</span></pre>
+                    </div>
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-database"></i></div><h4>Postgres</h4><p>Particionado, índices, réplicas.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-dharmachakra"></i></div><h4>Kubernetes</h4><p>Deploys sin ventanas de mantenimiento.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-golang"></i></div><h4>Go</h4><p>Servicios que corren en 12MB de RAM.</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>uptime: 8 años</span><span>status: open_to_work</span></div>
                 </div>
               </div>
-              <div class="row spread">
-                <span class="bar w-40" style="height:.28rem"></span>
-                <span class="pill" style="width:3.2rem"></span>
-              </div>
+              <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1548,7 +1993,7 @@
                 DevOps y SREs que quieren que su portfolio hable su idioma.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Consola interactiva (<code class="font-mono">help</code>, <code class="font-mono">ls</code>)</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Consola interactiva (<code class="font-mono">help</code>, <code class="font-mono">ls</code>, <code class="font-mono">git</code>)</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Efecto máquina de escribir</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Repositorios y stack en vivo</li>
               </ul>
@@ -1568,13 +2013,41 @@
           <!-- ===== Hecho a medida ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal flex flex-col transition-all duration-300 hover:border-neon-cyan/40 hover:-translate-y-1"
                    data-template="custom">
-            <div class="tpl-mock mock-noir" aria-hidden="true" style="justify-content:center;align-items:center;gap:.5rem">
-              <span class="tpl-flag">A medida</span>
-              <i class="fa-solid fa-wand-magic-sparkles text-2xl" style="color:#22d3ee"></i>
-              <span class="bar-lg bar-accent w-50"></span>
-              <span class="bar w-75"></span>
-              <span class="bar w-60"></span>
-              <span class="cap" style="margin-top:.4rem">tu idea → tu diseño</span>
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">tu-proyecto.app — en blanco</span>
+              </div>
+              <div class="shot-view">
+                <div class="pg pg-blank">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">?</span>Tu marca</div>
+                    <div class="pg-links"><span>Tu sección</span><span>Tu sección</span><span>Tu sección</span></div>
+                    <div class="pg-btn">Tu CTA</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Lienzo en blanco</div>
+                      <div class="pg-h1">¿Qué vamos a <em>construir</em>?</div>
+                      <div class="pg-lead">Me cuentas el objetivo y te propongo una maqueta antes de escribir una línea de código.</div>
+                      <div class="pg-btns"><span class="pg-btn">Empezar</span><span class="pg-btn alt">Ver proceso</span></div>
+                    </div>
+                    <div class="pg-ph">
+                      <i class="fa-regular fa-image"></i>
+                      <span>tu contenido aquí</span>
+                    </div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-g3">
+                      <div class="pg-ph sm"><span>bloque 01</span></div>
+                      <div class="pg-ph sm"><span>bloque 02</span></div>
+                      <div class="pg-ph sm"><span>bloque 03</span></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>estructura y colores: los que tú necesites</span></div>
+                </div>
+              </div>
+              <span class="shot-flag">A medida</span>
             </div>
             <div class="p-3 pt-4 flex flex-col grow">
               <div class="flex items-center justify-between gap-3 mb-2">
@@ -1583,13 +2056,12 @@
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
                 Si ninguna plantilla encaja, la diseñamos desde cero con tus requerimientos:
-                tu marca, tu contenido, tus funcionalidades. Me cuentas el objetivo y te
-                propongo una maqueta antes de escribir una línea de código.
+                tu marca, tu contenido, tus funcionalidades.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted grow">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Maqueta previa a decidir</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Integraciones a medida (APIs, CMS, pagos)</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Código tuyo, sin licencias ni dependencias raras</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Maqueta aprobada antes de cotizar</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Integraciones a medida (pagos, CRM, APIs)</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Código tuyo, sin licencias ni suscripciones</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
                 <button type="button" data-request="custom"
@@ -1601,6 +2073,7 @@
           </article>
 
         </div>
+
 
         <!-- Nota de alcance -->
         <div class="mt-10 glass rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 reveal">
@@ -1787,6 +2260,9 @@
         <h3 id="tplModalTitle" class="text-2xl md:text-3xl font-bold t-text-strong tracking-tight mb-3"></h3>
         <p id="tplModalLead" class="text-sm t-text-muted leading-relaxed mb-6 max-w-2xl"></p>
         <div id="tplModalMock" class="mb-6"></div>
+          <p class="text-[11px] t-text-faint font-mono mb-6 -mt-3">
+            <i class="fa-solid fa-computer-mouse mr-1"></i>Desplaza dentro del marco para ver la pagina completa
+          </p>
         <div class="grid sm:grid-cols-2 gap-6 mb-7">
           <div>
             <h4 class="text-xs font-semibold t-text-strong uppercase tracking-wider mb-3">
@@ -2054,22 +2530,69 @@
           .map((i) => `<li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-neon-indigo text-[11px] mt-1"></i><span>${i}</span></li>`)
           .join('');
 
-        // Clonamos la miniatura de la tarjeta: misma maqueta, tamaño de panel
-        const source = document.querySelector(`[data-template="${key}"] .tpl-mock`);
+        // Clonamos el marco completo de la tarjeta: el mismo render real,
+        // mas grande y con scroll vertical dentro del panel.
+        const source = document.querySelector(`[data-template="${key}"] .shot`);
         mockBox.innerHTML = '';
         if (source) {
           const clone = source.cloneNode(true);
-          clone.style.maxWidth = '100%';
+          clone.classList.add('tpl-live');
           clone.removeAttribute('aria-hidden');
+          const flag = clone.querySelector('.shot-flag');
+          if (flag) flag.remove();
           mockBox.appendChild(clone);
+          fitShots(clone);
         }
         return true;
+      }
+
+      /* ------------------------------------------------------------------
+         ESCALA DE LAS MINIATURAS
+         La pagina dentro del marco mide siempre 1200px de ancho: es un
+         diseno real, no un dibujo. `zoom` la ajusta al ancho disponible,
+         asi la miniatura se ve nitida en cualquier pantalla y el modal
+         puede mostrarla casi a tamano real y dejar hacer scroll.
+         ------------------------------------------------------------------ */
+      function fitShots(scope) {
+        const roots = scope ? [scope] : Array.from(document.querySelectorAll('.shot'));
+        roots.forEach((shot) => {
+          const view = shot.querySelector('.shot-view');
+          const page = shot.querySelector('.pg');
+          if (!view || !page) return;
+          const w = view.clientWidth;
+          if (!w) return;
+          const live = shot.classList.contains('tpl-live');
+          // En el modal la pagina se ve casi a tamano real; si el panel es
+          // estrecho (movil) se fija una escala legible y se deja paneo
+          // horizontal en lugar de encoger el texto hasta perderlo.
+          const scale = live
+            ? Math.max(0.62, Math.min(1, (w - 2) / 1200))
+            : w / 1200;
+          page.style.zoom = scale.toFixed(4);
+          if (live) {
+            view.style.overflowX = 1200 * scale > w + 1 ? 'auto' : 'hidden';
+          }
+        });
+      }
+
+      fitShots();
+      let shotTimer = null;
+      window.addEventListener('resize', () => {
+        clearTimeout(shotTimer);
+        shotTimer = setTimeout(() => fitShots(), 120);
+      });
+      window.addEventListener('load', () => fitShots());
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => fitShots());
       }
 
       function open(key) {
         if (!fill(key)) return;
         lastFocus = document.activeElement;
         modal.classList.add('is-open');
+        // Con el modal ya visible es cuando el clon tiene ancho real:
+        // fitShots() dentro de fill() habria medido 0px.
+        fitShots(modal.querySelector('.shot'));
         modal.setAttribute('aria-hidden', 'false');
 
         // Bloqueamos el scroll sin perder la posición de la página
