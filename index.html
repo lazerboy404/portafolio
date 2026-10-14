@@ -447,6 +447,235 @@
       color: var(--text-strong);
       background: rgba(34, 211, 238, 0.08);
     }
+
+    /* ============================================================
+       PLANTILLAS — Miniaturas wireframe (CSS puro, sin imágenes)
+       Cada mock pinta el esqueleto del layout con su propia paleta.
+       ============================================================ */
+    .tpl-mock {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      border: 1px solid var(--mock-edge, var(--glass-border));
+      background: var(--mock-bg);
+      padding: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    .tpl-card:hover .tpl-mock { transform: scale(1.035); }
+
+    .tpl-mock .bar {
+      display: block;
+      height: 0.35rem;
+      border-radius: 999px;
+      background: var(--mock-line);
+    }
+    .tpl-mock .bar-lg { height: 0.7rem; border-radius: 0.25rem; }
+    .tpl-mock .bar-accent { background: var(--mock-accent); }
+    .tpl-mock .row { display: flex; gap: 0.4rem; align-items: center; }
+    .tpl-mock .spread { justify-content: space-between; }
+    .tpl-mock .stack { display: flex; flex-direction: column; gap: 0.35rem; }
+    .tpl-mock .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+    .tpl-mock .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
+    .tpl-mock .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; }
+    .tpl-mock .blk {
+      border-radius: 0.4rem;
+      background: var(--mock-soft);
+      min-height: 1.7rem;
+      padding: 0.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      justify-content: center;
+    }
+    .tpl-mock .blk > .bar { width: 100%; }
+    .tpl-mock .grow { flex: 1; }
+    .tpl-mock .w-25 { width: 25%; }
+    .tpl-mock .w-40 { width: 40%; }
+    .tpl-mock .w-50 { width: 50%; }
+    .tpl-mock .w-60 { width: 60%; }
+    .tpl-mock .w-75 { width: 75%; }
+    .tpl-mock .w-90 { width: 90%; }
+    .tpl-mock .spacer { flex: 1; }
+    .tpl-mock .dot {
+      width: 0.6rem; height: 0.6rem;
+      border-radius: 999px;
+      background: var(--mock-accent);
+      flex: none;
+    }
+    .tpl-mock .pill {
+      height: 0.95rem; width: 2.6rem;
+      border-radius: 0.3rem;
+      background: var(--mock-accent);
+      flex: none;
+    }
+    .tpl-mock .pill-ghost {
+      height: 0.95rem; width: 2.2rem;
+      border-radius: 0.3rem;
+      border: 1px solid var(--mock-line);
+      flex: none;
+    }
+    .tpl-mock .logo {
+      width: 1.1rem; height: 1.1rem;
+      border-radius: 0.3rem;
+      background: var(--mock-accent);
+      flex: none;
+    }
+    .tpl-mock .hero {
+      flex: 1;
+      border-radius: 0.5rem;
+      background: var(--mock-hero);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      justify-content: center;
+      padding: 0.7rem;
+    }
+    .tpl-mock .mono { font-family: 'JetBrains Mono', monospace; }
+    .tpl-mock .cap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.04em;
+      color: var(--mock-accent);
+      line-height: 1;
+    }
+
+    /* Paletas de cada plantilla (no dependen del tema activo:
+       la miniatura siempre muestra el color real del template) */
+    .mock-noir {
+      --mock-bg: #0b1120;
+      --mock-edge: rgba(34, 211, 238, 0.25);
+      --mock-line: rgba(226, 232, 240, 0.22);
+      --mock-soft: rgba(255, 255, 255, 0.06);
+      --mock-accent: #22d3ee;
+      --mock-hero: linear-gradient(135deg, rgba(34,211,238,0.16), rgba(129,140,248,0.12));
+    }
+    .mock-paper {
+      --mock-bg: #ffffff;
+      --mock-edge: rgba(15, 23, 42, 0.12);
+      --mock-line: rgba(15, 23, 42, 0.14);
+      --mock-soft: rgba(15, 23, 42, 0.045);
+      --mock-accent: #0f172a;
+      --mock-hero: rgba(15, 23, 42, 0.03);
+    }
+    .mock-bolt {
+      --mock-bg: #fff7ed;
+      --mock-edge: rgba(249, 115, 22, 0.35);
+      --mock-line: rgba(124, 45, 18, 0.20);
+      --mock-soft: rgba(249, 115, 22, 0.10);
+      --mock-accent: #f97316;
+      --mock-hero: linear-gradient(135deg, rgba(249,115,22,0.22), rgba(236,72,153,0.14));
+    }
+    .mock-corp {
+      --mock-bg: #f8fafc;
+      --mock-edge: rgba(37, 99, 235, 0.28);
+      --mock-line: rgba(15, 23, 42, 0.16);
+      --mock-soft: rgba(37, 99, 235, 0.07);
+      --mock-accent: #2563eb;
+      --mock-hero: linear-gradient(135deg, rgba(37,99,235,0.14), rgba(14,165,233,0.10));
+    }
+    .mock-canvas {
+      --mock-bg: #faf5ff;
+      --mock-edge: rgba(167, 139, 250, 0.32);
+      --mock-line: rgba(76, 29, 149, 0.18);
+      --mock-soft: rgba(167, 139, 250, 0.12);
+      --mock-accent: #a78bfa;
+      --mock-hero: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(236,72,153,0.12));
+    }
+    .mock-term {
+      --mock-bg: #05070d;
+      --mock-edge: rgba(52, 211, 153, 0.30);
+      --mock-line: rgba(148, 163, 184, 0.26);
+      --mock-soft: rgba(52, 211, 153, 0.07);
+      --mock-accent: #34d399;
+      --mock-hero: rgba(52, 211, 153, 0.06);
+    }
+
+    /* Chip de estado "Disponible" sobre la miniatura */
+    .tpl-flag {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      z-index: 2;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 0.3rem;
+      background: rgba(2, 6, 23, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #e2e8f0;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ============================================================
+       PLANTILLAS — Modal de vista previa
+       ============================================================ */
+    .tpl-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+    }
+    .tpl-modal.is-open { display: block; }
+    .tpl-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: tpl-fade 0.25s ease;
+    }
+    .tpl-modal-panel {
+      position: relative;
+      margin: 5vh auto;
+      width: calc(100% - 2rem);
+      max-width: 52rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 1.25rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 30px 80px -20px rgba(2, 6, 23, 0.6);
+      animation: tpl-rise 0.3s ease;
+    }
+    @keyframes tpl-fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes tpl-rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    body.tpl-lock {
+      /* position:fixed + top negativo = bloquear scroll sin saltar al inicio */
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+    .tpl-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 3;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tpl-close:hover { color: var(--text-strong); border-color: rgba(34, 211, 238, 0.5); }
   </style>
 </head>
 
@@ -512,6 +741,7 @@
             <li><a href="#about"    class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Sobre mí</a></li>
             <li><a href="#skills"   class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Habilidades</a></li>
             <li><a href="#projects" class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Proyectos</a></li>
+            <li><a href="#templates" class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Plantillas</a></li>
             <li><a href="#contact"  class="block px-3 py-2.5 rounded-lg t-text-muted hover:t-text-strong t-hover-bg transition-colors">Contacto</a></li>
             <li class="pt-2">
               <a href="#contact" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
@@ -575,6 +805,11 @@
                 <i class="fa-solid fa-rocket"></i>
                 Ver proyectos
                 <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+              <a href="#templates"
+                 class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-lg border t-border-faint t-text-base font-semibold text-sm md:text-base">
+                <i class="fa-solid fa-table-cells-large"></i>
+                Ver plantillas
               </a>
               <a href="#contact"
                  class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-lg border t-border-faint t-text-base font-semibold text-sm md:text-base">
@@ -1003,13 +1238,393 @@
     </section>
 
     <!-- ============================================================
+         PLANTILLAS SECTION — Catálogo de diseños
+         ============================================================ -->
+    <section id="templates" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Encabezado de sección -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 reveal">
+          <div class="max-w-2xl">
+            <p class="text-neon-cyan font-mono text-sm mb-3">// 04 · Plantillas</p>
+            <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
+              ¿No sabes por dónde empezar? <span class="gradient-text">Elige un diseño</span>.
+            </h3>
+            <p class="mt-4 t-text-muted leading-relaxed">
+              Estas son las plantillas que ya tengo construidas y listas para publicar.
+              Eliges la que más te guste, la personalizamos con tu contenido y queda viva en días.
+              ¿Ninguna encaja con lo que tienes en mente? También la construimos desde cero,
+              con tus requerimientos exactos.
+            </p>
+          </div>
+          <a href="#contact"
+             class="shrink-0 inline-flex items-center gap-2 text-sm font-medium t-text-muted hover:text-neon-cyan transition-colors">
+            Prefiero algo a medida <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Grid de plantillas -->
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+          <!-- ===== Plantilla 1 — Neón (esta misma) ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-cyan/40 hover:-translate-y-1 hover:shadow-glow-cyan"
+                   data-template="neon">
+            <div class="tpl-mock mock-noir" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row spread">
+                <div class="row gap-2" style="gap:.3rem"><span class="logo"></span><span class="bar w-25"></span></div>
+                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="pill"></span></div>
+              </div>
+              <div class="hero">
+                <span class="cap">// 01 · hero</span>
+                <span class="bar-lg bar-accent w-60"></span>
+                <span class="bar w-90"></span>
+                <span class="bar w-75"></span>
+                <div class="row" style="gap:.35rem;margin-top:.25rem"><span class="pill"></span><span class="pill-ghost"></span></div>
+              </div>
+              <div class="grid3">
+                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
+                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
+                <div class="blk"><span class="bar"></span><span class="bar w-60"></span></div>
+              </div>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Techunlock Neón</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-cyan">Dark / Light</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                El diseño de esta página: glassmorphism, acentos neón y mascota animada.
+                Ideal para desarrolladores y productos tech que quieren verse modernos.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Tema claro/oscuro con persistencia</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Hero animado + 5 secciones</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Galería de proyectos con filtros</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="neon"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="neon"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 2 — Minimal Paper ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-indigo/40 hover:-translate-y-1 hover:shadow-glow-indigo"
+                   data-template="paper">
+            <div class="tpl-mock mock-paper" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row spread">
+                <span class="bar w-40"></span>
+                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="bar w-25"></span></div>
+              </div>
+              <div class="hero" style="align-items:center;text-align:center">
+                <span class="cap">curriculum · 2026</span>
+                <span class="bar-lg w-60" style="margin:0 auto"></span>
+                <span class="bar w-75" style="margin:0 auto"></span>
+                <span class="bar w-50" style="margin:0 auto"></span>
+              </div>
+              <div class="grid2">
+                <div class="blk"><span class="bar w-60"></span><span class="bar"></span><span class="bar w-90"></span></div>
+                <div class="blk"><span class="bar w-60"></span><span class="bar"></span><span class="bar w-90"></span></div>
+              </div>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Minimal Paper</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-indigo">Editorial</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Blanco, tipografía grande y cero distracciones. Lo que importa se lee,
+                todo lo demás desaparece. Perfecto para CV digital y perfiles senior.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Una columna, lectura rápida</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Formato imprimible / PDF</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Carga casi instantánea</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="paper"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="paper"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 3 — Bold Creative ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-orange-400/50 hover:-translate-y-1"
+                   data-template="bolt">
+            <div class="tpl-mock mock-bolt" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row spread">
+                <span class="bar-lg bar-accent w-40"></span>
+                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="pill"></span></div>
+              </div>
+              <div class="row grow" style="align-items:stretch;gap:.45rem">
+                <div class="stack grow" style="justify-content:center">
+                  <span class="cap">hola · soy</span>
+                  <span class="bar-lg w-90"></span>
+                  <span class="bar-lg bar-accent w-75"></span>
+                  <span class="bar w-60"></span>
+                </div>
+                <div class="blk" style="width:38%;border-radius:.6rem"></div>
+              </div>
+              <div class="grid4">
+                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
+                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
+                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
+                <div class="blk" style="min-height:1.2rem"><span class="bar"></span></div>
+              </div>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Bold Creative</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-orange-400">Alto impacto</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Colores saturados, tipografía enorme y bloques asimétricos. Para portfolios
+                de diseño, branding, fotografía y creadores que quieren que los recuerden.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Grid editorial asimétrico</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Animaciones al hacer scroll</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Galería full-bleed</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="bolt"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="bolt"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 4 — Corporate Clean ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-sky-400/50 hover:-translate-y-1"
+                   data-template="corp">
+            <div class="tpl-mock mock-corp" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row spread">
+                <div class="row" style="gap:.3rem"><span class="logo"></span><span class="bar w-40"></span></div>
+                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="bar w-25"></span><span class="pill"></span></div>
+              </div>
+              <div class="row" style="gap:.45rem;flex:none">
+                <div class="stack" style="flex:1.3;gap:.3rem">
+                  <span class="bar-lg w-90"></span>
+                  <span class="bar w-75"></span>
+                  <div class="row" style="gap:.35rem"><span class="pill"></span><span class="pill-ghost"></span></div>
+                </div>
+                <div class="blk" style="flex:1;min-height:3rem"></div>
+              </div>
+              <div class="grid3">
+                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
+                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
+                <div class="blk"><span class="dot"></span><span class="bar w-60"></span></div>
+              </div>
+              <span class="bar w-90" style="height:.28rem;margin-top:auto"></span>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Corporate Clean</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-sky-400">Negocio</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Estructura clara, azul corporativo y secciones de servicio. Para agencias,
+                consultoras y freelancers que le venden a empresas.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Servicios + precios + FAQ</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Pruebas sociales y logos de clientes</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Formulario de cotización</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="corp"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="corp"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 5 — Creative Canvas ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-violet/50 hover:-translate-y-1"
+                   data-template="canvas">
+            <div class="tpl-mock mock-canvas" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row spread">
+                <span class="bar-lg bar-accent w-25"></span>
+                <div class="row" style="gap:.3rem"><span class="bar w-25"></span><span class="bar w-25"></span><span class="dot"></span></div>
+              </div>
+              <div class="grid2 grow" style="grid-template-rows:1fr 1fr;gap:.4rem">
+                <div class="blk" style="grid-row:span 2;justify-content:flex-start"><span class="cap">work · 01</span><span class="bar-lg w-75"></span><span class="bar w-60"></span></div>
+                <div class="blk"><span class="bar w-60"></span></div>
+                <div class="blk"><span class="bar w-90"></span></div>
+              </div>
+              <div class="row" style="gap:.3rem;justify-content:flex-end">
+                <span class="pill-ghost"></span><span class="pill-ghost"></span><span class="pill"></span>
+              </div>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Creative Canvas</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-violet">Masonry</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Mosaico tipo galería, degradados suaves y mucho aire. Pensada para ilustradores,
+                diseñadores UX y cualquier portfolio donde la imagen manda.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Mosaico responsive con lightbox</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Filtros por categoría</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Caso de estudio por pieza</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="canvas"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="canvas"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 6 — Dev Terminal ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-emerald-400/50 hover:-translate-y-1"
+                   data-template="term">
+            <div class="tpl-mock mock-term" aria-hidden="true">
+              <span class="tpl-flag">Disponible</span>
+              <div class="row" style="gap:.3rem">
+                <span class="dot" style="background:#f87171"></span>
+                <span class="dot" style="background:#fbbf24"></span>
+                <span class="dot" style="background:#34d399"></span>
+                <span class="bar w-50" style="height:.28rem;margin-left:.3rem"></span>
+              </div>
+              <div class="hero mono" style="gap:.3rem;justify-content:flex-start">
+                <span class="cap">$ whoami</span>
+                <span class="bar bar-accent w-75" style="height:.45rem"></span>
+                <span class="bar w-90" style="height:.3rem"></span>
+                <span class="bar w-60" style="height:.3rem"></span>
+                <span class="cap" style="margin-top:.3rem">$ ls ./projects</span>
+                <div class="grid3">
+                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
+                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
+                  <div class="blk" style="min-height:1.1rem"><span class="bar"></span></div>
+                </div>
+              </div>
+              <div class="row spread">
+                <span class="bar w-40" style="height:.28rem"></span>
+                <span class="pill" style="width:3.2rem"></span>
+              </div>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Dev Terminal</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-emerald-400">Monospace</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Se abre como una terminal y se navega con comandos. Para ingenieros de backend,
+                DevOps y SREs que quieren que su portfolio hable su idioma.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Consola interactiva (<code class="font-mono">help</code>, <code class="font-mono">ls</code>)</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Efecto máquina de escribir</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Repositorios y stack en vivo</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="term"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="term"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Hecho a medida ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal flex flex-col transition-all duration-300 hover:border-neon-cyan/40 hover:-translate-y-1"
+                   data-template="custom">
+            <div class="tpl-mock mock-noir" aria-hidden="true" style="justify-content:center;align-items:center;gap:.5rem">
+              <span class="tpl-flag">A medida</span>
+              <i class="fa-solid fa-wand-magic-sparkles text-2xl" style="color:#22d3ee"></i>
+              <span class="bar-lg bar-accent w-50"></span>
+              <span class="bar w-75"></span>
+              <span class="bar w-60"></span>
+              <span class="cap" style="margin-top:.4rem">tu idea → tu diseño</span>
+            </div>
+            <div class="p-3 pt-4 flex flex-col grow">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Ninguna me convence</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-cyan">Desde cero</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Si ninguna plantilla encaja, la diseñamos desde cero con tus requerimientos:
+                tu marca, tu contenido, tus funcionalidades. Me cuentas el objetivo y te
+                propongo una maqueta antes de escribir una línea de código.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted grow">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Maqueta previa a decidir</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Integraciones a medida (APIs, CMS, pagos)</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-cyan text-[10px]"></i> Código tuyo, sin licencias ni dependencias raras</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-request="custom"
+                        class="grow inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold shadow-glow-cyan">
+                  <i class="fa-regular fa-paper-plane text-xs"></i> Contar mi idea
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Nota de alcance -->
+        <div class="mt-10 glass rounded-2xl px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 reveal">
+          <span class="w-10 h-10 shrink-0 rounded-lg bg-gradient-to-br from-neon-cyan to-neon-indigo flex items-center justify-center text-slate-900">
+            <i class="fa-solid fa-lightbulb"></i>
+          </span>
+          <p class="text-sm t-text-muted leading-relaxed">
+            <span class="t-text-strong font-semibold">Todas las plantillas incluyen</span>
+            diseño responsive, SEO básico, accesibilidad, tema claro/oscuro y despliegue
+            en GitHub Pages, Vercel o Netlify. Puedes mezclar secciones de varias:
+            el diseño de esta página con la galería de Creative Canvas, por ejemplo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
          CONTACT SECTION
          ============================================================ -->
     <section id="contact" class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
 
         <div class="max-w-2xl mb-14 reveal">
-          <p class="text-neon-cyan font-mono text-sm mb-3">// 04 · Contacto</p>
+          <p class="text-neon-cyan font-mono text-sm mb-3">// 05 · Contacto</p>
           <h3 class="text-3xl md:text-4xl font-bold t-text-strong tracking-tight">
             ¿Tienes una idea? <span class="gradient-text">Construyámosla juntos</span>.
           </h3>
@@ -1159,6 +1774,52 @@
   </footer>
 
   <!-- ============================================================
+       PLANTILLAS — Modal de vista previa (rellenado por JS)
+       ============================================================ -->
+  <div id="tplModal" class="tpl-modal" role="dialog" aria-modal="true" aria-labelledby="tplModalTitle" aria-hidden="true">
+    <div class="tpl-modal-backdrop" data-close="1"></div>
+    <div class="tpl-modal-panel">
+      <button type="button" class="tpl-close" data-close="1" aria-label="Cerrar vista previa">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="p-6 md:p-8">
+        <p id="tplModalKicker" class="text-neon-cyan font-mono text-xs mb-2 uppercase tracking-wider"></p>
+        <h3 id="tplModalTitle" class="text-2xl md:text-3xl font-bold t-text-strong tracking-tight mb-3"></h3>
+        <p id="tplModalLead" class="text-sm t-text-muted leading-relaxed mb-6 max-w-2xl"></p>
+        <div id="tplModalMock" class="mb-6"></div>
+        <div class="grid sm:grid-cols-2 gap-6 mb-7">
+          <div>
+            <h4 class="text-xs font-semibold t-text-strong uppercase tracking-wider mb-3">
+              <i class="fa-solid fa-cube mr-1.5 text-neon-cyan"></i>Incluye
+            </h4>
+            <ul id="tplModalIncludes" class="space-y-2 text-sm t-text-muted"></ul>
+          </div>
+          <div>
+            <h4 class="text-xs font-semibold t-text-strong uppercase tracking-wider mb-3">
+              <i class="fa-solid fa-user-astronaut mr-1.5 text-neon-indigo"></i>Ideal para
+            </h4>
+            <ul id="tplModalAudience" class="space-y-2 text-sm t-text-muted"></ul>
+            <p id="tplModalMeta" class="mt-4 text-xs t-text-faint font-mono"></p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 pt-5 border-t t-divide">
+          <button type="button" id="tplModalRequest"
+                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg btn-primary text-slate-900 font-semibold text-sm">
+            <i class="fa-solid fa-arrow-right text-xs"></i> Quiero esta plantilla
+          </button>
+          <button type="button" data-close="1"
+                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base font-semibold text-sm">
+            Ver más diseños
+          </button>
+          <p class="text-xs t-text-faint grow sm:text-right min-w-full sm:min-w-0">
+            Vista previa esquemática · el contenido se adapta a tu proyecto
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
        JAVASCRIPT — Interacciones mínimas
        ============================================================ -->
   <script>
@@ -1273,9 +1934,10 @@
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const name    = form.name.value.trim();
-        const email   = form.email.value.trim();
-        const message = form.message.value.trim();
+        // form.elements evita el shadowing de HTMLFormElement.name (devolvía '')
+        const name    = form.elements.name.value.trim();
+        const email   = form.elements.email.value.trim();
+        const message = form.elements.message.value.trim();
         const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         const showError = (text) => {
@@ -1296,6 +1958,194 @@
         setTimeout(() => feedback.classList.add('hidden'), 6000);
       });
     }
+
+    // ============================================================
+    // PLANTILLAS — Catálogo, vista previa y solicitud
+    // ============================================================
+    (function () {
+      const modal = document.getElementById('tplModal');
+      if (!modal) return;
+
+      const TEMPLATES = {
+        neon: {
+          kicker: 'Plantilla 01 · Techunlock Neón',
+          title: 'Techunlock Neón',
+          lead: 'Glassmorphism, acentos neón y una mascota animada que sigue el cursor. Es el diseño de esta misma página: oscuro por defecto con alternativa clara, y pensado para que un perfil técnico se vea moderno sin parecer plantilla comprada.',
+          includes: ['Tema claro/oscuro con persistencia', 'Hero con mascota SVG animada', 'Secciones de proyectos con chips de stack', 'Formulario de contacto validado'],
+          audience: ['Desarrolladores full-stack', 'SaaS y productos tech', 'Freelancers que quieren impacto'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        paper: {
+          kicker: 'Plantilla 02 · Minimal Paper',
+          title: 'Minimal Paper',
+          lead: 'Fondo blanco, tipografía grande y jerarquía estricta. Nada compite por la atención: quien entra lee quién eres y qué haces, en menos de diez segundos.',
+          includes: ['Una columna de lectura rápida', 'Hoja de estilos imprimible (CV en PDF)', 'Enlaces a repos y publicaciones', 'Sin dependencias pesadas'],
+          audience: ['Perfiles senior y consultores', 'CV digital para reclutadores', 'Escritores y analistas'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        bolt: {
+          kicker: 'Plantilla 03 · Bold Creative',
+          title: 'Bold Creative',
+          lead: 'Color saturado, tipografía enorme y bloques asimétricos. Es la que se recuerda después de cerrarla: para trabajo creativo que necesita defenderse con presencia.',
+          includes: ['Grid editorial asimétrico', 'Animaciones al hacer scroll', 'Galería de obras a sangre completa', 'Microinteracciones en hover'],
+          audience: ['Diseñadores y branding', 'Fotógrafos y ilustradores', 'Creadores de contenido'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        corp: {
+          kicker: 'Plantilla 04 · Corporate Clean',
+          title: 'Corporate Clean',
+          lead: 'Estructura predecible, azul corporativo y secciones orientadas a conversión: qué haces, para quién, cuánto importa y cómo empezar.',
+          includes: ['Bloques de servicios y proceso', 'Pruebas sociales y logos de clientes', 'Formulario de cotización', 'FAQ y política de alcance'],
+          audience: ['Agencias y consultoras', 'Freelancers que venden a empresas', 'Startups en fase comercial'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        canvas: {
+          kicker: 'Plantilla 05 · Creative Canvas',
+          title: 'Creative Canvas',
+          lead: 'Mosaico tipo galería con degradados suaves y mucho aire entre piezas. La imagen manda y el texto solo aparece cuando el visitante lo pide.',
+          includes: ['Mosaico responsive con lightbox', 'Filtros por categoría de trabajo', 'Página de caso de estudio por pieza', 'Modo oscuro opcional'],
+          audience: ['Diseñadores UX / UI', 'Ilustradores y artistas', 'Estudios creativos pequeños'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        term: {
+          kicker: 'Plantilla 06 · Dev Terminal',
+          title: 'Dev Terminal',
+          lead: 'Se abre como una consola y se navega escribiendo comandos. Es un filtro divertido: quien llega hasta `contact` es exactamente el cliente que quieres.',
+          includes: ['Consola interactiva (help, ls, open)', 'Efecto máquina de escribir', 'Repositorios y stack en vivo', 'Modo clásico para quien no quiera comandos'],
+          audience: ['Backend, DevOps y SRE', 'Hacker y security research', 'Estudiantes de ingeniería'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        custom: {
+          kicker: 'Hecho a medida',
+          title: 'Ninguna me convence: la hacemos a medida',
+          lead: 'También funciona así: me cuentas el objetivo, para quién es y qué tiene que hacer el visitante al llegar. Con eso propongo una maqueta antes de escribir código, y ajustamos hasta que sea exactamente lo que imaginaste.',
+          includes: ['Maqueta previa a decidir', 'Integraciones a medida (APIs, CMS, pagos)', 'Panel o contenido editable si lo necesitas', 'Código tuyo, sin licencias raras'],
+          audience: ['Negocios con un flujo concreto', 'Productos que ya tienen marca', 'Cualquiera que no quiera encajar en plantilla'],
+          meta: 'Alcance y plazo se definen en la primera conversación',
+        },
+      };
+
+      const title    = document.getElementById('tplModalTitle');
+      const kicker   = document.getElementById('tplModalKicker');
+      const lead     = document.getElementById('tplModalLead');
+      const mockBox  = document.getElementById('tplModalMock');
+      const listInc  = document.getElementById('tplModalIncludes');
+      const listAud  = document.getElementById('tplModalAudience');
+      const meta     = document.getElementById('tplModalMeta');
+      const btnReq   = document.getElementById('tplModalRequest');
+      let lastFocus  = null;
+      let currentKey = null;
+      let scrollY    = 0;
+
+      function fill(key) {
+        const data = TEMPLATES[key];
+        if (!data) return false;
+        currentKey = key;
+
+        kicker.textContent = data.kicker;
+        title.textContent  = data.title;
+        lead.textContent   = data.lead;
+        meta.textContent   = data.meta;
+
+        listInc.innerHTML = data.includes
+          .map((i) => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-neon-cyan text-[11px] mt-1"></i><span>${i}</span></li>`)
+          .join('');
+        listAud.innerHTML = data.audience
+          .map((i) => `<li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-neon-indigo text-[11px] mt-1"></i><span>${i}</span></li>`)
+          .join('');
+
+        // Clonamos la miniatura de la tarjeta: misma maqueta, tamaño de panel
+        const source = document.querySelector(`[data-template="${key}"] .tpl-mock`);
+        mockBox.innerHTML = '';
+        if (source) {
+          const clone = source.cloneNode(true);
+          clone.style.maxWidth = '100%';
+          clone.removeAttribute('aria-hidden');
+          mockBox.appendChild(clone);
+        }
+        return true;
+      }
+
+      function open(key) {
+        if (!fill(key)) return;
+        lastFocus = document.activeElement;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+
+        // Bloqueamos el scroll sin perder la posición de la página
+        scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        document.body.classList.add('tpl-lock');
+        document.body.style.top = `-${scrollY}px`;
+
+        const closeBtn = modal.querySelector('.tpl-close');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function close() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.top = '';
+        document.body.classList.remove('tpl-lock');
+        window.scrollTo(0, scrollY);
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+      }
+
+      // Abrir desde las tarjetas
+      document.querySelectorAll('[data-preview]').forEach((btn) => {
+        btn.addEventListener('click', () => open(btn.getAttribute('data-preview')));
+      });
+
+      // Cerrar: backdrop, botón X, "Ver más diseños"
+      modal.querySelectorAll('[data-close]').forEach((el) => {
+        el.addEventListener('click', close);
+      });
+
+      // ESC y trap de foco
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') { close(); return; }
+        if (e.key !== 'Tab') return;
+        const focusables = modal.querySelectorAll('button, a[href], input, textarea, [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last  = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+
+      // "Quiero esta" / "Contar mi idea" → lleva al formulario y lo prepara
+      const message = form && form.elements.message ? form.elements.message : null;
+
+      function requestTemplate(key) {
+        const data = TEMPLATES[key];
+        const label = data ? data.title : 'a medida';
+        close();
+
+        const contact = document.getElementById('contact');
+        if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (message) {
+          const intro = key === 'custom'
+            ? 'Quiero hablar de un proyecto a medida. Mi idea es: '
+            : `Me interesa la plantilla "${label}". Me gustaría personalizarla con mi contenido. `;
+          if (!message.value.trim()) {
+            message.value = intro;
+          } else if (!message.value.includes(label)) {
+            message.value = `${message.value.trim()}\n\n${intro}`;
+          }
+          // Pequeño delay para que el scroll suave no se coma el foco
+          setTimeout(() => {
+            message.focus({ preventScroll: true });
+            message.setSelectionRange(message.value.length, message.value.length);
+          }, 450);
+        }
+      }
+
+      btnReq.addEventListener('click', () => requestTemplate(currentKey));
+      document.querySelectorAll('[data-request]').forEach((btn) => {
+        btn.addEventListener('click', () => requestTemplate(btn.getAttribute('data-request')));
+      });
+    })();
   </script>
 </body>
 </html>
