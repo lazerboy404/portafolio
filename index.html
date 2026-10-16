@@ -978,6 +978,9 @@
       max-width: 64rem;
       max-height: 92vh;
       overflow-y: auto;
+      /* Sin esto, al llegar al final del modal el scroll "rebota" al
+         documento y la pagina se mueve aunque el gesto nacia dentro. */
+      overscroll-behavior: contain;
       border-radius: 1.25rem;
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -991,13 +994,13 @@
       from { opacity: 0; transform: translateY(18px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    body.tpl-lock {
-      /* position:fixed + top negativo = bloquear scroll sin saltar al inicio */
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      overflow: hidden;
-    }
+    /* Candado de scroll: NUNCA overflow/clip en la raiz. Medido en Chromium:
+       al volver no-scrolleable el <html> el navegador descarta el offset y la
+       pagina se va a 0 (antes=10934, abierto=0). El bloqueo se hace cancelando
+       los eventos wheel/touchmove que vengan de fuera del panel. */
+
+    /* Ya no se oculta la barra de la raiz, asi que no hace falta reservar
+       gutter: no hay reflujo al abrir/cerrar. */
     .tpl-close {
       position: absolute;
       top: 1rem;
@@ -1607,10 +1610,7 @@
               ¿No sabes por dónde empezar? <span class="gradient-text">Elige un diseño</span>.
             </h3>
             <p class="mt-4 t-text-muted leading-relaxed">
-              Estas son las plantillas que ya tengo construidas y listas para publicar.
-              Eliges la que más te guste, la personalizamos con tu contenido y queda viva en días.
-              ¿Ninguna encaja con lo que tienes en mente? También la construimos desde cero,
-              con tus requerimientos exactos.
+              Eliges la que más te guste, la personalizamos con tu contenido y queda viva en días. ¿Ninguna encaja con lo que tienes en mente? También la construimos desde cero, con tus requerimientos exactos.
             </p>
           </div>
           <a href="#contact"
@@ -2161,14 +2161,14 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
           <aside class="lg:col-span-2 space-y-6 reveal">
 
             <!-- Tarjeta de email -->
-            <a href="mailto:hola@techunlock.dev"
+            <a href="mailto:contacto.techunlock@gmail.com"
                class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-neon-cyan/40 transition-all duration-300 hover:-translate-y-1 block">
               <span class="w-11 h-11 rounded-lg bg-neon-cyan/10 text-neon-cyan flex items-center justify-center shrink-0">
                 <i class="fa-regular fa-envelope"></i>
               </span>
               <div class="min-w-0">
                 <p class="text-xs t-text-muted">Email</p>
-                <p class="text-sm t-text-strong font-medium truncate">hola@techunlock.dev</p>
+                <p class="text-sm t-text-strong font-medium truncate">contacto.techunlock@gmail.com</p>
               </div>
               <i class="fa-solid fa-arrow-up-right-from-square text-xs t-text-faint ml-auto"></i>
             </a>
@@ -2180,7 +2180,7 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
               </span>
               <div>
                 <p class="text-xs t-text-muted">Ubicación</p>
-                <p class="text-sm t-text-strong font-medium">Madrid, España · Remoto</p>
+                <p class="text-sm t-text-strong font-medium">CDMX, México · Remoto</p>
               </div>
             </div>
 
@@ -2200,7 +2200,7 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
                    class="social-btn hover:border-neon-cyan/40">
                   <i class="fa-brands fa-x-twitter text-lg"></i>
                 </a>
-                <a href="mailto:hola@techunlock.dev" aria-label="Email"
+                <a href="mailto:contacto.techunlock@gmail.com" aria-label="Email"
                    class="social-btn hover:border-neon-violet/40">
                   <i class="fa-regular fa-envelope text-lg"></i>
                 </a>
@@ -2511,7 +2511,6 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
       const btnReq   = document.getElementById('tplModalRequest');
       let lastFocus  = null;
       let currentKey = null;
-      let scrollY    = 0;
 
       function fill(key) {
         const data = TEMPLATES[key];
@@ -2586,6 +2585,15 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
         document.fonts.ready.then(() => fitShots());
       }
 
+      // Bloqueo de scroll con el modal abierto: cancela solo los gestos que
+      // nacen fuera del panel, asi el documento no se mueve y el contenido
+      // del modal sigue scrolleable. No toca el offset de la raiz.
+      function blockOutsidePanel(e) {
+        const panel = modal.querySelector('.tpl-modal-panel');
+        if (panel && panel.contains(e.target)) return;
+        e.preventDefault();
+      }
+
       function open(key) {
         if (!fill(key)) return;
         lastFocus = document.activeElement;
@@ -2595,21 +2603,24 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
         fitShots(modal.querySelector('.shot'));
         modal.setAttribute('aria-hidden', 'false');
 
-        // Bloqueamos el scroll sin perder la posición de la página
-        scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-        document.body.classList.add('tpl-lock');
-        document.body.style.top = `-${scrollY}px`;
+        // Bloqueo el scroll sin tocar la raiz: overflow hidden/clip en <html>
+        // hace que Chromium descarte el offset y la pagina se vaya a 0
+        // (medido: antes=10934, abierto=0). Cancelar wheel/touchmove fuera
+        // del panel deja la posicion intacta y el modal sigue scrolleable.
+        document.addEventListener('wheel', blockOutsidePanel, { passive: false });
+        document.addEventListener('touchmove', blockOutsidePanel, { passive: false });
 
+        // preventScroll: sin el, enfocar la X (fixed arriba del viewport)
+        // subia el documento a 0 y ahi se quedaba al cerrar.
         const closeBtn = modal.querySelector('.tpl-close');
-        if (closeBtn) closeBtn.focus();
+        if (closeBtn) closeBtn.focus({ preventScroll: true });
       }
 
       function close() {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
-        document.body.style.top = '';
-        document.body.classList.remove('tpl-lock');
-        window.scrollTo(0, scrollY);
+        document.removeEventListener('wheel', blockOutsidePanel);
+        document.removeEventListener('touchmove', blockOutsidePanel);
         if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
       }
 
@@ -2627,13 +2638,22 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
       document.addEventListener('keydown', (e) => {
         if (!modal.classList.contains('is-open')) return;
         if (e.key === 'Escape') { close(); return; }
+        // Flechas/espacio/Home/End scrollearian el documento con el modal
+        // abierto. Se permite solo dentro del panel o en campos editables.
+        const scrollers = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' ', 'Home', 'End'];
+        if (scrollers.includes(e.key)) {
+          const panel = modal.querySelector('.tpl-modal-panel');
+          const tag = (document.activeElement.tagName || '').toLowerCase();
+          const editable = tag === 'input' || tag === 'textarea' || document.activeElement.isContentEditable;
+          if (!editable && !(panel && panel.contains(document.activeElement))) e.preventDefault();
+        }
         if (e.key !== 'Tab') return;
         const focusables = modal.querySelectorAll('button, a[href], input, textarea, [tabindex]:not([tabindex="-1"])');
         if (!focusables.length) return;
         const first = focusables[0];
         const last  = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus({ preventScroll: true }); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus({ preventScroll: true }); }
       });
 
       // "Quiero esta" / "Contar mi idea" → lleva al formulario y lo prepara
