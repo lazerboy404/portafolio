@@ -527,7 +527,7 @@
       -webkit-backdrop-filter: blur(4px);
     }
 
-    /* --- Framework de pagina (compartido por los 6 templates) --- */
+    /* --- Framework de pagina (compartido por los 8 templates) --- */
     .pg {
       width: 1200px;
       zoom: 0.24;                 /* JS lo ajusta al ancho real */
@@ -754,36 +754,80 @@
     .pg-paper .pg-logo { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0; }
     .pg-paper .pg-logo .mk { border-radius: 0; width: 26px; height: 26px; font-family: 'Playfair Display', serif; }
 
-    /* 03 · Bold Creative — display enorme, naranja, asimetrico */
-    .pg-bolt {
-      --tp-bg: #fff6ec;
-      --tp-strong: #14100e;
-      --tp-text: #574d45;
-      --tp-faint: #9b8d80;
-      --tp-accent: #ff4d1c;
-      --tp-on: #ffffff;
-      --tp-edge: rgba(20, 16, 14, 0.14);
-      --tp-edge2: rgba(20, 16, 14, 0.28);
-      --tp-card: #ffffff;
-      --tp-accent-soft: rgba(255, 77, 28, 0.12);
-      --tp-nav-bg: #fff6ec;
-      --tp-alt-bg: #ffffff;
-      --tp-hero-bg: #fff6ec;
-      --tp-shadow: 0 22px 0 -6px rgba(20, 16, 14, 0.9);
-      --tp-font: 'Space Grotesk', sans-serif;
-      --tp-display: 'Syne', sans-serif;
+    /* 03 · Aurora Glass — vidrio violeta sobre negro (referencia del cliente) */
+    .pg-glass {
+      --tp-bg:
+        radial-gradient(720px 460px at 12% -6%, rgba(139, 92, 246, 0.30), transparent 62%),
+        radial-gradient(620px 420px at 92% 12%, rgba(167, 139, 250, 0.22), transparent 58%),
+        radial-gradient(760px 520px at 46% 108%, rgba(99, 102, 241, 0.20), transparent 60%),
+        #08060f;
+      --tp-strong: #ffffff;
+      --tp-text: #c6c1da;
+      --tp-faint: #8b84a3;
+      --tp-accent: #a78bfa;
+      --tp-on: #170f2b;
+      --tp-edge: rgba(255, 255, 255, 0.10);
+      --tp-edge2: rgba(167, 139, 250, 0.45);
+      --tp-card: rgba(255, 255, 255, 0.05);
+      --tp-accent-soft: rgba(139, 92, 246, 0.18);
+      --tp-nav-bg: rgba(255, 255, 255, 0.04);
+      --tp-alt-bg: rgba(255, 255, 255, 0.06);
+      --tp-hero-bg: transparent;
+      --tp-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+      --tp-font: 'Plus Jakarta Sans', sans-serif;
+      --tp-display: 'Plus Jakarta Sans', sans-serif;
       --tp-h-w: 800;
     }
-    .pg-bolt .pg-hero { grid-template-columns: 1.25fr 0.75fr; padding: 48px 56px 64px; }
-    .pg-bolt .pg-h1 { font-size: 92px; line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase; }
-    .pg-bolt .pg-h2 { font-size: 40px; text-transform: uppercase; letter-spacing: -0.03em; }
-    .pg-bolt .pg-btn { border-radius: 999px; box-shadow: 4px 4px 0 0 #14100e; }
-    .pg-bolt .pg-btn.alt { border-radius: 999px; box-shadow: 4px 4px 0 0 #14100e; }
-    .pg-bolt .pg-card { border-radius: 20px; border: 2px solid #14100e; box-shadow: 6px 6px 0 0 #14100e; }
-    .pg-bolt .pg-media { border-radius: 24px; border: 2px solid #14100e; }
-    .pg-bolt .pg-logo { font-family: 'Syne', sans-serif; font-size: 22px; text-transform: uppercase; }
-    .pg-bolt .pg-logo .mk { border-radius: 999px; }
-    .pg-bolt .pg-links { font-weight: 600; }
+    /* El vidrio solo funciona si lo que hay detras se ve borroso */
+    .pg-glass .pg-nav, .pg-glass .pg-card, .pg-glass .pg-glasspanel,
+    .pg-glass .pg-btn.alt, .pg-glass .pg-ic {
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+    }
+    .pg-glass .pg-nav { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .pg-glass .pg-hero { padding: 70px 56px; }
+    .pg-glass .pg-h1 { font-size: 58px; letter-spacing: -0.035em; }
+    .pg-glass .pg-h1 em { color: #a78bfa; }
+    .pg-glass .pg-card {
+      border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: 0 24px 48px -30px rgba(0, 0, 0, 0.9);
+    }
+    .pg-glass .pg-btn {
+      border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff;
+      box-shadow: 0 18px 40px -16px rgba(139, 92, 246, 0.7);
+    }
+    .pg-glass .pg-btn.alt { border-radius: 12px; border-color: rgba(255, 255, 255, 0.14); color: #fff; }
+    .pg-glass .pg-ic { border-radius: 12px; border: 1px solid rgba(167, 139, 250, 0.35); background: rgba(139, 92, 246, 0.16); }
+    .pg-glass .pg-sec, .pg-glass .pg-foot { border-color: rgba(255, 255, 255, 0.08); }
+    /* Panel de estadisticas de cristal: lo que define la referencia */
+    .pg-glass .pg-glasspanel {
+      border-radius: 22px; padding: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 34px 70px -34px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    .pg-glass .pg-glasspanel .hd {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+    }
+    .pg-glass .pg-glasspanel .hd h4 { font-size: 15px; font-weight: 700; color: #fff; }
+    .pg-glass .pg-glasspanel .hd span {
+      font-size: 11px; padding: 5px 11px; border-radius: 999px;
+      background: rgba(139, 92, 246, 0.20); border: 1px solid rgba(167, 139, 250, 0.35); color: #d6c9ff;
+    }
+    .pg-glass .pg-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .pg-glass .pg-mini .cell {
+      border-radius: 14px; padding: 14px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+    .pg-glass .pg-mini .cell b { display: block; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+    .pg-glass .pg-mini .cell span { font-size: 11px; color: var(--tp-faint); }
+    .pg-glass .pg-spark { display: flex; align-items: flex-end; gap: 5px; height: 74px; }
+    .pg-glass .pg-spark i {
+      flex: 1; display: block; border-radius: 4px 4px 0 0;
+      background: linear-gradient(180deg, #a78bfa, rgba(139, 92, 246, 0.25));
+    }
+    .pg-glass .pg-spark i.hi { background: linear-gradient(180deg, #c4b5fd, #7c3aed); box-shadow: 0 0 18px rgba(167, 139, 250, 0.65); }
+    .pg-glass .pg-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--tp-faint); margin-top: 8px; }
 
     /* 04 · Corporate Clean — azul negocio, estructura clara */
     .pg-corp {
@@ -813,47 +857,214 @@
     .pg-corp .pg-media { border-radius: 14px; border: none; }
     .pg-corp .pg-sec { background: #fff; }
 
-    /* 05 · Creative Canvas — mosaico pastel, imagen manda */
-    .pg-canvas {
-      --tp-bg: #f7f4ff;
-      --tp-strong: #2b1055;
-      --tp-text: #6a5a8c;
-      --tp-faint: #a294bd;
-      --tp-accent: #7c3aed;
+    /* 05 · Pulse Analytics — dashboard de metricas, sidebar y graficas */
+    .pg-dash {
+      --tp-bg: #f4f6fb;
+      --tp-strong: #101828;
+      --tp-text: #5a6478;
+      --tp-faint: #98a2b8;
+      --tp-accent: #4f46e5;
       --tp-on: #ffffff;
-      --tp-edge: rgba(124, 58, 237, 0.14);
-      --tp-edge2: rgba(124, 58, 237, 0.3);
+      --tp-edge: #e4e9f2;
+      --tp-edge2: #d3dcea;
       --tp-card: #ffffff;
-      --tp-accent-soft: rgba(124, 58, 237, 0.10);
-      --tp-nav-bg: rgba(247, 244, 255, 0.9);
+      --tp-accent-soft: rgba(79, 70, 229, 0.10);
+      --tp-nav-bg: #ffffff;
       --tp-alt-bg: #ffffff;
-      --tp-hero-bg: linear-gradient(160deg, #f7f4ff, #ffeef8);
-      --tp-shadow: 0 24px 60px -26px rgba(124, 58, 237, 0.45);
+      --tp-hero-bg: transparent;
+      --tp-shadow: 0 18px 34px -26px rgba(16, 24, 40, 0.35);
+      --tp-font: 'Inter', sans-serif;
+      --tp-display: 'Inter', sans-serif;
+      --tp-h-w: 800;
+    }
+    /* La "pagina" de un dashboard no es hero + cards: es sidebar + panel */
+    .pg-dash .pg-nav { padding: 14px 24px; border-bottom: 1px solid var(--tp-edge); }
+    .pg-dash .pg-hero { display: block; padding: 0; }
+    .pg-dash .pg-shell { display: grid; grid-template-columns: 232px 1fr; min-height: 640px; }
+    .pg-dash .pg-side {
+      background: #0e1526;
+      padding: 22px 16px;
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .pg-dash .pg-side .brand {
+      display: flex; align-items: center; gap: 10px;
+      color: #fff; font-weight: 700; font-size: 16px;
+    }
+    .pg-dash .pg-side .brand .mk {
+      width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+      background: linear-gradient(135deg, #4f46e5, #22d3ee); color: #fff; font-size: 12px; font-weight: 800;
+    }
+    .pg-dash .pg-side .grp { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #5c6a86; margin-bottom: 8px; }
+    .pg-dash .pg-side .lnk {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 11px; border-radius: 9px;
+      font-size: 13.5px; color: #aab4c8; margin-bottom: 2px;
+    }
+    .pg-dash .pg-side .lnk i { width: 16px; font-size: 12px; }
+    .pg-dash .pg-side .lnk.on { background: rgba(79, 70, 229, 0.9); color: #fff; font-weight: 600; }
+    .pg-dash .pg-side .upsell {
+      margin-top: auto; padding: 14px; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px; color: #aab4c8;
+    }
+    .pg-dash .pg-side .upsell b { display: block; color: #fff; font-size: 13px; margin-bottom: 4px; }
+    .pg-dash .pg-main { padding: 24px 28px; }
+    .pg-dash .pg-top {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+    }
+    .pg-dash .pg-top h3 { font-size: 22px; font-weight: 800; color: var(--tp-strong); letter-spacing: -0.02em; }
+    .pg-dash .pg-top p { font-size: 12.5px; color: var(--tp-faint); margin-top: 2px; }
+    .pg-dash .pg-range {
+      display: flex; gap: 4px; padding: 4px; border-radius: 10px;
+      background: #fff; border: 1px solid var(--tp-edge); font-size: 12px; color: var(--tp-text);
+    }
+    .pg-dash .pg-range span { padding: 6px 12px; border-radius: 7px; }
+    .pg-dash .pg-range .on { background: var(--tp-accent); color: #fff; font-weight: 600; }
+    .pg-dash .pg-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+    .pg-dash .pg-kpi {
+      background: #fff; border: 1px solid var(--tp-edge); border-radius: 14px; padding: 16px 18px;
+      box-shadow: 0 12px 24px -22px rgba(16, 24, 40, 0.5);
+    }
+    .pg-dash .pg-kpi .lbl { font-size: 11.5px; color: var(--tp-faint); margin-bottom: 8px; }
+    .pg-dash .pg-kpi .val { font-size: 27px; font-weight: 800; color: var(--tp-strong); letter-spacing: -0.03em; line-height: 1; }
+    .pg-dash .pg-kpi .dlt { font-size: 11.5px; font-weight: 600; margin-top: 7px; color: #16a34a; }
+    .pg-dash .pg-kpi .dlt.dn { color: #dc2626; }
+    .pg-dash .pg-charts { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; margin-bottom: 16px; }
+    .pg-dash .pg-pnl {
+      background: #fff; border: 1px solid var(--tp-edge); border-radius: 14px; padding: 16px 18px;
+      box-shadow: 0 12px 24px -22px rgba(16, 24, 40, 0.5);
+    }
+    .pg-dash .pg-pnl .hd { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+    .pg-dash .pg-pnl .hd h4 { font-size: 14px; font-weight: 700; color: var(--tp-strong); }
+    .pg-dash .pg-pnl .hd span { font-size: 11.5px; color: var(--tp-faint); }
+    .pg-dash .pg-bars { display: flex; align-items: flex-end; gap: 12px; height: 132px; }
+    .pg-dash .pg-bars i { flex: 1; border-radius: 5px 5px 0 0; background: linear-gradient(180deg, #6366f1, #a5b4fc); display: block; }
+    .pg-dash .pg-bars i.hi { background: linear-gradient(180deg, #22d3ee, #4f46e5); }
+    .pg-dash .pg-donut {
+      width: 128px; height: 128px; border-radius: 999px; margin: 4px auto 0;
+      background: conic-gradient(#4f46e5 0 44%, #22d3ee 44% 71%, #f472b6 71% 88%, #e4e9f2 88% 100%);
+      display: grid; place-items: center;
+    }
+    .pg-dash .pg-donut span {
+      width: 76px; height: 76px; border-radius: 999px; background: #fff;
+      display: grid; place-items: center; font-size: 19px; font-weight: 800; color: var(--tp-strong);
+    }
+    .pg-dash .pg-leg { display: flex; flex-direction: column; gap: 7px; margin-top: 14px; font-size: 11.5px; color: var(--tp-text); }
+    .pg-dash .pg-leg b { display: inline-block; width: 8px; height: 8px; border-radius: 3px; margin-right: 7px; }
+    .pg-dash .pg-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .pg-dash .pg-table th {
+      text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--tp-faint); font-weight: 600; padding: 0 10px 9px; border-bottom: 1px solid var(--tp-edge);
+    }
+    .pg-dash .pg-table td { padding: 11px 10px; border-bottom: 1px solid var(--tp-edge); color: var(--tp-text); }
+    .pg-dash .pg-table tr:last-child td { border-bottom: none; }
+    .pg-dash .pg-table .nm { color: var(--tp-strong); font-weight: 600; }
+    .pg-dash .pg-pill {
+      display: inline-block; padding: 3px 9px; border-radius: 999px;
+      font-size: 11px; font-weight: 600; background: rgba(22, 163, 74, 0.1); color: #16a34a;
+    }
+    .pg-dash .pg-pill.w { background: rgba(217, 119, 6, 0.12); color: #b45309; }
+    .pg-dash .pg-foot { padding: 16px 28px; }
+
+    /* 06 · Soft Neo — neomorfismo, la superficie se hunde y sobresale */
+    .pg-neo {
+      --tp-bg: #e8ecf4;
+      --tp-strong: #2b3550;
+      --tp-text: #3d4763;
+      --tp-faint: #5d6880;
+      --tp-accent: #5b6ee8;
+      --tp-on: #ffffff;
+      --tp-edge: transparent;
+      --tp-edge2: #d9dfeb;
+      --tp-card: #e8ecf4;
+      --tp-accent-soft: #e8ecf4;
+      --tp-nav-bg: #e8ecf4;
+      --tp-alt-bg: #e8ecf4;
+      --tp-hero-bg: #e8ecf4;
+      --tp-shadow: inset -6px -6px 12px rgba(255, 255, 255, 0.9), inset 6px 6px 14px rgba(163, 177, 199, 0.55);
       --tp-font: 'Outfit', sans-serif;
       --tp-display: 'Outfit', sans-serif;
       --tp-h-w: 700;
     }
-    .pg-canvas .pg-hero { grid-template-columns: 1fr; text-align: center; padding-bottom: 34px; }
-    .pg-canvas .pg-lead { margin-left: auto; margin-right: auto; }
-    .pg-canvas .pg-btns { justify-content: center; }
-    .pg-canvas .pg-h1 { font-size: 62px; }
-    .pg-canvas .pg-btn { border-radius: 999px; }
-    .pg-canvas .pg-btn.alt { border-radius: 999px; }
-    .pg-canvas .pg-card { border-radius: 18px; border: none; box-shadow: 0 14px 30px -20px rgba(43, 16, 85, 0.4); }
-    .pg-canvas .pg-media { border-radius: 20px; border: none; }
-    .pg-canvas .pg-mos { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 112px; gap: 14px; }
-    .pg-canvas .pg-mos figure { border-radius: 16px; overflow: hidden; margin: 0; position: relative; }
-    .pg-canvas .pg-mos img { width: 100%; height: 100%; object-fit: cover; }
-    .pg-canvas .pg-mos .tall { grid-row: span 2; }
-    .pg-canvas .pg-mos .wide { grid-column: span 2; }
-    .pg-canvas .pg-mos figcaption {
-      position: absolute; inset: auto 0 0 0;
-      padding: 10px 12px;
-      font-size: 11px; font-weight: 600; color: #fff;
-      background: linear-gradient(transparent, rgba(43, 16, 85, 0.72));
+    /* Sin bordes: la forma la define la luz, no la linea */
+    .pg-neo .pg-nav { border-bottom: none; box-shadow: 0 6px 14px -10px rgba(120, 133, 160, 0.7); }
+    .pg-neo .pg-logo .mk { border: none; box-shadow: 5px 5px 10px rgba(163, 177, 199, 0.6), -5px -5px 10px rgba(255, 255, 255, 0.95); }
+    .pg-neo .pg-h1 { font-size: 54px; }
+    .pg-neo .pg-btn {
+      border: none; border-radius: 16px;
+      box-shadow: 6px 6px 14px rgba(163, 177, 199, 0.65), -6px -6px 14px rgba(255, 255, 255, 0.95);
+    }
+    .pg-neo .pg-btn.alt {
+      border: none; border-radius: 16px; color: var(--tp-strong);
+      box-shadow: inset 5px 5px 10px rgba(163, 177, 199, 0.55), inset -5px -5px 10px rgba(255, 255, 255, 0.9);
+    }
+    .pg-neo .pg-card {
+      border: none; border-radius: 22px;
+      box-shadow: 8px 8px 18px rgba(163, 177, 199, 0.6), -8px -8px 18px rgba(255, 255, 255, 0.92);
+    }
+    .pg-neo .pg-ic {
+      border-radius: 999px; color: var(--tp-accent);
+      box-shadow: inset 4px 4px 9px rgba(163, 177, 199, 0.6), inset -4px -4px 9px rgba(255, 255, 255, 0.95);
+    }
+    .pg-neo .pg-media {
+      border: none; border-radius: 26px; padding: 10px;
+      box-shadow: 10px 10px 22px rgba(163, 177, 199, 0.55), -10px -10px 22px rgba(255, 255, 255, 0.92);
+    }
+    .pg-neo .pg-media img { border-radius: 18px; }
+    .pg-neo .pg-sec, .pg-neo .pg-foot { border-color: transparent; }
+    .pg-neo .pg-switch {
+      width: 74px; height: 38px; border-radius: 999px; padding: 5px;
+      background: #e8ecf4;
+      box-shadow: inset 5px 5px 10px rgba(163, 177, 199, 0.6), inset -5px -5px 10px rgba(255, 255, 255, 0.95);
+    }
+    .pg-neo .pg-switch i {
+      display: block; width: 28px; height: 28px; border-radius: 999px;
+      background: linear-gradient(135deg, #6d7ef0, #4f46e5);
+      box-shadow: 3px 3px 7px rgba(120, 133, 160, 0.7);
     }
 
-    /* 06 · Dev Terminal — monospace, consola */
+    /* 07 · Flat Pop — color plano, sin degradados ni sombras */
+    .pg-flat {
+      --tp-bg: #fdfcf7;
+      --tp-strong: #111827;
+      --tp-text: #3f4a5a;
+      --tp-faint: #8b95a5;
+      --tp-accent: #2563eb;
+      --tp-on: #ffffff;
+      --tp-edge: #111827;
+      --tp-edge2: #111827;
+      --tp-card: #ffffff;
+      --tp-accent-soft: #ffe8a3;
+      --tp-nav-bg: #fdfcf7;
+      --tp-alt-bg: #d7f5ea;
+      --tp-hero-bg: #fdfcf7;
+      --tp-shadow: none;
+      --tp-font: 'Space Grotesk', sans-serif;
+      --tp-display: 'Space Grotesk', sans-serif;
+      --tp-h-w: 700;
+    }
+    /* Radio cero y borde solido: estetica de bloque impreso */
+    .pg-flat .pg-nav { border-bottom: 2px solid #111827; }
+    .pg-flat .pg-logo .mk { border-radius: 0; }
+    .pg-flat .pg-h1 { font-size: 60px; letter-spacing: -0.02em; }
+    .pg-flat .pg-btn { border-radius: 0; box-shadow: 4px 4px 0 0 #111827; }
+    .pg-flat .pg-btn.alt { border-radius: 0; border: 2px solid #111827; box-shadow: 4px 4px 0 0 #111827; }
+    .pg-flat .pg-card { border-radius: 0; border: 2px solid #111827; }
+    .pg-flat .pg-card:nth-child(2) { background: #ffe8a3; }
+    .pg-flat .pg-card:nth-child(3) { background: #d7f5ea; }
+    .pg-flat .pg-ic { border-radius: 0; border: 2px solid #111827; }
+    .pg-flat .pg-media { border-radius: 0; border: 2px solid #111827; box-shadow: 8px 8px 0 0 #f472b6; }
+    .pg-flat .pg-sec { border-top: 2px solid #111827; }
+    .pg-flat .pg-foot { border-top: 2px solid #111827; }
+    .pg-flat .pg-tag { border-radius: 0; border: 1.5px solid #111827; color: #111827; }
+    .pg-flat .pg-chip {
+      display: inline-block; padding: 6px 14px; font-size: 12px; font-weight: 600;
+      border: 2px solid #111827; background: #ffe8a3;
+    }
+    .pg-flat .pg-chip.g { background: #d7f5ea; }
+    .pg-flat .pg-chip.p { background: #ffd6e7; }
+
+    /* 08 · Dev Terminal — monospace, consola */
     .pg-term {
       --tp-bg: #05070d;
       --tp-strong: #e6f4ee;
@@ -905,7 +1116,7 @@
     @keyframes pg-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
     .pg-term .cursor { color: #34d399; animation: pg-blink 1s steps(2) infinite; }
 
-    /* 07 · A medida — lienzo en blanco, estructura sin definir */
+    /* 09 · A medida — lienzo en blanco, estructura sin definir */
     .pg-blank {
       --tp-bg: #ffffff;
       --tp-strong: #0f172a;
@@ -1749,64 +1960,76 @@
             </div>
           </article>
 
-          <!-- ===== Plantilla 3 — Bold Creative ===== -->
-          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-orange-400/50 hover:-translate-y-1"
-                   data-template="bolt">
+          <!-- ===== Plantilla 3 — Aurora Glass ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-indigo/50 hover:-translate-y-1"
+                   data-template="glass">
             <div class="shot">
               <div class="shot-chrome" aria-hidden="true">
                 <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-                <span class="shot-url">bold-creative.vercel.app</span>
+                <span class="shot-url">aurora-glass.vercel.app</span>
               </div>
               <div class="shot-view">
-                <div class="pg pg-bolt">
+                <div class="pg pg-glass">
                   <div class="pg-nav">
-                    <div class="pg-logo"><span class="mk">B</span>Bold Studio</div>
-                    <div class="pg-links"><span>Trabajo</span><span class="on">Estudio</span><span>Diario</span></div>
-                    <div class="pg-btn">Cotizar</div>
+                    <div class="pg-logo"><span class="mk">A</span>Aurora</div>
+                    <div class="pg-links"><span class="on">Producto</span><span>Precios</span><span>Clientes</span></div>
+                    <div class="pg-btn">Probar gratis</div>
                   </div>
                   <div class="pg-hero">
                     <div>
-                      <div class="pg-kick">Hola · soy</div>
-                      <div class="pg-h1">Diseño que <em>no</em> pide permiso</div>
-                      <div class="pg-lead">Branding y sitios para marcas que prefieren ser recordadas a pasar desapercibidas.</div>
-                      <div class="pg-btns"><span class="pg-btn">Ver trabajo</span><span class="pg-btn alt">El proceso</span></div>
+                      <div class="pg-kick">SaaS · Productividad</div>
+                      <div class="pg-h1">Todo tu trabajo, <em>bajo un mismo cristal</em></div>
+                      <div class="pg-lead">Paneles de vidrio sobre negro, acentos violeta y brillo real. La interfaz que se ve hoy en los productos mejor diseñados.</div>
+                      <div class="pg-btns"><span class="pg-btn">Empezar ahora</span><span class="pg-btn alt">Ver demo</span></div>
                     </div>
-                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=70" alt="Composición gráfica" loading="lazy" /></div>
+                    <div class="pg-glasspanel">
+                      <div class="hd"><h4>Buenos días, Jordan</h4><span>Esta semana</span></div>
+                      <div class="pg-mini">
+                        <div class="cell"><b>1,284</b><span>Solicitudes</span></div>
+                        <div class="cell"><b>642</b><span>En curso</span></div>
+                        <div class="cell"><b>98.6%</b><span>SLA</span></div>
+                      </div>
+                      <div class="pg-spark">
+                        <i style="height:34%"></i><i style="height:48%"></i><i style="height:41%"></i>
+                        <i style="height:62%"></i><i style="height:55%"></i><i class="hi" style="height:88%"></i>
+                        <i style="height:70%"></i>
+                      </div>
+                      <div class="pg-axis"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+                    </div>
                   </div>
                   <div class="pg-sec">
-                    <div class="pg-h2">Servicios</div>
-                    <div class="pg-g4">
-                      <div class="pg-card"><h4>Branding</h4><p>Identidad completa</p></div>
-                      <div class="pg-card"><h4>Web</h4><p>Diseño y build</p></div>
-                      <div class="pg-card"><h4>Motion</h4><p>Piezas animadas</p></div>
-                      <div class="pg-card"><h4>Print</h4><p>Editorial y empaque</p></div>
+                    <div class="pg-h2">Qué incluye</div>
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-layer-group"></i></div><h4>Módulos</h4><p>Activa solo lo que tu equipo usa.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-bolt"></i></div><h4>Automatización</h4><p>Reglas sin código, ejecutadas al instante.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-shield-halved"></i></div><h4>Seguridad</h4><p>SSO y auditoría de accesos.</p></div>
                     </div>
                   </div>
-                  <div class="pg-foot"><span>Bold Studio</span><span>CDMX · remoto</span></div>
+                  <div class="pg-foot"><span>Aurora</span><span>14 días sin tarjeta</span></div>
                 </div>
               </div>
               <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
-                <h4 class="text-lg font-bold t-text-strong">Bold Creative</h4>
-                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-orange-400">Alto impacto</span>
+                <h4 class="text-lg font-bold t-text-strong">Aurora Glass</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-indigo">Glassmorphism</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                Colores saturados, tipografía enorme y bloques asimétricos. Para portfolios
-                de diseño, branding, fotografía y creadores que quieren que los recuerden.
+                Vidrio esmerilado sobre negro, con acentos violeta y brillo. Es la estética
+                que domina las interfaces de producto ahora mismo: suave, moderna y muy fotogénica.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Grid editorial asimétrico</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Animaciones al hacer scroll</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400 text-[10px]"></i> Galería full-bleed</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Paneles con blur y saturación reales</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> KPIs en cristal con sparkline</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Ideal para SaaS y apps de producto</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
-                <button type="button" data-preview="bolt"
+                <button type="button" data-preview="glass"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
                   <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
                 </button>
-                <button type="button" data-request="bolt"
+                <button type="button" data-request="glass"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
                   Quiero esta
                 </button>
@@ -1884,60 +2107,113 @@
             </div>
           </article>
 
-          <!-- ===== Plantilla 5 — Creative Canvas ===== -->
-          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-neon-violet/50 hover:-translate-y-1"
-                   data-template="canvas">
+          <!-- ===== Plantilla 5 — Pulse Analytics ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-sky-400/50 hover:-translate-y-1"
+                   data-template="dash">
             <div class="shot">
               <div class="shot-chrome" aria-hidden="true">
                 <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-                <span class="shot-url">canvas-portfolio.dribbble.site</span>
+                <span class="shot-url">app.pulse-analytics.io</span>
               </div>
               <div class="shot-view">
-                <div class="pg pg-canvas">
+                <div class="pg pg-dash">
                   <div class="pg-nav">
-                    <div class="pg-logo"><span class="mk">C</span>Canvas</div>
-                    <div class="pg-links"><span class="on">Piezas</span><span>Casos</span><span>Acerca</span></div>
-                    <div class="pg-btn">Comisión</div>
+                    <div class="pg-logo"><span class="mk">P</span>Pulse</div>
+                    <div class="pg-links"><span class="on">Resumen</span><span>Informes</span><span>Integraciones</span></div>
+                    <div class="pg-btn">Nuevo informe</div>
                   </div>
                   <div class="pg-hero">
-                    <div class="pg-kick">Ilustración · UX · Dirección de arte</div>
-                    <div class="pg-h1">El trabajo primero, <em>la bio después</em></div>
-                    <div class="pg-lead">Selección de piezas de los últimos dos años. Cada una con su caso de estudio.</div>
-                    <div class="pg-btns"><span class="pg-btn">Ver galería</span><span class="pg-btn alt">Contacto</span></div>
-                  </div>
-                  <div class="pg-sec" style="padding-top:20px">
-                    <div class="pg-mos">
-                      <figure class="tall"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=70" alt="Pieza abstracta" loading="lazy" /><figcaption>Serie Neón · 2025</figcaption></figure>
-                      <figure><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=70" alt="Composición color" loading="lazy" /><figcaption>Retromanía</figcaption></figure>
-                      <figure><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=70" alt="Montaña nocturna" loading="lazy" /><figcaption>Portada Altitud</figcaption></figure>
-                      <figure class="wide"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=70" alt="Paisaje con niebla" loading="lazy" /><figcaption>Campaña Bruma · dirección de arte</figcaption></figure>
+                    <div class="pg-shell">
+                      <aside class="pg-side">
+                        <div class="brand"><span class="mk">P</span>Pulse Analytics</div>
+                        <div>
+                          <div class="grp">Espacio de trabajo</div>
+                          <div class="lnk on"><i class="fa-solid fa-gauge-high"></i> Resumen</div>
+                          <div class="lnk"><i class="fa-solid fa-chart-column"></i> Rendimiento</div>
+                          <div class="lnk"><i class="fa-solid fa-users"></i> Audiencia</div>
+                          <div class="lnk"><i class="fa-solid fa-cart-shopping"></i> Conversiones</div>
+                          <div class="lnk"><i class="fa-solid fa-file-lines"></i> Informes</div>
+                        </div>
+                        <div>
+                          <div class="grp">Cuenta</div>
+                          <div class="lnk"><i class="fa-solid fa-plug"></i> Integraciones</div>
+                          <div class="lnk"><i class="fa-solid fa-sliders"></i> Ajustes</div>
+                        </div>
+                        <div class="upsell"><b>Plan Pro</b>Tu periodo de prueba termina en 6 días.</div>
+                      </aside>
+                      <div class="pg-main">
+                        <div class="pg-top">
+                          <div>
+                            <h3>Resumen de rendimiento</h3>
+                            <p>Actualizado hace 4 minutos</p>
+                          </div>
+                          <div class="pg-range"><span>Hoy</span><span class="on">7 días</span><span>30 días</span><span>Año</span></div>
+                        </div>
+                        <div class="pg-kpis">
+                          <div class="pg-kpi"><div class="lbl">Ingresos</div><div class="val">$48,920</div><div class="dlt">▲ 12.4% vs. anterior</div></div>
+                          <div class="pg-kpi"><div class="lbl">Usuarios activos</div><div class="val">12,480</div><div class="dlt">▲ 8.1% vs. anterior</div></div>
+                          <div class="pg-kpi"><div class="lbl">Conversión</div><div class="val">3.94%</div><div class="dlt dn">▼ 0.6% vs. anterior</div></div>
+                          <div class="pg-kpi"><div class="lbl">Ticket promedio</div><div class="val">$126</div><div class="dlt">▲ 4.3% vs. anterior</div></div>
+                        </div>
+                        <div class="pg-charts">
+                          <div class="pg-pnl">
+                            <div class="hd"><h4>Ingresos por semana</h4><span>Últimas 9 semanas</span></div>
+                            <div class="pg-bars">
+                              <i style="height:42%"></i><i style="height:58%"></i><i style="height:49%"></i>
+                              <i style="height:71%"></i><i style="height:63%"></i><i style="height:84%"></i>
+                              <i style="height:69%"></i><i class="hi" style="height:96%"></i><i style="height:78%"></i>
+                            </div>
+                          </div>
+                          <div class="pg-pnl">
+                            <div class="hd"><h4>Fuentes de tráfico</h4><span>Sesiones</span></div>
+                            <div class="pg-donut"><span>12.4k</span></div>
+                            <div class="pg-leg">
+                              <div><b style="background:#4f46e5"></b>Orgánico · 44%</div>
+                              <div><b style="background:#22d3ee"></b>Directo · 27%</div>
+                              <div><b style="background:#f472b6"></b>Social · 17%</div>
+                              <div><b style="background:#e4e9f2"></b>Referidos · 12%</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="pg-pnl">
+                          <div class="hd"><h4>Campañas activas</h4><span>5 de 12</span></div>
+                          <table class="pg-table">
+                            <thead><tr><th>Campaña</th><th>Canal</th><th>Gasto</th><th>ROAS</th><th>Estado</th></tr></thead>
+                            <tbody>
+                              <tr><td class="nm">Black Week MX</td><td>Search</td><td>$8,400</td><td>4.6x</td><td><span class="pg-pill">En curso</span></td></tr>
+                              <tr><td class="nm">Retarget carrito</td><td>Social</td><td>$3,150</td><td>6.2x</td><td><span class="pg-pill">En curso</span></td></tr>
+                              <tr><td class="nm">Newsletter Q4</td><td>Email</td><td>$920</td><td>2.1x</td><td><span class="pg-pill w">Revisar</span></td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="pg-foot"><span>© Canvas</span><span>IG · Behance</span></div>
+                  <div class="pg-foot"><span>Pulse Analytics</span><span>Datos de ejemplo</span></div>
                 </div>
               </div>
               <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
-                <h4 class="text-lg font-bold t-text-strong">Creative Canvas</h4>
-                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-violet">Masonry</span>
+                <h4 class="text-lg font-bold t-text-strong">Pulse Analytics</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-sky-400">Dashboard</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                Mosaico tipo galería, degradados suaves y mucho aire. Pensada para ilustradores,
-                diseñadores UX y cualquier portfolio donde la imagen manda.
+                Panel de control con sidebar, KPIs, gráficas y tabla. Para SaaS, agencias
+                que reportan resultados, o cualquier producto donde los datos son el argumento.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Mosaico responsive con lightbox</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Filtros por categoría</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-violet text-[10px]"></i> Caso de estudio por pieza</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> KPIs, gráfica de barras y dona</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Tabla de registros con estados</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400 text-[10px]"></i> Conectable a tu API o a Google Sheets</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
-                <button type="button" data-preview="canvas"
+                <button type="button" data-preview="dash"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
                   <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
                 </button>
-                <button type="button" data-request="canvas"
+                <button type="button" data-request="dash"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
                   Quiero esta
                 </button>
@@ -1945,7 +2221,141 @@
             </div>
           </article>
 
-          <!-- ===== Plantilla 6 — Dev Terminal ===== -->
+          <!-- ===== Plantilla 6 — Soft Neo ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-slate-400/50 hover:-translate-y-1"
+                   data-template="neo">
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">soft-neo.studio</span>
+              </div>
+              <div class="shot-view">
+                <div class="pg pg-neo">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">S</span>Soft Neo</div>
+                    <div class="pg-links"><span class="on">Servicios</span><span>Metodología</span><span>Contacto</span></div>
+                    <div class="pg-btn">Agendar</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Estudio de producto</div>
+                      <div class="pg-h1">Interfaces que <em>se sienten</em>, no solo se ven</div>
+                      <div class="pg-lead">Diseñamos sistemas suaves, táctiles y accesibles para apps que la gente usa todos los días.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver casos</span><span class="pg-btn alt">El proceso</span></div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=70" alt="Equipo de diseño" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-h2">Especialidades</div>
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-hand-pointer"></i></div><h4>Producto digital</h4><p>Flujos claros y sin fricción.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-universal-access"></i></div><h4>Accesibilidad</h4><p>Contraste y foco revisados.</p></div>
+                      <div class="pg-card">
+                        <div class="pg-h2" style="font-size:15px;margin-bottom:12px">Modo oscuro</div>
+                        <div class="pg-switch"><i></i></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>Soft Neo Studio</span><span>Monterrey · remoto</span></div>
+                </div>
+              </div>
+              <span class="shot-flag">Disponible</span>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Soft Neo</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-slate-400">Neomorfismo</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                La superficie se hunde y sobresale con luz, sin bordes. Suave y táctil,
+                perfecta para estudios de diseño, apps de bienestar y portfolios senior.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Sombras dobles luz/sombra reales</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Controles y toggles en relieve</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Contraste revisado para accesibilidad</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="neo"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="neo"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 7 — Flat Pop ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-amber-400/50 hover:-translate-y-1"
+                   data-template="flat">
+            <div class="shot">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
+                <span class="shot-url">flat-pop.mx</span>
+              </div>
+              <div class="shot-view">
+                <div class="pg pg-flat">
+                  <div class="pg-nav">
+                    <div class="pg-logo"><span class="mk">F</span>Flat Pop</div>
+                    <div class="pg-links"><span class="on">Qué hacemos</span><span>Tarifas</span><span>Equipo</span></div>
+                    <div class="pg-btn">Cotizar</div>
+                  </div>
+                  <div class="pg-hero">
+                    <div>
+                      <div class="pg-kick">Agencia · CDMX</div>
+                      <div class="pg-h1">Ideas claras, <em>sitios directos</em></div>
+                      <div class="pg-lead">Sin degradados, sin sombras, sin relleno. Solo lo que tu negocio necesita decir.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver proyectos</span><span class="pg-btn alt">Tarifas</span></div>
+                      <div style="display:flex;gap:10px;margin-top:24px">
+                        <span class="pg-chip">Branding</span><span class="pg-chip g">Web</span><span class="pg-chip p">Contenido</span>
+                      </div>
+                    </div>
+                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=70" alt="Equipo en reunión" loading="lazy" /></div>
+                  </div>
+                  <div class="pg-sec">
+                    <div class="pg-h2">Servicios</div>
+                    <div class="pg-g3">
+                      <div class="pg-card"><h4>Sitio a medida</h4><p>Entrega en 3 semanas.</p></div>
+                      <div class="pg-card"><h4>Identidad</h4><p>Logo, paleta y tipografía.</p></div>
+                      <div class="pg-card"><h4>Contenido</h4><p>Textos que venden sin gritar.</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>Flat Pop</span><span>Hecho en México</span></div>
+                </div>
+              </div>
+              <span class="shot-flag">Disponible</span>
+            </div>
+            <div class="p-3 pt-4">
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <h4 class="text-lg font-bold t-text-strong">Flat Pop</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-amber-400">Flat design</span>
+              </div>
+              <p class="text-sm t-text-muted leading-relaxed mb-3">
+                Color plano, borde sólido y esquinas rectas. Se carga en un instante y se
+                entiende sin instrucciones: para negocios, agencias y portfolios de contenido.
+              </p>
+              <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Sistema plano de bloques y chips</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Carga mínima: sin imágenes de fondo pesadas</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Imprime bien: sin degradados ni sombras</li>
+              </ul>
+              <div class="flex items-center gap-2 pt-4 border-t t-divide">
+                <button type="button" data-preview="flat"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
+                  <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
+                </button>
+                <button type="button" data-request="flat"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
+                  Quiero esta
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- ===== Plantilla 8 — Dev Terminal ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-emerald-400/50 hover:-translate-y-1"
                    data-template="term">
             <div class="shot">
@@ -2084,7 +2494,7 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
             <span class="t-text-strong font-semibold">Todas las plantillas incluyen</span>
             diseño responsive, SEO básico, accesibilidad, tema claro/oscuro y despliegue
             en GitHub Pages, Vercel o Netlify. Puedes mezclar secciones de varias:
-            el diseño de esta página con la galería de Creative Canvas, por ejemplo.
+            el diseño de esta página con el panel de Pulse Analytics, por ejemplo.
           </p>
         </div>
       </div>
@@ -2459,12 +2869,12 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
           audience: ['Perfiles senior y consultores', 'CV digital para reclutadores', 'Escritores y analistas'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
-        bolt: {
-          kicker: 'Plantilla 03 · Bold Creative',
-          title: 'Bold Creative',
-          lead: 'Color saturado, tipografía enorme y bloques asimétricos. Es la que se recuerda después de cerrarla: para trabajo creativo que necesita defenderse con presencia.',
-          includes: ['Grid editorial asimétrico', 'Animaciones al hacer scroll', 'Galería de obras a sangre completa', 'Microinteracciones en hover'],
-          audience: ['Diseñadores y branding', 'Fotógrafos y ilustradores', 'Creadores de contenido'],
+        glass: {
+          kicker: 'Plantilla 03 · Aurora Glass',
+          title: 'Aurora Glass',
+          lead: 'Vidrio esmerilado flotando sobre negro, con acentos violeta y brillo en los bordes. Los paneles dejan de ser cajas blancas y ganan profundidad: es el lenguaje visual de los productos mejor diseñados hoy.',
+          includes: ['Paneles de cristal con blur y saturación reales', 'Tarjetas de KPI con sparkline dentro del vidrio', 'Acentos violeta con resplandor controlado', 'Contraste revisado sobre fondo oscuro'],
+          audience: ['SaaS y productos digitales', 'Startups que quieren verse actuales', 'Marcas de bienestar y tecnología'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
         corp: {
@@ -2475,16 +2885,32 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
           audience: ['Agencias y consultoras', 'Freelancers que venden a empresas', 'Startups en fase comercial'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
-        canvas: {
-          kicker: 'Plantilla 05 · Creative Canvas',
-          title: 'Creative Canvas',
-          lead: 'Mosaico tipo galería con degradados suaves y mucho aire entre piezas. La imagen manda y el texto solo aparece cuando el visitante lo pide.',
-          includes: ['Mosaico responsive con lightbox', 'Filtros por categoría de trabajo', 'Página de caso de estudio por pieza', 'Modo oscuro opcional'],
-          audience: ['Diseñadores UX / UI', 'Ilustradores y artistas', 'Estudios creativos pequeños'],
+        dash: {
+          kicker: 'Plantilla 05 · Pulse Analytics',
+          title: 'Pulse Analytics',
+          lead: 'Un panel de control de verdad: sidebar de navegación, tarjetas de KPI, gráfica de barras, dona de fuentes y tabla de registros con estados. No simula un dashboard, lo construye con componentes que se rellenan con tus datos.',
+          includes: ['Sidebar con secciones y plan de cuenta', 'KPIs con variación contra el periodo anterior', 'Gráficas de barras y dona en CSS puro', 'Tabla con estados y filtros por rango de fechas'],
+          audience: ['SaaS y productos con métricas', 'Agencias que reportan a clientes', 'Cualquiera que venda resultados en números'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        neo: {
+          kicker: 'Plantilla 06 · Soft Neo',
+          title: 'Soft Neo',
+          lead: 'Neomorfismo: la superficie se hunde y sobresale con luz, sin bordes ni líneas. Es un lenguaje que se siente táctil, y bien hecho transmite calma y oficio. El reto es el contraste, y ahí es donde esta versión revisa accesibilidad.',
+          includes: ['Sombras dobles de luz y sombra reales', 'Toggles y controles en relieve', 'Superficie monocromática suave', 'Contraste y foco revisados para accesibilidad'],
+          audience: ['Estudios de diseño y producto', 'Apps de bienestar y salud', 'Perfiles senior que prefieren discreción'],
+          meta: 'Responsive · Accesible · Un solo HTML, sin build',
+        },
+        flat: {
+          kicker: 'Plantilla 07 · Flat Pop',
+          title: 'Flat Pop',
+          lead: 'Diseño plano sin disculpas: color sólido, borde marcado y esquinas rectas. Nada de degradados ni sombras, así que carga en un instante, imprime bien y se entiende sin instrucciones. El contenido es lo que sostiene la página.',
+          includes: ['Sistema de bloques y chips de color plano', 'Tipografía grande con jerarquía clara', 'Carga mínima: sin fondos pesados', 'Versión imprimible sin perder contraste'],
+          audience: ['Negocios y agencias locales', 'Portfolios de contenido y escritura', 'Sitios que priorizan velocidad y claridad'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
         term: {
-          kicker: 'Plantilla 06 · Dev Terminal',
+          kicker: 'Plantilla 08 · Dev Terminal',
           title: 'Dev Terminal',
           lead: 'Se abre como una consola y se navega escribiendo comandos. Es un filtro divertido: quien llega hasta `contact` es exactamente el cliente que quieres.',
           includes: ['Consola interactiva (help, ls, open)', 'Efecto máquina de escribir', 'Repositorios y stack en vivo', 'Modo clásico para quien no quiera comandos'],
