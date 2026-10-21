@@ -1119,12 +1119,18 @@
     .pg-clay .pg-chip.y { background: #fff2c9; }
     .pg-clay .pg-chip.g { background: #d8f8e4; }
     /* Burbujas de plastilina: el detalle informal que rompe la retícula */
-    .pg-clay .cl-blobs { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+    /* Burbujas solo en los margenes: sangran por el borde y nunca tapan texto.
+       Los hijos directos de cada banda suben a z-index 1, asi el contenido
+       siempre queda por encima aunque alguien mueva una burbuja. */
+    .pg-clay .cl-blobs { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
     .pg-clay .cl-blobs i { position: absolute; display: block; border-radius: 50%; }
-    .pg-clay .cl-blobs i:nth-child(1) { top: 12%; left: 3%; width: 74px; height: 74px; background: linear-gradient(135deg, #ffc9e4, #f0abfc); box-shadow: 0 18px 30px -16px rgba(240, 171, 252, 0.95); }
-    .pg-clay .cl-blobs i:nth-child(2) { top: 34%; right: 4%; width: 52px; height: 52px; background: linear-gradient(135deg, #bfe9ff, #7dd3fc); box-shadow: 0 16px 26px -14px rgba(125, 211, 252, 0.95); }
-    .pg-clay .cl-blobs i:nth-child(3) { bottom: 16%; left: 8%; width: 40px; height: 40px; background: linear-gradient(135deg, #ffe9a8, #fcd34d); box-shadow: 0 14px 24px -12px rgba(252, 211, 77, 0.95); }
-    .pg-clay .cl-blobs i:nth-child(4) { top: 8%; right: 22%; width: 26px; height: 26px; background: linear-gradient(135deg, #c4b5fd, #a78bfa); }
+    .pg-clay .pg-nav > *, .pg-clay .pg-hero > *, .pg-clay .pg-sec > *, .pg-clay .pg-foot > * {
+      position: relative; z-index: 1;
+    }
+    .pg-clay .cl-blobs i:nth-child(1) { top: 30%; left: -30px; width: 74px; height: 74px; background: linear-gradient(135deg, #ffc9e4, #f0abfc); box-shadow: 0 18px 30px -16px rgba(240, 171, 252, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(2) { top: 52%; right: -20px; width: 52px; height: 52px; background: linear-gradient(135deg, #bfe9ff, #7dd3fc); box-shadow: 0 16px 26px -14px rgba(125, 211, 252, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(3) { bottom: 22%; left: -14px; width: 40px; height: 40px; background: linear-gradient(135deg, #ffe9a8, #fcd34d); box-shadow: 0 14px 24px -12px rgba(252, 211, 77, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(4) { top: 12%; right: -8px; width: 26px; height: 26px; background: linear-gradient(135deg, #c4b5fd, #a78bfa); }
     .pg-clay .cl-emoji { font-size: 22px; line-height: 1; }
     .pg-clay .cl-note {
       display: inline-flex; align-items: center; gap: 9px; margin-top: 18px;
@@ -1143,46 +1149,113 @@
     .pg-clay .cl-stat span { font-size: 11.5px; color: #7c6f9e; }
     .pg-clay .cl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 6px; }
 
-    /* 07 · Flat Pop — color plano, sin degradados ni sombras */
-    .pg-flat {
-      --tp-bg: #fdfcf7;
-      --tp-strong: #111827;
-      --tp-text: #3f4a5a;
-      --tp-faint: #8b95a5;
-      --tp-accent: #2563eb;
+    /* 07 · Nova Shop — tienda de producto, estilo moderno */
+    .pg-shop {
+      --tp-bg: #ffffff;
+      --tp-strong: #0f172a;
+      --tp-text: #475569;
+      --tp-faint: #5f6a7a;
+      --tp-accent: #4f46e5;
       --tp-on: #ffffff;
-      --tp-edge: #111827;
-      --tp-edge2: #111827;
+      --tp-edge: #e6e9f0;
+      --tp-edge2: #cbd5e1;
       --tp-card: #ffffff;
-      --tp-accent-soft: #ffe8a3;
-      --tp-nav-bg: #fdfcf7;
-      --tp-alt-bg: #d7f5ea;
-      --tp-hero-bg: #fdfcf7;
-      --tp-shadow: none;
-      --tp-font: 'Space Grotesk', sans-serif;
-      --tp-display: 'Space Grotesk', sans-serif;
-      --tp-h-w: 700;
+      --tp-accent-soft: #eef0ff;
+      --tp-nav-bg: #ffffff;
+      --tp-alt-bg: #f1f5f9;
+      --tp-hero-bg: #f7f8fc;
+      --tp-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.35);
+      --tp-font: 'Inter', sans-serif;
+      --tp-display: 'Inter', sans-serif;
+      --tp-h-w: 800;
+      background: var(--tp-bg);
     }
-    /* Radio cero y borde solido: estetica de bloque impreso */
-    .pg-flat .pg-nav { border-bottom: 2px solid #111827; }
-    .pg-flat .pg-logo .mk { border-radius: 0; }
-    .pg-flat .pg-h1 { font-size: 60px; letter-spacing: -0.02em; }
-    .pg-flat .pg-btn { border-radius: 0; box-shadow: 4px 4px 0 0 #111827; }
-    .pg-flat .pg-btn.alt { border-radius: 0; border: 2px solid #111827; box-shadow: 4px 4px 0 0 #111827; }
-    .pg-flat .pg-card { border-radius: 0; border: 2px solid #111827; }
-    .pg-flat .pg-card:nth-child(2) { background: #ffe8a3; }
-    .pg-flat .pg-card:nth-child(3) { background: #d7f5ea; }
-    .pg-flat .pg-ic { border-radius: 0; border: 2px solid #111827; }
-    .pg-flat .pg-media { border-radius: 0; border: 2px solid #111827; box-shadow: 8px 8px 0 0 #f472b6; }
-    .pg-flat .pg-sec { border-top: 2px solid #111827; }
-    .pg-flat .pg-foot { border-top: 2px solid #111827; }
-    .pg-flat .pg-tag { border-radius: 0; border: 1.5px solid #111827; color: #111827; }
-    .pg-flat .pg-chip {
-      display: inline-block; padding: 6px 14px; font-size: 12px; font-weight: 600;
-      border: 2px solid #111827; background: #ffe8a3;
+    .pg-shop .sh-ann {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 8px 20px; font-size: 11.5px; font-weight: 600; color: #fff;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
     }
-    .pg-flat .pg-chip.g { background: #d7f5ea; }
-    .pg-flat .pg-chip.p { background: #ffd6e7; }
+    .pg-shop .pg-nav { padding: 14px 26px; border-bottom: 1px solid var(--tp-edge); }
+    .pg-shop .pg-logo .mk { border-radius: 10px; background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+    .pg-shop .pg-links { gap: 20px; }
+    .pg-shop .pg-links span { font-size: 13px; }
+    .pg-shop .sh-icons { display: flex; align-items: center; gap: 14px; color: #475569; font-size: 13px; }
+    .pg-shop .sh-icons .cart { position: relative; }
+    .pg-shop .sh-icons .cart b {
+      position: absolute; top: -7px; right: -9px; min-width: 15px; height: 15px;
+      display: grid; place-items: center; padding: 0 4px; border-radius: 999px;
+      font-size: 9px; font-weight: 800; color: #fff; background: #4f46e5;
+    }
+    .pg-shop .pg-hero { display: block; padding: 0; background: var(--tp-hero-bg); }
+    .pg-shop .sh-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; padding: 32px 26px; }
+    .pg-shop .sh-hero .pg-kick { font-size: 11px; letter-spacing: 0.14em; }
+    .pg-shop .sh-hero .pg-h1 { font-size: 40px; line-height: 1.08; }
+    .pg-shop .sh-hero .pg-lead { font-size: 14.5px; margin-bottom: 16px; }
+    .pg-shop .sh-price { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+    .pg-shop .sh-price b { font-size: 30px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; }
+    .pg-shop .sh-price s { font-size: 15px; color: #5f6a7a; }
+    .pg-shop .sh-price i {
+      padding: 4px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700;
+      font-style: normal; color: #b91c1c; background: #fee2e2;
+    }
+    .pg-shop .sh-stars { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 11.5px; color: #5f6a7a; }
+    .pg-shop .sh-stars .st { color: #b45309; font-size: 12px; letter-spacing: 1px; }
+    .pg-shop .sh-swatches { display: flex; gap: 8px; margin-bottom: 16px; }
+    .pg-shop .sh-swatches i { display: block; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #d7dbe6; }
+    .pg-shop .sh-swatches i.on { box-shadow: 0 0 0 2px #4f46e5; }
+    .pg-shop .sh-gallery { display: grid; grid-template-columns: 54px 1fr; gap: 10px; }
+    .pg-shop .sh-thumbs { display: flex; flex-direction: column; gap: 8px; }
+    .pg-shop .sh-thumbs i {
+      display: block; height: 54px; border-radius: 10px; border: 1px solid var(--tp-edge);
+      background: linear-gradient(135deg, #eef0ff, #e5e9f7);
+    }
+    .pg-shop .sh-thumbs i.on { border-color: #4f46e5; box-shadow: 0 0 0 1px #4f46e5; }
+    .pg-shop .sh-main {
+      position: relative; height: 262px; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--tp-edge); background: linear-gradient(160deg, #eef0ff, #e7ebf8);
+    }
+    .pg-shop .sh-main img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-shop .sh-badge {
+      position: absolute; top: 12px; left: 12px; padding: 5px 10px; border-radius: 999px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #fff; background: #4f46e5;
+    }
+    .pg-shop .sh-cta { display: flex; gap: 10px; align-items: center; }
+    .pg-shop .sh-cta .pg-btn { padding: 13px 22px; font-size: 14px; }
+    .pg-shop .sh-cta .fav {
+      display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid var(--tp-edge2); color: #475569;
+    }
+    .pg-shop .sh-trust { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pg-shop .sh-trust span {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px;
+      font-size: 10.5px; font-weight: 600; color: #475569; background: #fff; border: 1px solid var(--tp-edge);
+    }
+    .pg-shop .sh-trust i { color: #4f46e5; font-size: 10px; }
+    .pg-shop .sh-sec { padding: 28px 26px; }
+    .pg-shop .sh-sec .pg-h2 { font-size: 22px; }
+    .pg-shop .sh-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .pg-shop .sh-card { border: 1px solid var(--tp-edge); border-radius: 14px; overflow: hidden; background: #fff; }
+    .pg-shop .sh-card .im { position: relative; height: 116px; background: linear-gradient(160deg, #f1f3fb, #e6eaf6); }
+    .pg-shop .sh-card .im img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-shop .sh-card .im .tag {
+      position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 999px;
+      font-size: 9px; font-weight: 800; color: #fff; background: #0f172a;
+    }
+    .pg-shop .sh-card .im .tag.sale { background: #b91c1c; }
+    .pg-shop .sh-card .tx { padding: 11px 12px 13px; }
+    .pg-shop .sh-card .tx b { display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; }
+    .pg-shop .sh-card .tx span { display: block; margin-top: 2px; font-size: 10.5px; color: #5f6a7a; }
+    .pg-shop .sh-card .tx .pr { display: flex; align-items: baseline; gap: 6px; margin-top: 7px; }
+    .pg-shop .sh-card .tx .pr b { font-size: 14px; }
+    .pg-shop .sh-card .tx .pr s { font-size: 10.5px; color: #64748b; }
+    .pg-shop .sh-card .tx .st { margin-top: 5px; font-size: 10px; color: #b45309; letter-spacing: 0.5px; }
+    .pg-shop .sh-foot { display: flex; align-items: center; justify-content: space-between; padding: 18px 26px; border-top: 1px solid var(--tp-edge); font-size: 11.5px; color: #5f6a7a; }
+    .pg-shop .sh-foot .pay { display: flex; gap: 6px; }
+    .pg-shop .sh-foot .pay i {
+      display: grid; place-items: center; width: 30px; height: 19px; border-radius: 4px;
+      font-size: 9px; font-weight: 800; font-style: normal; color: #475569; background: #f1f5f9; border: 1px solid var(--tp-edge);
+    }
 
     /* 08 · Dev Terminal — monospace, consola */
     .pg-term {
@@ -2197,16 +2270,14 @@
                 <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-indigo">Dashboard · Glass</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                Un panel de producto de verdad, no una landing con un cuadro bonito: sidebar,
-                saludo, KPIs con sparkline, gráfica de área con degradado, estados y dona.
-                Todo en vidrio violeta sobre negro, con halos de luz detrás para que el blur
-                tenga algo que difuminar.
+                Un panel de producto completo en vidrio violeta sobre negro: sidebar, KPIs
+                con sparkline, gráfica de área con degradado, estados y dona de desempeño.
+                Todo dibujado en CSS puro, sin librerías.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Sidebar, KPIs, área, dona y acciones rápidas</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Vidrio real: blur, saturación y brillo en los bordes</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Gráficas en CSS puro, sin librerías</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Contraste revisado sobre fondo oscuro</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
                 <button type="button" data-preview="glass"
@@ -2465,15 +2536,13 @@
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
                 Plastilina digital: superficies gruesas, radios enormes, sombras suaves y
-                colores que no piden permiso. Informal a propósito, con emoji, notas
-                manuscritas y tarjetas ligeramente torcidas. Para negocios que quieren
-                caer bien antes de vender.
+                colores que no piden permiso. Informal a propósito, con emoji y notas tipo
+                burbuja, para negocios que quieren caer bien antes de vender.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Relieve de plastilina con luz y sombra suaves</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Emoji, chips de color y notas tipo burbuja</li>
                 <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Tarjetas con inclinación y burbujas flotantes</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Tono cercano, para público de cualquier edad</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
                 <button type="button" data-preview="clay"
@@ -2488,66 +2557,108 @@
             </div>
           </article>
 
-          <!-- ===== Plantilla 7 — Flat Pop ===== -->
-          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-amber-400/50 hover:-translate-y-1"
-                   data-template="flat">
+          <!-- ===== Plantilla 7 — Nova Shop ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-indigo-400/50 hover:-translate-y-1"
+                   data-template="shop">
             <div class="shot">
               <div class="shot-chrome" aria-hidden="true">
                 <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-                <span class="shot-url">flat-pop.mx</span>
+                <span class="shot-url">nova-shop.mx</span>
               </div>
               <div class="shot-view">
-                <div class="pg pg-flat">
+                <div class="pg pg-shop">
+                  <div class="sh-ann"><i class="fa-solid fa-truck-fast"></i>Envío gratis en compras desde $999 · Devolución en 30 días</div>
                   <div class="pg-nav">
-                    <div class="pg-logo"><span class="mk">F</span>Flat Pop</div>
-                    <div class="pg-links"><span class="on">Qué hacemos</span><span>Tarifas</span><span>Equipo</span></div>
-                    <div class="pg-btn">Cotizar</div>
+                    <div class="pg-logo"><span class="mk">N</span>Nova</div>
+                    <div class="pg-links"><span class="on">Tienda</span><span>Mujer</span><span>Hombre</span><span>Ofertas</span></div>
+                    <div class="sh-icons">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                      <i class="fa-regular fa-heart"></i>
+                      <span class="cart"><i class="fa-solid fa-bag-shopping"></i><b>3</b></span>
+                    </div>
                   </div>
                   <div class="pg-hero">
-                    <div>
-                      <div class="pg-kick">Agencia · CDMX</div>
-                      <div class="pg-h1">Ideas claras, <em>sitios directos</em></div>
-                      <div class="pg-lead">Sin degradados, sin sombras, sin relleno. Solo lo que tu negocio necesita decir.</div>
-                      <div class="pg-btns"><span class="pg-btn">Ver proyectos</span><span class="pg-btn alt">Tarifas</span></div>
-                      <div style="display:flex;gap:10px;margin-top:24px">
-                        <span class="pg-chip">Branding</span><span class="pg-chip g">Web</span><span class="pg-chip p">Contenido</span>
+                    <div class="sh-hero">
+                      <div>
+                        <div class="pg-kick">Nueva temporada</div>
+                        <div class="pg-h1">Sudadera Nova <em>Oversize</em></div>
+                        <div class="sh-stars"><span class="st">★★★★★</span>4.8 · 214 reseñas</div>
+                        <div class="sh-price"><b>$1,290</b><s>$1,690</s><i>-24%</i></div>
+                        <div class="sh-swatches">
+                          <i class="on" style="background:#1f2937"></i>
+                          <i style="background:#a78bfa"></i>
+                          <i style="background:#fda4af"></i>
+                          <i style="background:#d6d3d1"></i>
+                        </div>
+                        <div class="sh-cta">
+                          <span class="pg-btn">Añadir al carrito</span>
+                          <span class="fav"><i class="fa-regular fa-heart"></i></span>
+                        </div>
+                        <div class="sh-trust">
+                          <span><i class="fa-solid fa-truck-fast"></i>Envío 24-48 h</span>
+                          <span><i class="fa-solid fa-rotate-left"></i>30 días</span>
+                          <span><i class="fa-solid fa-shield-halved"></i>Pago seguro</span>
+                        </div>
+                      </div>
+                      <div class="sh-gallery">
+                        <div class="sh-thumbs"><i class="on"></i><i></i><i></i><i></i></div>
+                        <div class="sh-main">
+                          <span class="sh-badge">Más vendido</span>
+                          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=70" alt="Sudadera oversize" loading="lazy" />
+                        </div>
                       </div>
                     </div>
-                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=70" alt="Equipo en reunión" loading="lazy" /></div>
                   </div>
-                  <div class="pg-sec">
-                    <div class="pg-h2">Servicios</div>
-                    <div class="pg-g3">
-                      <div class="pg-card"><h4>Sitio a medida</h4><p>Entrega en 3 semanas.</p></div>
-                      <div class="pg-card"><h4>Identidad</h4><p>Logo, paleta y tipografía.</p></div>
-                      <div class="pg-card"><h4>Contenido</h4><p>Textos que venden sin gritar.</p></div>
+                  <div class="sh-sec">
+                    <div class="pg-h2">También te puede gustar</div>
+                    <div class="sh-grid">
+                      <div class="sh-card">
+                        <div class="im"><span class="tag sale">-30%</span><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=70" alt="Camiseta" loading="lazy" /></div>
+                        <div class="tx"><b>Camiseta Pima</b><span>Algodón peinado</span><div class="pr"><b>$390</b><s>$560</s></div><div class="st">★★★★★</div></div>
+                      </div>
+                      <div class="sh-card">
+                        <div class="im"><span class="tag">Nuevo</span><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=70" alt="Tenis" loading="lazy" /></div>
+                        <div class="tx"><b>Tenis Nova Run</b><span>Running urbano</span><div class="pr"><b>$1,890</b></div><div class="st">★★★★☆</div></div>
+                      </div>
+                      <div class="sh-card">
+                        <div class="im"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=70" alt="Mochila" loading="lazy" /></div>
+                        <div class="tx"><b>Mochila Daypack</b><span>20 L · impermeable</span><div class="pr"><b>$1,150</b></div><div class="st">★★★★★</div></div>
+                      </div>
+                      <div class="sh-card">
+                        <div class="im"><span class="tag sale">-15%</span><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=70" alt="Gafas" loading="lazy" /></div>
+                        <div class="tx"><b>Gafas Solaris</b><span>UV400 · unisex</span><div class="pr"><b>$890</b><s>$1,050</s></div><div class="st">★★★★☆</div></div>
+                      </div>
                     </div>
                   </div>
-                  <div class="pg-foot"><span>Flat Pop</span><span>Hecho en México</span></div>
+                  <div class="sh-foot">
+                    <span>© 2026 Nova Shop · Hecho en México</span>
+                    <span class="pay"><i>VISA</i><i>MC</i><i>AMEX</i><i>OXXO</i></span>
+                  </div>
                 </div>
               </div>
               <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
-                <h4 class="text-lg font-bold t-text-strong">Flat Pop</h4>
-                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-amber-400">Flat design</span>
+                <h4 class="text-lg font-bold t-text-strong">Nova Shop</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-indigo-400">E-commerce</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                Color plano, borde sólido y esquinas rectas. Se carga en un instante y se
-                entiende sin instrucciones: para negocios, agencias y portfolios de contenido.
+                Tienda de producto lista para vender: ficha con precio y descuento, selector
+                de color, galería con miniaturas, carrito y rejilla de productos relacionados.
+                El catálogo se conecta a tu inventario.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Sistema plano de bloques y chips</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Carga mínima: sin imágenes de fondo pesadas</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400 text-[10px]"></i> Imprime bien: sin degradados ni sombras</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400 text-[10px]"></i> Ficha de producto con variantes y galería</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400 text-[10px]"></i> Rejilla de catálogo con precios y ofertas</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400 text-[10px]"></i> Conectable a Stripe, Mercado Pago o Shopify</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
-                <button type="button" data-preview="flat"
+                <button type="button" data-preview="shop"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
                   <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
                 </button>
-                <button type="button" data-request="flat"
+                <button type="button" data-request="shop"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
                   Quiero esta
                 </button>
@@ -3101,12 +3212,12 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
           audience: ['Estudios creativos y agencias', 'Negocios locales y marcas jóvenes', 'Cualquiera que no quiera verse corporativo'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
-        flat: {
-          kicker: 'Plantilla 07 · Flat Pop',
-          title: 'Flat Pop',
-          lead: 'Diseño plano sin disculpas: color sólido, borde marcado y esquinas rectas. Nada de degradados ni sombras, así que carga en un instante, imprime bien y se entiende sin instrucciones. El contenido es lo que sostiene la página.',
-          includes: ['Sistema de bloques y chips de color plano', 'Tipografía grande con jerarquía clara', 'Carga mínima: sin fondos pesados', 'Versión imprimible sin perder contraste'],
-          audience: ['Negocios y agencias locales', 'Portfolios de contenido y escritura', 'Sitios que priorizan velocidad y claridad'],
+        shop: {
+          kicker: 'Plantilla 07 · Nova Shop',
+          title: 'Nova Shop',
+          lead: 'Tienda de producto lista para vender: ficha con precio y descuento, selector de color, galería con miniaturas, carrito con contador y rejilla de productos relacionados. El catálogo se conecta a tu inventario y el checkout a la pasarela que ya uses.',
+          includes: ['Ficha de producto con variantes y galería', 'Rejilla de catálogo con precios y ofertas', 'Conectable a Stripe, Mercado Pago o Shopify'],
+          audience: ['Tiendas de ropa, accesorios y calzado', 'Marcas propias y producto físico', 'Negocios que venden por Instagram y quieren su tienda'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
         term: {
