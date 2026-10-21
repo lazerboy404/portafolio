@@ -754,80 +754,145 @@
     .pg-paper .pg-logo { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 0; }
     .pg-paper .pg-logo .mk { border-radius: 0; width: 26px; height: 26px; font-family: 'Playfair Display', serif; }
 
-    /* 03 · Aurora Glass — vidrio violeta sobre negro (referencia del cliente) */
+    /* 03 · Aurora Glass — dashboard de producto en vidrio violeta (referencia del cliente) */
     .pg-glass {
-      --tp-bg:
-        radial-gradient(720px 460px at 12% -6%, rgba(139, 92, 246, 0.30), transparent 62%),
-        radial-gradient(620px 420px at 92% 12%, rgba(167, 139, 250, 0.22), transparent 58%),
-        radial-gradient(760px 520px at 46% 108%, rgba(99, 102, 241, 0.20), transparent 60%),
-        #08060f;
+      --tp-bg: #08060f;
       --tp-strong: #ffffff;
-      --tp-text: #c6c1da;
-      --tp-faint: #8b84a3;
-      --tp-accent: #a78bfa;
-      --tp-on: #170f2b;
-      --tp-edge: rgba(255, 255, 255, 0.10);
-      --tp-edge2: rgba(167, 139, 250, 0.45);
-      --tp-card: rgba(255, 255, 255, 0.05);
-      --tp-accent-soft: rgba(139, 92, 246, 0.18);
-      --tp-nav-bg: rgba(255, 255, 255, 0.04);
-      --tp-alt-bg: rgba(255, 255, 255, 0.06);
+      --tp-text: #d8d4e8;
+      --tp-faint: #9d97b8;
+      --tp-accent: #8b5cf6;
+      --tp-on: #ffffff;
+      --tp-edge: rgba(255, 255, 255, 0.09);
+      --tp-edge2: rgba(167, 139, 250, 0.28);
+      --tp-card: rgba(255, 255, 255, 0.045);
+      --tp-accent-soft: rgba(139, 92, 246, 0.16);
+      --tp-nav-bg: rgba(10, 8, 20, 0.72);
+      --tp-alt-bg: rgba(255, 255, 255, 0.03);
       --tp-hero-bg: transparent;
-      --tp-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+      --tp-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
       --tp-font: 'Plus Jakarta Sans', sans-serif;
       --tp-display: 'Plus Jakarta Sans', sans-serif;
       --tp-h-w: 800;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(760px 520px at 8% -10%, rgba(139, 92, 246, 0.30), transparent 62%),
+        radial-gradient(620px 460px at 96% 4%, rgba(56, 189, 248, 0.16), transparent 60%),
+        radial-gradient(700px 520px at 70% 108%, rgba(217, 70, 239, 0.18), transparent 64%),
+        #08060f;
     }
-    /* El vidrio solo funciona si lo que hay detras se ve borroso */
-    .pg-glass .pg-nav, .pg-glass .pg-card, .pg-glass .pg-glasspanel,
-    .pg-glass .pg-btn.alt, .pg-glass .pg-ic {
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
+    /* Halo flotante: la profundidad real detras del vidrio */
+    .pg-glass::before {
+      content: ''; position: absolute; right: -90px; bottom: -150px;
+      width: 400px; height: 400px; border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.55), transparent 68%);
+      filter: blur(30px);
     }
-    .pg-glass .pg-nav { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .pg-glass .pg-hero { padding: 70px 56px; }
-    .pg-glass .pg-h1 { font-size: 58px; letter-spacing: -0.035em; }
-    .pg-glass .pg-h1 em { color: #a78bfa; }
-    .pg-glass .pg-card {
-      border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.10);
-      box-shadow: 0 24px 48px -30px rgba(0, 0, 0, 0.9);
+    .pg-glass .pg-nav {
+      position: relative; z-index: 2; padding: 14px 26px;
+      background: var(--tp-nav-bg);
+      backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      border-bottom: 1px solid var(--tp-edge);
     }
+    .pg-glass .pg-logo { color: #fff; font-weight: 800; }
+    .pg-glass .pg-logo .mk {
+      border-radius: 11px; border: 1px solid rgba(167, 139, 250, 0.45);
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      box-shadow: 0 0 22px rgba(139, 92, 246, 0.55);
+    }
+    .pg-glass .pg-links span { color: var(--tp-faint); }
+    .pg-glass .pg-links span.on { color: #fff; }
     .pg-glass .pg-btn {
-      border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff;
-      box-shadow: 0 18px 40px -16px rgba(139, 92, 246, 0.7);
+      border: none; border-radius: 11px; color: #fff; font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      box-shadow: 0 10px 26px -10px rgba(139, 92, 246, 0.9);
     }
-    .pg-glass .pg-btn.alt { border-radius: 12px; border-color: rgba(255, 255, 255, 0.14); color: #fff; }
-    .pg-glass .pg-ic { border-radius: 12px; border: 1px solid rgba(167, 139, 250, 0.35); background: rgba(139, 92, 246, 0.16); }
-    .pg-glass .pg-sec, .pg-glass .pg-foot { border-color: rgba(255, 255, 255, 0.08); }
-    /* Panel de estadisticas de cristal: lo que define la referencia */
-    .pg-glass .pg-glasspanel {
-      border-radius: 22px; padding: 26px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 34px 70px -34px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    .pg-glass .pg-btn.alt {
+      background: rgba(255, 255, 255, 0.06); color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: none;
     }
-    .pg-glass .pg-glasspanel .hd {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+    .pg-glass .ag-shell { display: grid; grid-template-columns: 214px 1fr; position: relative; z-index: 2; }
+    .pg-glass .ag-side {
+      display: flex; flex-direction: column; gap: 3px; padding: 18px 14px;
+      border-right: 1px solid var(--tp-edge); background: rgba(12, 9, 24, 0.55);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     }
-    .pg-glass .pg-glasspanel .hd h4 { font-size: 15px; font-weight: 700; color: #fff; }
-    .pg-glass .pg-glasspanel .hd span {
-      font-size: 11px; padding: 5px 11px; border-radius: 999px;
-      background: rgba(139, 92, 246, 0.20); border: 1px solid rgba(167, 139, 250, 0.35); color: #d6c9ff;
+    .pg-glass .ag-side .grp { padding: 10px 10px 6px; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #8b84a8; }
+    .pg-glass .ag-side .lnk { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 10px; font-size: 12.5px; font-weight: 600; color: #b9b3cf; }
+    .pg-glass .ag-side .lnk i { width: 15px; font-size: 11px; text-align: center; }
+    .pg-glass .ag-side .lnk.on {
+      color: #fff; background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      box-shadow: 0 10px 24px -12px rgba(139, 92, 246, 0.95);
     }
-    .pg-glass .pg-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
-    .pg-glass .pg-mini .cell {
-      border-radius: 14px; padding: 14px;
-      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.09);
+    .pg-glass .ag-side .help { margin-top: auto; padding: 12px; border-radius: 12px; border: 1px solid var(--tp-edge); background: rgba(255, 255, 255, 0.04); font-size: 11.5px; color: #cfc9e4; }
+    .pg-glass .ag-side .help b { display: block; margin-bottom: 3px; font-size: 12.5px; color: #fff; }
+    .pg-glass .ag-main { padding: 20px 22px 24px; }
+    .pg-glass .ag-top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .pg-glass .ag-search { display: flex; flex: 1; align-items: center; gap: 9px; padding: 10px 14px; border-radius: 11px; border: 1px solid var(--tp-edge); background: rgba(255, 255, 255, 0.05); font-size: 12px; color: #9d97b8; }
+    .pg-glass .ag-ava { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #7c3aed, #6d28d9); border: 1px solid rgba(255, 255, 255, 0.25); }
+    .pg-glass .ag-hi { margin-bottom: 16px; }
+    .pg-glass .ag-hi h3 { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+    .pg-glass .ag-hi p { margin-top: 3px; font-size: 12px; color: #9d97b8; }
+    .pg-glass .ag-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+    .pg-glass .ag-kpi, .pg-glass .ag-pnl {
+      border: 1px solid var(--tp-edge); border-radius: 15px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
+      backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 22px 50px -30px rgba(0, 0, 0, 0.95);
     }
-    .pg-glass .pg-mini .cell b { display: block; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
-    .pg-glass .pg-mini .cell span { font-size: 11px; color: var(--tp-faint); }
-    .pg-glass .pg-spark { display: flex; align-items: flex-end; gap: 5px; height: 74px; }
-    .pg-glass .pg-spark i {
-      flex: 1; display: block; border-radius: 4px 4px 0 0;
-      background: linear-gradient(180deg, #a78bfa, rgba(139, 92, 246, 0.25));
+    .pg-glass .ag-kpi { padding: 13px 14px; }
+    .pg-glass .ag-kpi .ic { display: grid; place-items: center; width: 26px; height: 26px; margin-bottom: 9px; border-radius: 9px; font-size: 11px; color: #ddd6fe; background: rgba(139, 92, 246, 0.22); border: 1px solid rgba(167, 139, 250, 0.35); }
+    .pg-glass .ag-kpi .lbl { font-size: 10.5px; color: #9d97b8; }
+    .pg-glass .ag-kpi .val { margin: 2px 0 3px; font-size: 23px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
+    .pg-glass .ag-kpi .dlt { font-size: 10.5px; font-weight: 700; color: #6ee7b7; }
+    .pg-glass .ag-kpi .dlt.dn { color: #fca5a5; }
+    .pg-glass .ag-spark { display: flex; align-items: flex-end; gap: 4px; height: 30px; margin-top: 9px; }
+    .pg-glass .ag-spark i { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, rgba(167, 139, 250, 0.85), rgba(109, 40, 217, 0.35)); }
+    .pg-glass .ag-spark i.hi { background: linear-gradient(180deg, #ddd6fe, #8b5cf6); box-shadow: 0 0 14px rgba(167, 139, 250, 0.8); }
+    .pg-glass .ag-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .pg-glass .ag-row:last-child { margin-bottom: 0; }
+    .pg-glass .ag-pnl { padding: 15px; }
+    .pg-glass .ag-pnl .hd { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+    .pg-glass .ag-pnl .hd h4 { font-size: 13.5px; font-weight: 700; color: #fff; }
+    .pg-glass .ag-pnl .hd span { font-size: 11px; color: #9d97b8; }
+    /* Area chart en CSS puro: relleno + linea con glow */
+    .pg-glass .ag-area { position: relative; height: 132px; }
+    .pg-glass .ag-area .glow,
+    .pg-glass .ag-area .line { position: absolute; inset: 0; }
+    .pg-glass .ag-area .glow {
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.55), rgba(139, 92, 246, 0.02) 78%);
+      clip-path: polygon(0 62%, 8% 54%, 16% 66%, 24% 44%, 32% 50%, 40% 26%, 48% 34%, 56% 18%, 64% 30%, 72% 12%, 80% 22%, 88% 8%, 100% 16%, 100% 100%, 0 100%);
     }
-    .pg-glass .pg-spark i.hi { background: linear-gradient(180deg, #c4b5fd, #7c3aed); box-shadow: 0 0 18px rgba(167, 139, 250, 0.65); }
-    .pg-glass .pg-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--tp-faint); margin-top: 8px; }
+    .pg-glass .ag-area .line {
+      background: linear-gradient(90deg, #a78bfa, #c4b5fd);
+      clip-path: polygon(0 61%, 8% 53%, 16% 65%, 24% 43%, 32% 49%, 40% 25%, 48% 33%, 56% 17%, 64% 29%, 72% 11%, 80% 21%, 88% 7%, 100% 15%, 100% 17%, 88% 9%, 80% 23%, 72% 13%, 64% 31%, 56% 19%, 48% 35%, 40% 27%, 32% 51%, 24% 45%, 16% 67%, 8% 55%, 0 63%);
+      filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.9));
+    }
+    .pg-glass .ag-tip {
+      position: absolute; top: 4%; left: 61%; padding: 6px 10px; border-radius: 9px;
+      font-size: 10.5px; font-weight: 700; line-height: 1.25; text-align: center; color: #fff;
+      background: rgba(139, 92, 246, 0.95); box-shadow: 0 10px 24px -10px rgba(139, 92, 246, 1);
+    }
+    .pg-glass .ag-tip small { display: block; font-size: 9px; font-weight: 500; opacity: 0.85; }
+    .pg-glass .ag-axis { display: flex; justify-content: space-between; margin-top: 8px; font-size: 9.5px; color: #8b84a8; }
+    .pg-glass .ag-list { display: flex; flex-direction: column; gap: 8px; }
+    .pg-glass .ag-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 11px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.06); }
+    .pg-glass .ag-item .ic { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 8px; font-size: 10.5px; color: #ddd6fe; background: rgba(139, 92, 246, 0.2); }
+    .pg-glass .ag-item .tx { flex: 1; min-width: 0; }
+    .pg-glass .ag-item .tx b { display: block; font-size: 11.5px; font-weight: 600; color: #fff; }
+    .pg-glass .ag-item .tx span { font-size: 10px; color: #8b84a8; }
+    .pg-glass .ag-pill { padding: 4px 9px; border-radius: 999px; font-size: 9.5px; font-weight: 700; color: #c4b5fd; background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(167, 139, 250, 0.3); }
+    .pg-glass .ag-pill.pd { color: #fcd34d; background: rgba(251, 191, 36, 0.16); border-color: rgba(251, 191, 36, 0.3); }
+    .pg-glass .ag-pill.ok { color: #6ee7b7; background: rgba(52, 211, 153, 0.16); border-color: rgba(52, 211, 153, 0.3); }
+    .pg-glass .ag-donut {
+      display: grid; place-items: center; width: 104px; height: 104px; margin: 4px auto 0; border-radius: 50%;
+      background: conic-gradient(#a78bfa 0 85%, rgba(255, 255, 255, 0.09) 85% 100%);
+      box-shadow: 0 0 30px -6px rgba(139, 92, 246, 0.7);
+    }
+    .pg-glass .ag-donut b { display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: #0c0a1a; font-size: 19px; font-weight: 800; color: #fff; }
+    .pg-glass .ag-acts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .pg-glass .ag-act { padding: 11px; border-radius: 12px; text-align: center; border: 1px solid var(--tp-edge); background: rgba(255, 255, 255, 0.04); font-size: 10.5px; font-weight: 600; color: #cfc9e4; }
+    .pg-glass .ag-act i { display: block; margin-bottom: 6px; font-size: 13px; color: #c4b5fd; }
+    .pg-glass .pg-sec, .pg-glass .pg-foot { border-color: var(--tp-edge); }
 
     /* 04 · Corporate Clean — azul negocio, estructura clara */
     .pg-corp {
@@ -966,62 +1031,117 @@
     .pg-dash .pg-pill.w { background: rgba(217, 119, 6, 0.12); color: #b45309; }
     .pg-dash .pg-foot { padding: 16px 28px; }
 
-    /* 06 · Soft Neo — neomorfismo, la superficie se hunde y sobresale */
-    .pg-neo {
-      --tp-bg: #e8ecf4;
-      --tp-strong: #2b3550;
-      --tp-text: #3d4763;
-      --tp-faint: #5d6880;
-      --tp-accent: #5b6ee8;
+    /* 06 · Clay Pop — claymorphism informal: plastilina, emoji y color */
+    .pg-clay {
+      --tp-bg: #efe9ff;
+      --tp-strong: #241a3d;
+      --tp-text: #4a3f6b;
+      --tp-faint: #7c6f9e;
+      --tp-accent: #7c3aed;
       --tp-on: #ffffff;
-      --tp-edge: transparent;
-      --tp-edge2: #d9dfeb;
-      --tp-card: #e8ecf4;
-      --tp-accent-soft: #e8ecf4;
-      --tp-nav-bg: #e8ecf4;
-      --tp-alt-bg: #e8ecf4;
-      --tp-hero-bg: #e8ecf4;
-      --tp-shadow: inset -6px -6px 12px rgba(255, 255, 255, 0.9), inset 6px 6px 14px rgba(163, 177, 199, 0.55);
+      --tp-edge: rgba(36, 26, 61, 0.08);
+      --tp-edge2: rgba(124, 58, 237, 0.22);
+      --tp-card: #ffffff;
+      --tp-accent-soft: #ffe0f0;
+      --tp-nav-bg: #efe9ff;
+      --tp-alt-bg: #e6dcff;
+      --tp-hero-bg: transparent;
+      --tp-shadow: 0 18px 40px -18px rgba(36, 26, 61, 0.35);
       --tp-font: 'Outfit', sans-serif;
       --tp-display: 'Outfit', sans-serif;
-      --tp-h-w: 700;
+      --tp-h-w: 800;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(420px 320px at 4% 6%, #ffd9ec 0%, transparent 66%),
+        radial-gradient(460px 340px at 98% 12%, #d6f5ff 0%, transparent 64%),
+        radial-gradient(520px 400px at 52% 104%, #e3d6ff 0%, transparent 68%),
+        #efe9ff;
     }
-    /* Sin bordes: la forma la define la luz, no la linea */
-    .pg-neo .pg-nav { border-bottom: none; box-shadow: 0 6px 14px -10px rgba(120, 133, 160, 0.7); }
-    .pg-neo .pg-logo .mk { border: none; box-shadow: 5px 5px 10px rgba(163, 177, 199, 0.6), -5px -5px 10px rgba(255, 255, 255, 0.95); }
-    .pg-neo .pg-h1 { font-size: 54px; }
-    .pg-neo .pg-btn {
-      border: none; border-radius: 16px;
-      box-shadow: 6px 6px 14px rgba(163, 177, 199, 0.65), -6px -6px 14px rgba(255, 255, 255, 0.95);
+    /* Plastilina: superficie gruesa, radio enorme y sombra suave de dos tonos */
+    .pg-clay .pg-nav {
+      border-bottom: none; padding: 16px 28px;
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
-    .pg-neo .pg-btn.alt {
-      border: none; border-radius: 16px; color: var(--tp-strong);
-      box-shadow: inset 5px 5px 10px rgba(163, 177, 199, 0.55), inset -5px -5px 10px rgba(255, 255, 255, 0.9);
+    .pg-clay .pg-logo { color: #241a3d; font-weight: 800; }
+    .pg-clay .pg-logo .mk {
+      border-radius: 14px; border: none; color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      box-shadow: 0 8px 18px -6px rgba(124, 58, 237, 0.7), inset 0 -3px 0 rgba(0, 0, 0, 0.12);
     }
-    .pg-neo .pg-card {
-      border: none; border-radius: 22px;
-      box-shadow: 8px 8px 18px rgba(163, 177, 199, 0.6), -8px -8px 18px rgba(255, 255, 255, 0.92);
+    .pg-clay .pg-links span { color: #6d5f92; font-weight: 600; }
+    .pg-clay .pg-links span.on { color: #241a3d; }
+    .pg-clay .pg-hero { padding: 56px 44px 44px; }
+    .pg-clay .pg-kick {
+      display: inline-block; padding: 7px 15px; border-radius: 999px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.01em; text-transform: none;
+      color: #7c3aed; background: #fff; box-shadow: 0 6px 14px -8px rgba(124, 58, 237, 0.6);
     }
-    .pg-neo .pg-ic {
-      border-radius: 999px; color: var(--tp-accent);
-      box-shadow: inset 4px 4px 9px rgba(163, 177, 199, 0.6), inset -4px -4px 9px rgba(255, 255, 255, 0.95);
+    .pg-clay .pg-h1 { font-size: 56px; letter-spacing: -0.03em; color: #241a3d; }
+    .pg-clay .pg-h1 em { color: #7c3aed; font-style: normal; }
+    .pg-clay .pg-lead { font-size: 16px; color: #5b4f7d; }
+    .pg-clay .pg-btn {
+      border: none; border-radius: 999px; color: #fff; font-weight: 700;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      box-shadow: 0 12px 24px -10px rgba(124, 58, 237, 0.85), inset 0 -3px 0 rgba(0, 0, 0, 0.14);
     }
-    .pg-neo .pg-media {
-      border: none; border-radius: 26px; padding: 10px;
-      box-shadow: 10px 10px 22px rgba(163, 177, 199, 0.55), -10px -10px 22px rgba(255, 255, 255, 0.92);
+    .pg-clay .pg-btn.alt {
+      background: #fff; color: #7c3aed;
+      box-shadow: 0 10px 22px -12px rgba(36, 26, 61, 0.5), inset 0 -3px 0 rgba(124, 58, 237, 0.12);
     }
-    .pg-neo .pg-media img { border-radius: 18px; }
-    .pg-neo .pg-sec, .pg-neo .pg-foot { border-color: transparent; }
-    .pg-neo .pg-switch {
-      width: 74px; height: 38px; border-radius: 999px; padding: 5px;
-      background: #e8ecf4;
-      box-shadow: inset 5px 5px 10px rgba(163, 177, 199, 0.6), inset -5px -5px 10px rgba(255, 255, 255, 0.95);
+    .pg-clay .pg-card {
+      border: none; border-radius: 28px; background: #fff;
+      box-shadow: 0 20px 40px -22px rgba(36, 26, 61, 0.45), inset 0 -4px 0 rgba(124, 58, 237, 0.07);
     }
-    .pg-neo .pg-switch i {
-      display: block; width: 28px; height: 28px; border-radius: 999px;
-      background: linear-gradient(135deg, #6d7ef0, #4f46e5);
-      box-shadow: 3px 3px 7px rgba(120, 133, 160, 0.7);
+    .pg-clay .pg-card:nth-child(1) { transform: rotate(-1.4deg); }
+    .pg-clay .pg-card:nth-child(2) { transform: rotate(0.9deg); }
+    .pg-clay .pg-card:nth-child(3) { transform: rotate(-0.7deg); }
+    .pg-clay .pg-card h4 { color: #241a3d; font-weight: 800; }
+    .pg-clay .pg-ic {
+      border: none; border-radius: 18px; color: #241a3d;
+      background: linear-gradient(135deg, #f0abfc, #a78bfa);
+      box-shadow: 0 10px 20px -10px rgba(167, 139, 250, 0.95), inset 0 -3px 0 rgba(0, 0, 0, 0.12);
     }
+    .pg-clay .pg-card:nth-child(2) .pg-ic { background: linear-gradient(135deg, #7dd3fc, #38bdf8); box-shadow: 0 10px 20px -10px rgba(56, 189, 248, 0.95), inset 0 -3px 0 rgba(0, 0, 0, 0.12); }
+    .pg-clay .pg-card:nth-child(3) .pg-ic { background: linear-gradient(135deg, #fcd34d, #fb923c); box-shadow: 0 10px 20px -10px rgba(251, 146, 60, 0.95), inset 0 -3px 0 rgba(0, 0, 0, 0.12); }
+    .pg-clay .pg-sec { border-top: none; background: rgba(255, 255, 255, 0.42); }
+    .pg-clay .pg-foot { border-top: none; color: #6d5f92; }
+    .pg-clay .pg-media { border: none; border-radius: 30px; box-shadow: 0 26px 50px -24px rgba(36, 26, 61, 0.55); }
+    .pg-clay .pg-media img { border-radius: 30px; }
+    .pg-clay .pg-tag { border: none; border-radius: 999px; background: #fff; color: #7c3aed; font-weight: 700; box-shadow: 0 6px 14px -8px rgba(124, 58, 237, 0.55); }
+    .pg-clay .pg-chip {
+      display: inline-block; padding: 8px 16px; border-radius: 999px;
+      font-size: 12.5px; font-weight: 700; color: #241a3d; background: #fff;
+      box-shadow: 0 10px 20px -12px rgba(36, 26, 61, 0.5), inset 0 -3px 0 rgba(124, 58, 237, 0.08);
+    }
+    .pg-clay .pg-chip.p { background: #ffe0f0; }
+    .pg-clay .pg-chip.b { background: #d6f5ff; }
+    .pg-clay .pg-chip.y { background: #fff2c9; }
+    .pg-clay .pg-chip.g { background: #d8f8e4; }
+    /* Burbujas de plastilina: el detalle informal que rompe la retícula */
+    .pg-clay .cl-blobs { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+    .pg-clay .cl-blobs i { position: absolute; display: block; border-radius: 50%; }
+    .pg-clay .cl-blobs i:nth-child(1) { top: 12%; left: 3%; width: 74px; height: 74px; background: linear-gradient(135deg, #ffc9e4, #f0abfc); box-shadow: 0 18px 30px -16px rgba(240, 171, 252, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(2) { top: 34%; right: 4%; width: 52px; height: 52px; background: linear-gradient(135deg, #bfe9ff, #7dd3fc); box-shadow: 0 16px 26px -14px rgba(125, 211, 252, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(3) { bottom: 16%; left: 8%; width: 40px; height: 40px; background: linear-gradient(135deg, #ffe9a8, #fcd34d); box-shadow: 0 14px 24px -12px rgba(252, 211, 77, 0.95); }
+    .pg-clay .cl-blobs i:nth-child(4) { top: 8%; right: 22%; width: 26px; height: 26px; background: linear-gradient(135deg, #c4b5fd, #a78bfa); }
+    .pg-clay .cl-emoji { font-size: 22px; line-height: 1; }
+    .pg-clay .cl-note {
+      display: inline-flex; align-items: center; gap: 9px; margin-top: 18px;
+      padding: 11px 16px; border-radius: 20px 20px 20px 6px;
+      font-size: 12.5px; font-weight: 600; color: #4a3f6b; background: #fff;
+      box-shadow: 0 16px 30px -18px rgba(36, 26, 61, 0.55);
+    }
+    .pg-clay .cl-note b { color: #7c3aed; }
+    .pg-clay .cl-marquee { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .pg-clay .cl-stat {
+      display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 22px;
+      background: #fff; box-shadow: 0 18px 34px -20px rgba(36, 26, 61, 0.5), inset 0 -4px 0 rgba(124, 58, 237, 0.07);
+    }
+    .pg-clay .cl-stat .em { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 15px; font-size: 19px; background: #f3ecff; color: #241a3d; }
+    .pg-clay .cl-stat b { display: block; font-size: 21px; font-weight: 800; color: #241a3d; letter-spacing: -0.02em; }
+    .pg-clay .cl-stat span { font-size: 11.5px; color: #7c6f9e; }
+    .pg-clay .cl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 6px; }
 
     /* 07 · Flat Pop — color plano, sin degradados ni sombras */
     .pg-flat {
@@ -1972,40 +2092,101 @@
                 <div class="pg pg-glass">
                   <div class="pg-nav">
                     <div class="pg-logo"><span class="mk">A</span>Aurora</div>
-                    <div class="pg-links"><span class="on">Producto</span><span>Precios</span><span>Clientes</span></div>
-                    <div class="pg-btn">Probar gratis</div>
+                    <div class="pg-links"><span class="on">Panel</span><span>Reportes</span><span>Equipo</span></div>
+                    <div class="pg-btn">+ Nueva solicitud</div>
                   </div>
-                  <div class="pg-hero">
-                    <div>
-                      <div class="pg-kick">SaaS · Productividad</div>
-                      <div class="pg-h1">Todo tu trabajo, <em>bajo un mismo cristal</em></div>
-                      <div class="pg-lead">Paneles de vidrio sobre negro, acentos violeta y brillo real. La interfaz que se ve hoy en los productos mejor diseñados.</div>
-                      <div class="pg-btns"><span class="pg-btn">Empezar ahora</span><span class="pg-btn alt">Ver demo</span></div>
-                    </div>
-                    <div class="pg-glasspanel">
-                      <div class="hd"><h4>Buenos días, Jordan</h4><span>Esta semana</span></div>
-                      <div class="pg-mini">
-                        <div class="cell"><b>1,284</b><span>Solicitudes</span></div>
-                        <div class="cell"><b>642</b><span>En curso</span></div>
-                        <div class="cell"><b>98.6%</b><span>SLA</span></div>
+                  <div class="ag-shell">
+                    <aside class="ag-side">
+                      <div class="lnk on"><i class="fa-solid fa-gauge-high"></i>Resumen</div>
+                      <div class="lnk"><i class="fa-solid fa-layer-group"></i>Servicios</div>
+                      <div class="lnk"><i class="fa-regular fa-clipboard"></i>Solicitudes</div>
+                      <div class="lnk"><i class="fa-solid fa-box"></i>Activos</div>
+                      <div class="lnk"><i class="fa-solid fa-users"></i>Técnicos</div>
+                      <div class="lnk"><i class="fa-solid fa-chart-pie"></i>Reportes</div>
+                      <div class="lnk"><i class="fa-solid fa-gear"></i>Ajustes</div>
+                      <div class="help"><b>¿Necesitas ayuda?</b>Escríbenos y te contestamos hoy mismo.</div>
+                    </aside>
+                    <div class="ag-main">
+                      <div class="ag-top">
+                        <div class="ag-search"><i class="fa-solid fa-magnifying-glass"></i>Buscar en el panel…</div>
+                        <div class="ag-ava">J</div>
                       </div>
-                      <div class="pg-spark">
-                        <i style="height:34%"></i><i style="height:48%"></i><i style="height:41%"></i>
-                        <i style="height:62%"></i><i style="height:55%"></i><i class="hi" style="height:88%"></i>
-                        <i style="height:70%"></i>
+                      <div class="ag-hi">
+                        <h3>Buenos días, Jordan 👋</h3>
+                        <p>Esto es lo que está pasando con tus servicios hoy.</p>
                       </div>
-                      <div class="pg-axis"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+                      <div class="ag-kpis">
+                        <div class="ag-kpi">
+                          <div class="ic"><i class="fa-regular fa-clipboard"></i></div>
+                          <div class="lbl">Solicitudes totales</div>
+                          <div class="val">1,284</div>
+                          <div class="dlt">+12.5% vs mes anterior</div>
+                          <div class="ag-spark"><i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i class="hi" style="height:92%"></i><i style="height:74%"></i></div>
+                        </div>
+                        <div class="ag-kpi">
+                          <div class="ic"><i class="fa-solid fa-spinner"></i></div>
+                          <div class="lbl">En curso</div>
+                          <div class="val">642</div>
+                          <div class="dlt">+8.2% vs mes anterior</div>
+                          <div class="ag-spark"><i style="height:44%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:50%"></i><i style="height:70%"></i><i class="hi" style="height:84%"></i></div>
+                        </div>
+                        <div class="ag-kpi">
+                          <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
+                          <div class="lbl">Completadas</div>
+                          <div class="val">532</div>
+                          <div class="dlt">+15.3% vs mes anterior</div>
+                          <div class="ag-spark"><i style="height:30%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:62%"></i><i style="height:56%"></i><i class="hi" style="height:88%"></i></div>
+                        </div>
+                        <div class="ag-kpi">
+                          <div class="ic"><i class="fa-solid fa-shield-halved"></i></div>
+                          <div class="lbl">Cumplimiento SLA</div>
+                          <div class="val">98.6%</div>
+                          <div class="dlt">+2.7% vs mes anterior</div>
+                          <div class="ag-spark"><i style="height:52%"></i><i style="height:60%"></i><i style="height:48%"></i><i style="height:72%"></i><i style="height:66%"></i><i class="hi" style="height:90%"></i></div>
+                        </div>
+                      </div>
+                      <div class="ag-row">
+                        <div class="ag-pnl">
+                          <div class="hd"><h4>Resumen de solicitudes</h4><span>Esta semana</span></div>
+                          <div class="ag-area">
+                            <div class="glow"></div>
+                            <div class="line"></div>
+                            <div class="ag-tip">246<small>Hoy</small></div>
+                          </div>
+                          <div class="ag-axis"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+                        </div>
+                        <div class="ag-pnl">
+                          <div class="hd"><h4>Solicitudes recientes</h4><span>Ver todo</span></div>
+                          <div class="ag-list">
+                            <div class="ag-item"><div class="ic"><i class="fa-solid fa-wifi"></i></div><div class="tx"><b>Falla de red</b><span>#SR-2481</span></div><span class="ag-pill">En curso</span></div>
+                            <div class="ag-item"><div class="ic"><i class="fa-solid fa-key"></i></div><div class="tx"><b>Problema de acceso</b><span>#SR-3480</span></div><span class="ag-pill">En curso</span></div>
+                            <div class="ag-item"><div class="ic"><i class="fa-solid fa-bug"></i></div><div class="tx"><b>Error de software</b><span>#SR-2479</span></div><span class="ag-pill pd">Pendiente</span></div>
+                            <div class="ag-item"><div class="ic"><i class="fa-solid fa-microchip"></i></div><div class="tx"><b>Falla de hardware</b><span>#SR-2478</span></div><span class="ag-pill ok">Resuelto</span></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ag-row">
+                        <div class="ag-pnl">
+                          <div class="hd"><h4>Acciones rápidas</h4><span>4 disponibles</span></div>
+                          <div class="ag-acts">
+                            <div class="ag-act"><i class="fa-solid fa-plus"></i>Nueva solicitud</div>
+                            <div class="ag-act"><i class="fa-solid fa-user-plus"></i>Asignar tarea</div>
+                            <div class="ag-act"><i class="fa-regular fa-calendar"></i>Agendar visita</div>
+                            <div class="ag-act"><i class="fa-solid fa-file-arrow-down"></i>Generar reporte</div>
+                          </div>
+                        </div>
+                        <div class="ag-pnl">
+                          <div class="hd"><h4>Desempeño del equipo</h4><span>Top 4</span></div>
+                          <div class="ag-donut"><b>85%</b></div>
+                          <div class="ag-list" style="margin-top:12px">
+                            <div class="ag-item"><div class="tx"><b>Alex Thompson</b></div><span class="ag-pill">92%</span></div>
+                            <div class="ag-item"><div class="tx"><b>María García</b></div><span class="ag-pill">87%</span></div>
+                            <div class="ag-item"><div class="tx"><b>James Wilson</b></div><span class="ag-pill">85%</span></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="pg-sec">
-                    <div class="pg-h2">Qué incluye</div>
-                    <div class="pg-g3">
-                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-layer-group"></i></div><h4>Módulos</h4><p>Activa solo lo que tu equipo usa.</p></div>
-                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-bolt"></i></div><h4>Automatización</h4><p>Reglas sin código, ejecutadas al instante.</p></div>
-                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-shield-halved"></i></div><h4>Seguridad</h4><p>SSO y auditoría de accesos.</p></div>
-                    </div>
-                  </div>
-                  <div class="pg-foot"><span>Aurora</span><span>14 días sin tarjeta</span></div>
                 </div>
               </div>
               <span class="shot-flag">Disponible</span>
@@ -2013,16 +2194,19 @@
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
                 <h4 class="text-lg font-bold t-text-strong">Aurora Glass</h4>
-                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-indigo">Glassmorphism</span>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-neon-indigo">Dashboard · Glass</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                Vidrio esmerilado sobre negro, con acentos violeta y brillo. Es la estética
-                que domina las interfaces de producto ahora mismo: suave, moderna y muy fotogénica.
+                Un panel de producto de verdad, no una landing con un cuadro bonito: sidebar,
+                saludo, KPIs con sparkline, gráfica de área con degradado, estados y dona.
+                Todo en vidrio violeta sobre negro, con halos de luz detrás para que el blur
+                tenga algo que difuminar.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Paneles con blur y saturación reales</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> KPIs en cristal con sparkline</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Ideal para SaaS y apps de producto</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Sidebar, KPIs, área, dona y acciones rápidas</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Vidrio real: blur, saturación y brillo en los bordes</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Gráficas en CSS puro, sin librerías</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-neon-indigo text-[10px]"></i> Contraste revisado sobre fondo oscuro</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
                 <button type="button" data-preview="glass"
@@ -2036,7 +2220,6 @@
               </div>
             </div>
           </article>
-
 
           <!-- ===== Plantilla 4 — Corporate Clean ===== -->
           <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-sky-400/50 hover:-translate-y-1"
@@ -2221,66 +2404,83 @@
             </div>
           </article>
 
-          <!-- ===== Plantilla 6 — Soft Neo ===== -->
-          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-slate-400/50 hover:-translate-y-1"
-                   data-template="neo">
+          <!-- ===== Plantilla 6 — Clay Pop ===== -->
+          <article class="tpl-card glass rounded-2xl p-4 reveal transition-all duration-300 hover:border-fuchsia-400/50 hover:-translate-y-1"
+                   data-template="clay">
             <div class="shot">
               <div class="shot-chrome" aria-hidden="true">
                 <span class="cdot r"></span><span class="cdot y"></span><span class="cdot g"></span>
-                <span class="shot-url">soft-neo.studio</span>
+                <span class="shot-url">claypop.mx</span>
               </div>
               <div class="shot-view">
-                <div class="pg pg-neo">
+                <div class="pg pg-clay">
+                  <div class="cl-blobs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
                   <div class="pg-nav">
-                    <div class="pg-logo"><span class="mk">S</span>Soft Neo</div>
-                    <div class="pg-links"><span class="on">Servicios</span><span>Metodología</span><span>Contacto</span></div>
-                    <div class="pg-btn">Agendar</div>
+                    <div class="pg-logo"><span class="mk">C</span>Clay Pop</div>
+                    <div class="pg-links"><span class="on">Qué hacemos</span><span>Precios</span><span>Hola 👋</span></div>
+                    <div class="pg-btn">Escríbenos</div>
                   </div>
                   <div class="pg-hero">
                     <div>
-                      <div class="pg-kick">Estudio de producto</div>
-                      <div class="pg-h1">Interfaces que <em>se sienten</em>, no solo se ven</div>
-                      <div class="pg-lead">Diseñamos sistemas suaves, táctiles y accesibles para apps que la gente usa todos los días.</div>
-                      <div class="pg-btns"><span class="pg-btn">Ver casos</span><span class="pg-btn alt">El proceso</span></div>
+                      <div class="pg-kick">🎨 Estudio creativo · sin corbata</div>
+                      <div class="pg-h1">Marcas con <em>carácter</em>, no con plantilla</div>
+                      <div class="pg-lead">Diseño, contenido y web para negocios que no quieren parecer otro negocio. Trabajamos rápido, hablamos claro y nos reímos en las juntas.</div>
+                      <div class="pg-btns"><span class="pg-btn">Ver el portafolio</span><span class="pg-btn alt">Hablemos ☕</span></div>
+                      <div class="cl-note"><span class="cl-emoji">💬</span>Respondemos en <b>menos de 24 h</b>. Sin formularios eternos.</div>
                     </div>
-                    <div class="pg-media"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=70" alt="Equipo de diseño" loading="lazy" /></div>
-                  </div>
-                  <div class="pg-sec">
-                    <div class="pg-h2">Especialidades</div>
-                    <div class="pg-g3">
-                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-hand-pointer"></i></div><h4>Producto digital</h4><p>Flujos claros y sin fricción.</p></div>
-                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-universal-access"></i></div><h4>Accesibilidad</h4><p>Contraste y foco revisados.</p></div>
-                      <div class="pg-card">
-                        <div class="pg-h2" style="font-size:15px;margin-bottom:12px">Modo oscuro</div>
-                        <div class="pg-switch"><i></i></div>
+                    <div>
+                      <div class="cl-stats">
+                        <div class="cl-stat"><span class="em">🚀</span><div><b>180+</b><span>proyectos</span></div></div>
+                        <div class="cl-stat"><span class="em">😄</span><div><b>96%</b><span>recomiendan</span></div></div>
+                        <div class="cl-stat"><span class="em">⚡</span><div><b>12 días</b><span>promedio</span></div></div>
+                      </div>
+                      <div class="cl-marquee">
+                        <span class="pg-chip p">Branding</span>
+                        <span class="pg-chip b">Web</span>
+                        <span class="pg-chip y">Contenido</span>
+                        <span class="pg-chip g">Redes</span>
+                        <span class="pg-chip">Packaging</span>
+                        <span class="pg-chip p">Naming</span>
                       </div>
                     </div>
                   </div>
-                  <div class="pg-foot"><span>Soft Neo Studio</span><span>Monterrey · remoto</span></div>
+                  <div class="pg-sec">
+                    <div class="pg-h2">Lo que hacemos 🛠️</div>
+                    <div class="pg-sub">Tres cosas, bien hechas. Si tu proyecto necesita otra, lo decimos de frente.</div>
+                    <div class="pg-g3">
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h4>Identidad</h4><p>Logo, colores y tono de voz. Que te reconozcan en un scroll.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-laptop-code"></i></div><h4>Web que convierte</h4><p>Rápida, clara y sin adornos que estorben. Se ve bien en celular.</p></div>
+                      <div class="pg-card"><div class="pg-ic"><i class="fa-solid fa-camera-retro"></i></div><h4>Contenido</h4><p>Fotos, video y copy para redes. Publicamos o te enseñamos a hacerlo.</p></div>
+                    </div>
+                  </div>
+                  <div class="pg-foot"><span>Clay Pop Studio</span><span>Ciudad de México · remoto 🌎</span></div>
                 </div>
               </div>
               <span class="shot-flag">Disponible</span>
             </div>
             <div class="p-3 pt-4">
               <div class="flex items-center justify-between gap-3 mb-2">
-                <h4 class="text-lg font-bold t-text-strong">Soft Neo</h4>
-                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-slate-400">Neomorfismo</span>
+                <h4 class="text-lg font-bold t-text-strong">Clay Pop</h4>
+                <span class="px-2 py-0.5 rounded-md project-tag text-[10px] font-mono text-fuchsia-400">Claymorphism</span>
               </div>
               <p class="text-sm t-text-muted leading-relaxed mb-3">
-                La superficie se hunde y sobresale con luz, sin bordes. Suave y táctil,
-                perfecta para estudios de diseño, apps de bienestar y portfolios senior.
+                Plastilina digital: superficies gruesas, radios enormes, sombras suaves y
+                colores que no piden permiso. Informal a propósito, con emoji, notas
+                manuscritas y tarjetas ligeramente torcidas. Para negocios que quieren
+                caer bien antes de vender.
               </p>
               <ul class="space-y-1.5 mb-5 text-xs t-text-muted">
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Sombras dobles luz/sombra reales</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Controles y toggles en relieve</li>
-                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400 text-[10px]"></i> Contraste revisado para accesibilidad</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Relieve de plastilina con luz y sombra suaves</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Emoji, chips de color y notas tipo burbuja</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Tarjetas con inclinación y burbujas flotantes</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-fuchsia-400 text-[10px]"></i> Tono cercano, para público de cualquier edad</li>
               </ul>
               <div class="flex items-center gap-2 pt-4 border-t t-divide">
-                <button type="button" data-preview="neo"
+                <button type="button" data-preview="clay"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-ghost border t-border-faint t-text-base text-xs font-semibold">
                   <i class="fa-regular fa-eye text-xs"></i> Ver vista previa
                 </button>
-                <button type="button" data-request="neo"
+                <button type="button" data-request="clay"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg btn-primary text-slate-900 text-xs font-semibold">
                   Quiero esta
                 </button>
@@ -2872,9 +3072,9 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
         glass: {
           kicker: 'Plantilla 03 · Aurora Glass',
           title: 'Aurora Glass',
-          lead: 'Vidrio esmerilado flotando sobre negro, con acentos violeta y brillo en los bordes. Los paneles dejan de ser cajas blancas y ganan profundidad: es el lenguaje visual de los productos mejor diseñados hoy.',
-          includes: ['Paneles de cristal con blur y saturación reales', 'Tarjetas de KPI con sparkline dentro del vidrio', 'Acentos violeta con resplandor controlado', 'Contraste revisado sobre fondo oscuro'],
-          audience: ['SaaS y productos digitales', 'Startups que quieren verse actuales', 'Marcas de bienestar y tecnología'],
+          lead: 'Un panel de producto completo en vidrio violeta sobre negro: sidebar, saludo, KPIs con sparkline, gráfica de área con degradado, estados y dona. No es una landing con un cuadro bonito, es el dashboard que tus usuarios van a usar todos los días.',
+          includes: ['Sidebar, KPIs, gráfica de área, dona y acciones rápidas', 'Vidrio real: blur, saturación y brillo en los bordes', 'Gráficas dibujadas en CSS puro, sin librerías', 'Contraste revisado sobre fondo oscuro'],
+          audience: ['SaaS y productos con métricas', 'Paneles internos y backoffice', 'Apps que quieren verse actuales de verdad'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
         corp: {
@@ -2893,12 +3093,12 @@ Ingeniero backend · Kubernetes, Go y bases de datos que no se caen.
           audience: ['SaaS y productos con métricas', 'Agencias que reportan a clientes', 'Cualquiera que venda resultados en números'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
-        neo: {
-          kicker: 'Plantilla 06 · Soft Neo',
-          title: 'Soft Neo',
-          lead: 'Neomorfismo: la superficie se hunde y sobresale con luz, sin bordes ni líneas. Es un lenguaje que se siente táctil, y bien hecho transmite calma y oficio. El reto es el contraste, y ahí es donde esta versión revisa accesibilidad.',
-          includes: ['Sombras dobles de luz y sombra reales', 'Toggles y controles en relieve', 'Superficie monocromática suave', 'Contraste y foco revisados para accesibilidad'],
-          audience: ['Estudios de diseño y producto', 'Apps de bienestar y salud', 'Perfiles senior que prefieren discreción'],
+        clay: {
+          kicker: 'Plantilla 06 · Clay Pop',
+          title: 'Clay Pop',
+          lead: 'Plastilina digital: superficies gruesas, radios enormes, sombras suaves y colores que no piden permiso. Informal a propósito, con emoji, notas tipo burbuja y tarjetas ligeramente torcidas. Para negocios que quieren caer bien antes de vender.',
+          includes: ['Relieve de plastilina con luz y sombra suaves', 'Emoji, chips de color y notas tipo burbuja', 'Tarjetas con inclinación y burbujas flotantes', 'Tono cercano, para público de cualquier edad'],
+          audience: ['Estudios creativos y agencias', 'Negocios locales y marcas jóvenes', 'Cualquiera que no quiera verse corporativo'],
           meta: 'Responsive · Accesible · Un solo HTML, sin build',
         },
         flat: {
